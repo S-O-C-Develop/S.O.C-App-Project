@@ -19,13 +19,13 @@ public class ExceptionAdvice {
     @ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     protected CommonResponse defaultException(HttpServletRequest req, Exception e){
-        return responseService.getFailResponse();
+        return responseService.getFailResponse("Default Error");
     }
 
     @ExceptionHandler(CustomUserNotFoundException.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     protected CommonResponse userNotFoundException(HttpServletRequest req, CustomUserNotFoundException e){
-        return responseService.getFailResponse();
+        return responseService.getFailResponse("User를 찾을 수 없습니다.");
     }
 
 }

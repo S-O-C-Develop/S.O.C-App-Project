@@ -33,11 +33,11 @@ public class ResponseService {
         return res;
     }
 
-    public CommonResponse getFailResponse(){
-        CommonResponse res = new CommonResponse();
+    public CommonResponse getFailResponse(String msg){
+        CommonResponse res = new CommonResponse(msg);
         res.setSuccess(false);
         res.setCode(-1);
-        res.setMsg("Fail");
+        res.setMsg(msg);
         return res;
     }
 

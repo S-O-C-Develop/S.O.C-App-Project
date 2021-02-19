@@ -7,6 +7,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class CommonResponse {
+
     @ApiModelProperty(value = "응답 성공 여부 : 0 -> 성공, -1 -> 실패")
     private boolean isSuccess;
 
@@ -15,4 +16,10 @@ public class CommonResponse {
 
     @ApiModelProperty(value = "응답 메세지")
     private String msg;
+
+    public CommonResponse(){}
+    public CommonResponse(String msg){
+        this.msg = msg;
+    };
+    
 }
