@@ -9,7 +9,7 @@ server:
 
 spring:
   profiles:
-    include: datasource
+    include: datasource, key
 
   devtools:
     livereload:
