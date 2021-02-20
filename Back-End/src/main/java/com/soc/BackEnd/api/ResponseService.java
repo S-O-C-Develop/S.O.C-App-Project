@@ -11,7 +11,7 @@ public class ResponseService {
         SingleResponse<T> res = new SingleResponse<>();
         res.setData(data);
         res.setCode(0);
-        res.setMsg("Success");
+        res.setMessage("Success");
         res.setSuccess(true);
         return res;
     }
@@ -20,7 +20,7 @@ public class ResponseService {
         ListResponse<T> res = new ListResponse<>();
         res.setList(list);
         res.setCode(0);
-        res.setMsg("Success");
+        res.setMessage("Success");
         res.setSuccess(true);
         return res;
     }
@@ -29,7 +29,7 @@ public class ResponseService {
         CommonResponse res = new CommonResponse();
         res.setSuccess(true);
         res.setCode(0);
-        res.setMsg("Success");
+        res.setMessage("Success");
         return res;
     }
 
@@ -37,7 +37,7 @@ public class ResponseService {
         CommonResponse res = new CommonResponse(msg);
         res.setSuccess(false);
         res.setCode(-1);
-        res.setMsg(msg);
+        res.setMessage(msg);
         return res;
     }
 

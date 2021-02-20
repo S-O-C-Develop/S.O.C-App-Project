@@ -15,11 +15,11 @@ public class CommonResponse {
     private int code;
 
     @ApiModelProperty(value = "응답 메세지")
-    private String msg;
+    private String message;
 
     public CommonResponse(){}
     public CommonResponse(String msg){
-        this.msg = msg;
+        this.message = msg;
     };
     
 }
