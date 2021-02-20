@@ -31,8 +31,11 @@ public class ExceptionAdvice {
 
     @ExceptionHandler(CustomValidationException.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    protected CommonResponse validationException(HttpServletRequest req, CustomValidationException e){
+    protected CommonResponse validationException(HttpServletRequest req, CustomValidationException e) {
+        if (e.getMessage() != null) {
+            if (e.getMessage().equals("studentId")) return responseService.getFailResponse("중복되는 학번입니다.");
+            else if (e.getMessage().equals("email")) return responseService.getFailResponse("중복되는 이메일입니다.");
+        }
         return responseService.getFailResponse("잘 못 된 입력 값입니다.");
     }
-
 }
