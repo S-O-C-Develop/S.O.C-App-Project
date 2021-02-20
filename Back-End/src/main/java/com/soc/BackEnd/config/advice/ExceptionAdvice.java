@@ -3,6 +3,7 @@ package com.soc.BackEnd.config.advice;
 import com.soc.BackEnd.api.CommonResponse;
 import com.soc.BackEnd.api.ResponseService;
 import com.soc.BackEnd.config.advice.exception.CustomUserNotFoundException;
+import com.soc.BackEnd.config.advice.exception.CustomValidationException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -25,7 +26,13 @@ public class ExceptionAdvice {
     @ExceptionHandler(CustomUserNotFoundException.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     protected CommonResponse userNotFoundException(HttpServletRequest req, CustomUserNotFoundException e){
-        return responseService.getFailResponse("User를 찾을 수 없습니다.");
+        return responseService.getFailResponse("잘 못 된 User 정보 입니다.");
+    }
+
+    @ExceptionHandler(CustomValidationException.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    protected CommonResponse validationException(HttpServletRequest req, CustomValidationException e){
+        return responseService.getFailResponse("잘 못 된 입력 값입니다.");
     }
 
 }
