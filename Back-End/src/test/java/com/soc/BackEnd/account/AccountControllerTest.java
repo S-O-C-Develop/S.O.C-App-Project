@@ -47,7 +47,7 @@ class AccountControllerTest {
 
         //then
         perform.andExpect(status().isOk())
-                .andExpect(jsonPath("$.msg").value("Success"))
+                .andExpect(jsonPath("$.message").value("Success"))
                 .andExpect(jsonPath("$.code").value(0))
                 .andExpect(jsonPath("$.success").value(true));
 
