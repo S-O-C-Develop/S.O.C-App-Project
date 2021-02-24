@@ -33,6 +33,7 @@ public class Account extends BaseTimeEntity {
     private String email;
 
     private boolean isConfirm;
+    private String emailToken;
 
     @ElementCollection(fetch = FetchType.EAGER)
     @Builder.Default

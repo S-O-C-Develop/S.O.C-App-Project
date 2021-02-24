@@ -10,12 +10,15 @@ import com.soc.BackEnd.config.advice.exception.CustomUserNotFoundException;
 import com.soc.BackEnd.config.advice.exception.CustomValidationException;
 import com.soc.BackEnd.config.security.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.Errors;
 
 import javax.transaction.Transactional;
 import java.util.Collections;
+import java.util.UUID;
 
 @RequiredArgsConstructor
 @Transactional
@@ -26,6 +29,7 @@ public class AccountService {
     private final ResponseService responseService;
     private final PasswordEncoder passwordEncoder;
     private final JwtTokenProvider jwtTokenProvider;
+    private final JavaMailSender javaMailSender;
 
     public CommonResponse signUp(SignupDto dto, Errors errors) {
 
@@ -45,9 +49,15 @@ public class AccountService {
                 .email(dto.getEmail())
                 .roles(Collections.singletonList("ROLE_USER"))
                 .isConfirm(false)
+                .emailToken(UUID.randomUUID().toString())
                 .build();
 
         accountRepository.save(account);
+
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setSubject("SOC_Project 회원 가입 인증");
+        message.setText("check-valid-email?emailToken="+account.getEmailToken()+"&email="+account.getEmail());
+        javaMailSender.send(message);
 
         return responseService.getSuccessResponse();
     }
