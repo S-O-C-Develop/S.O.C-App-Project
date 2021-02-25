@@ -9,15 +9,13 @@ server:
 
 spring:
   profiles:
-    include: datasource, key
-
+    include: key
+    active: dev
   devtools:
     livereload:
       enabled: true
-
   jpa:
     hibernate:
-      ddl-auto: create #create update none
       naming:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
     show-sql: true
