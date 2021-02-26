@@ -33,10 +33,16 @@ public class Account extends BaseTimeEntity {
     private String email;
 
     private boolean isConfirm;
+
+    @Column(nullable = false)
     private String emailToken;
 
     @ElementCollection(fetch = FetchType.EAGER)
     @Builder.Default
     private List<String> roles = new ArrayList<>();
+
+    public void changeConfirm(){
+        this.isConfirm = true;
+    }
 
 }
