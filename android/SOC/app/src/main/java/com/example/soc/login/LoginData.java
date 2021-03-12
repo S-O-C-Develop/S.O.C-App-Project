@@ -1,7 +1,6 @@
 package com.example.soc.login;
 
 import com.google.gson.annotations.SerializedName;
-
     public class LoginData {
         @SerializedName("password")
         String password;

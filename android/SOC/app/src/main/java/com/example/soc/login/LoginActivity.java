@@ -3,12 +3,9 @@ package com.example.soc.login;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.Message;
-import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -16,16 +13,16 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
+import com.example.soc.function.ApiClient;
+import com.example.soc.function.ApiService;
 import com.example.soc.function.BackPressHandler;
 import com.example.soc.main.MainActivity;
 import com.example.soc.R;
-import com.google.gson.Gson;
+import com.example.soc.signup.SignUpActivity;
+import com.example.soc.signup.SignUpData;
+import com.example.soc.signup.SignUpResponse;
 
-import okhttp3.MediaType;
-import okhttp3.RequestBody;
-import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -62,38 +59,57 @@ public class LoginActivity extends Activity {
         Button LoginButton = (Button) findViewById(R.id.login);
         Button SignButton = (Button) findViewById(R.id.sign);
         Button FindButton = (Button) findViewById(R.id.find);
-        SignButton.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        SharedPreferences pref1 = getSharedPreferences("PREF", MODE_PRIVATE);
+       if(pref1.getString("id","").isEmpty() == false) {
                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                 startActivity(intent);
                 finish();
-            }
-        });
+        }
 
-        FindButton.setOnClickListener(new OnClickListener() {
+        SignButton.setOnClickListener(new OnClickListener() { //회원가입버튼 눌렀을 떄의 동작
+
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), FIndActivity.class);
+                Intent intent = new Intent(getApplicationContext(), SignUpActivity.class);
                 startActivity(intent);
+            }
+        });
+
+        FindButton.setOnClickListener(new OnClickListener() { //비밀번호찾기버튼 눌렀을 때의 동작
+            @Override
+            public void onClick(View view) {
 
             }
         });
-        LoginButton.setOnClickListener(new OnClickListener() {
+        LoginButton.setOnClickListener(new OnClickListener() { //로그인버튼 눌렀을 때의 동작
             @Override
             public void onClick(View view) {
         LoginData data = new LoginData(passwordView.getText().toString(),idView.getText().toString());
+        // LoginData의 data객체를 생성해서 password, studentId 정보를 준비해둔다.
         ApiService apiService = ApiClient.getClient().create(ApiService.class);
+        // APiservice의 apiService를 정의해 자동으로 Json에서 Gson으로 변환할 수 있게 함.
         Call<LoginResponse> call = apiService.userLogin(data);
                     call.enqueue(new Callback<LoginResponse>() {
                         @Override
                         public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
                             if (response.isSuccessful()) {
                                 LoginResponse res = response.body();
-                                Log.d(TAG, "Response:" + res.getSuccess());
+                                Log.e(TAG, "Response:" + res.getSuccess());
                                 tokenManager.createSession(res.getData());
-                                SharedPreferences pref = getSharedPreferences("JWTTOKEN", MODE_PRIVATE);
+                                SharedPreferences pref = getSharedPreferences("PREF", MODE_PRIVATE);
                                 Call<GetLogin> call1 = apiService.getuser(pref.getString("data", ""));
+                                call1.enqueue(new Callback<GetLogin>() {
+                                                  @Override
+                                                  public void onResponse(Call<GetLogin> call, Response<GetLogin> response) {
+                                                      GetLogin res = response.body();
+                                                        tokenManager.autoLogin(res.getMessage());
+                                                        Log.d(TAG, res.getMessage());
+                                                  }
+                                                  @Override
+                                                  public void onFailure(Call<GetLogin> call, Throwable t) {
+
+                                                  }
+                                              });
                                 Intent i = new Intent(getApplicationContext(), MainActivity.class);
                                 startActivity(i);
                                 finish();
