@@ -45,4 +45,8 @@ public class Account extends BaseTimeEntity {
         this.isConfirm = true;
     }
 
+    public void changePassword(String password){
+        this.password = password;
+    }
+
 }

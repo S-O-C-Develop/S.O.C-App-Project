@@ -1,17 +1,19 @@
 package com.soc.BackEnd.account;
 
 import com.soc.BackEnd.account.dto.LoginDto;
+import com.soc.BackEnd.account.dto.PasswordUpdateDto;
 import com.soc.BackEnd.account.dto.ResponseAccountDto;
 import com.soc.BackEnd.account.dto.SignupDto;
+import com.soc.BackEnd.account.mail.MailService;
+import com.soc.BackEnd.account.mail.MessageData;
 import com.soc.BackEnd.api.CommonResponse;
 import com.soc.BackEnd.api.ResponseService;
 import com.soc.BackEnd.api.SingleResponse;
 import com.soc.BackEnd.config.advice.exception.CustomUserNotFoundException;
 import com.soc.BackEnd.config.advice.exception.CustomValidationException;
+import com.soc.BackEnd.config.security.CustomUserDetails;
 import com.soc.BackEnd.config.security.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
-import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.Errors;
@@ -29,7 +31,7 @@ public class AccountService {
     private final ResponseService responseService;
     private final PasswordEncoder passwordEncoder;
     private final JwtTokenProvider jwtTokenProvider;
-    private final JavaMailSender javaMailSender;
+    private final MailService mailService;
 
     public CommonResponse signUp(SignupDto dto, Errors errors) {
 
@@ -54,12 +56,18 @@ public class AccountService {
 
         accountRepository.save(account);
 
-        SimpleMailMessage message = new SimpleMailMessage();
-        message.setSubject("SOC_Project 회원 가입 인증");
-        message.setText("check-valid-email?emailToken="+account.getEmailToken()+"&email="+account.getEmail());
-        javaMailSender.send(message);
+        sendEmailToAccount(account);
 
         return responseService.getSuccessResponse();
+    }
+
+    private void sendEmailToAccount(Account account) {
+        MessageData messageData = MessageData.builder()
+                .to(account.getEmail())
+                .title("S.O.C 회원가입 인증")
+                .content("check-valid-email?emailToken="+ account.getEmailToken()+"&email="+ account.getEmail())
+                .build();
+        mailService.sendMessage(messageData);
     }
 
     public SingleResponse<String> signIn(LoginDto dto, Errors errors) {
@@ -79,5 +87,15 @@ public class AccountService {
     public SingleResponse<ResponseAccountDto> getAccount(String studentId) {
         Account accountEntity =  accountRepository.findByStudentId(studentId).orElseThrow(CustomUserNotFoundException::new);
         return responseService.getSingleResponse(new ResponseAccountDto(accountEntity));
+    }
+
+    public SingleResponse<String> changePwd(PasswordUpdateDto dto, Errors errors, String userName) {
+        if(errors.hasErrors()) throw new CustomValidationException();
+        Account accountEntity = accountRepository.findByStudentId(userName).orElseThrow(CustomUserNotFoundException::new);
+        if(!passwordEncoder.matches(dto.getBeforePassword(),accountEntity.getPassword())){
+            throw new CustomUserNotFoundException();
+        }
+        accountEntity.changePassword(passwordEncoder.encode(dto.getUpdatePassword()));
+        return responseService.getSingleResponse("비밀번호 변경 완료");
     }
 }

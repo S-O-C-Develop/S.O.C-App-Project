@@ -1,13 +1,17 @@
 package com.soc.BackEnd.account;
 
 import com.soc.BackEnd.account.dto.LoginDto;
+import com.soc.BackEnd.account.dto.PasswordUpdateDto;
 import com.soc.BackEnd.account.dto.ResponseAccountDto;
 import com.soc.BackEnd.account.dto.SignupDto;
 import com.soc.BackEnd.api.CommonResponse;
 import com.soc.BackEnd.api.SingleResponse;
+import com.soc.BackEnd.config.security.CustomUserDetails;
+import com.sun.security.auth.UserPrincipal;
 import io.swagger.annotations.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
@@ -43,6 +47,18 @@ public class AccountController {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String studentId = authentication.getName();
         return accountService.getAccount(studentId);
+    }
+
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "X-AUTH-TOKEN", value = "로그인 성공 후 토큰", required = false, dataType = "String", paramType = "header")
+    })
+    @ApiOperation(value = "비밀번호 변경 API", notes ="이전 비밀번호, 새로운 비밀번호 전송")
+    @PostMapping(value = "/change-password")
+    public SingleResponse<String> changePwd(@ApiParam(value = "비밀번호 변경 객체", required = true) @RequestBody @Valid PasswordUpdateDto dto, Errors errors){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String studentId = authentication.getName();
+        System.out.println(studentId+"!!!");
+        return accountService.changePwd(dto, errors, studentId);
     }
 
 }
