@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">SOC</string>
+    <string name="schoolnumber">학번</string>
+    <string name="password">비밀번호</string>
+    <string name="passwordconfirm">비밀번호 확인</string>
+    <string name="email">이메일</string>
+    <string name="id">닉네임</string>
+    <string name="register">회원가입</string>
+    <string name="btn_next">다음</string>
+    <string name="btn_previous">이전</string>
+    <string name="btn_doublecheck">중복확인</string>
+    <string name="catEmail">\u0026catholic.ac.kr</string>
+    <string name="numbersend"> </string>
+    <string name="btn_send">전송</string>
+    <string name="authenticationnumer">인증번호</string>
+    <string name="falsenumber"> </string>
+    <string name="register1">이메일로 비밀번호 찾기</string>
+</resources>
