@@ -42,6 +42,9 @@ public class AccountService {
         if(accountRepository.findByStudentId(dto.getStudentId()).isPresent()){
             throw new CustomValidationException("studentId");
         }
+        if(accountRepository.findByNickname(dto.getStudentId()).isPresent()){
+            throw new CustomValidationException("nickname");
+        }
 
 
         Account account = Account.builder()
