@@ -7,6 +7,7 @@ import androidx.fragment.app.FragmentTransaction;
 import android.os.Bundle;
 import android.view.MenuItem;
 import com.example.soc.R;
+import com.example.soc.board.Board;
 import com.example.soc.function.BackPressHandler;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 

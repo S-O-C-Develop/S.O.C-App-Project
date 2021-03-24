@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<item
+    android:id="@+id/board_menu1"
+    android:icon="@drawable/abc_vector_test"
+    android:title="정보"/>
+    <item
+        android:id="@+id/board_menu2"
+        android:icon="@drawable/abc_vector_test"
+        android:title="묻고 답하기"/>
+    <item
+        android:id="@+id/board_menu3"
+        android:icon="@drawable/abc_vector_test"
+        android:title="공모전"
+/>
+    <item
+        android:id="@+id/board_menu4"
+        android:icon="@drawable/abc_vector_test"
+        android:title="대외활동"
+        />
+</menu>

@@ -3,65 +3,55 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".main.Board">
-
+    tools:context=".board.Board">
     <!--리사이클러뷰-->
     <androidx.recyclerview.widget.RecyclerView
-        android:background="@color/cardview_dark_background"
         android:id="@+id/Board"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scrollbars="vertical" />
-
     <LinearLayout
         android:id="@+id/child_fragment"
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
-
     <LinearLayout
+        android:padding="10dp"
         android:background="@color/design_default_color_on_primary"
-        android:orientation="horizontal"
-        android:layout_gravity="right"
-        android:padding="18dp"
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-
+<TextView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:textAlignment="center"
+    android:text="S.O.C 게시판"
+    android:textSize="30dp"
+    android:textStyle="bold"
+    android:gravity="center_horizontal" />
         <LinearLayout
-            android:id="@+id/subButton1"
-            android:orientation="vertical"
-            android:layout_weight="3"
-            android:layout_gravity="right"
-            android:gravity="center_horizontal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:text="공모전"
-                android:textColor="@color/black"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-        </LinearLayout>
-        <LinearLayout
-            android:id="@+id/subButton2"
-
-            android:orientation="vertical"
-            android:layout_gravity="right"
-            android:layout_weight="3"
-            android:gravity="center_horizontal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:weightSum="10"
+            android:orientation="horizontal">
+   <TextView
+       android:gravity="left"
+       android:id="@+id/board_name"
+       android:textSize="25dp"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:layout_weight="3" />
             <ImageView
+                android:id="@+id/board_menu"
+                android:layout_gravity="center"
+                android:backgroundTint="@color/white"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="7"
+                android:src="@drawable/ic_baseline_expand_more_24"/>
 
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-            <TextView
-                android:text="대외활동"
-                android:textColor="@color/black"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
         </LinearLayout>
+
     </LinearLayout>
 
 </FrameLayout>

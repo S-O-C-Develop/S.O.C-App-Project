@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 
+import com.example.soc.find.FindActivity;
 import com.example.soc.function.ApiClient;
 import com.example.soc.function.ApiService;
 import com.example.soc.function.BackPressHandler;
@@ -78,7 +79,8 @@ public class LoginActivity extends Activity {
         FindButton.setOnClickListener(new OnClickListener() { //비밀번호찾기버튼 눌렀을 때의 동작
             @Override
             public void onClick(View view) {
-
+                Intent intent = new Intent(getApplicationContext(), FindActivity.class);
+                startActivity(intent);
             }
         });
         LoginButton.setOnClickListener(new OnClickListener() { //로그인버튼 눌렀을 때의 동작
