@@ -45,10 +45,10 @@ class AccountControllerTest {
     public void signupTest() throws Exception{
         // given
         SignupDto signupDto = SignupDto.builder()
-                .studentId("123456789")
-                .nickname("vividswan")
-                .password("12345678910")
-                .email("vividswan@naver.com")
+                .studentId("999999999")
+                .nickname("testUser")
+                .password("1234567891")
+                .email("test@naver.com")
                 .build();
 
         // when
@@ -68,13 +68,13 @@ class AccountControllerTest {
     @Test
     public void loginTest() throws Exception{
         //given
-        String studentId = "123456789";
+        String studentId = "123456788";
         String rawPassword = "123456789";
 
         Account accountEntity = Account.builder()
                 .studentId(studentId)
-                .nickname("testUser")
-                .email("test@test.com")
+                .nickname("testUser2")
+                .email("test2@test.com")
                 .password(passwordEncoder.encode(rawPassword))
                 .isConfirm(false)
                 .roles(Collections.singletonList("ROLE_USER"))
