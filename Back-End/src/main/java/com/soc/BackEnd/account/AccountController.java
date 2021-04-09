@@ -14,6 +14,9 @@ import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 
 @Api(tags = {"Account API"})
 @RestController
@@ -50,11 +53,23 @@ public class AccountController {
             @ApiImplicitParam(name = "X-AUTH-TOKEN", value = "로그인 성공 후 토큰", required = false, dataType = "String", paramType = "header")
     })
     @ApiOperation(value = "비밀번호 변경 API", notes ="이전 비밀번호, 새로운 비밀번호 전송")
-    @PutMapping(value = "/change-password")
+    @PutMapping(value = "/account/password")
     public SingleResponse<String> changePwd(@ApiParam(value = "비밀번호 변경 객체", required = true) @RequestBody @Valid PasswordUpdateDto dto, Errors errors){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String studentId = authentication.getName();
         return accountService.changePwd(dto, errors, studentId);
+    }
+
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "X-AUTH-TOKEN", value = "로그인 성공 후 토큰", required = false, dataType = "String", paramType = "header")
+    })
+    @ApiOperation(value = "닉네임 변경 API", notes ="새로운 닉네임 전송")
+    @PutMapping(value = "/account-update")
+    public SingleResponse<String> changeNickname(@ApiParam(value = "변경 될 닉네임", required = true)
+                                                     @RequestParam String updateNickname){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String studentId = authentication.getName();
+        return accountService.changeNickname(updateNickname, studentId);
     }
 
 }

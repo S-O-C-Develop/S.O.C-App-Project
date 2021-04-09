@@ -101,4 +101,18 @@ public class AccountService {
         accountEntity.changePassword(passwordEncoder.encode(dto.getUpdatePassword()));
         return responseService.getSingleResponse("비밀번호 변경 완료");
     }
+
+    public SingleResponse<String> changeNickname(String updateNickname, String userName) {
+        Account accountEntity = accountRepository.findByStudentId(userName).orElseThrow(CustomUserNotFoundException::new);
+        if(updateNickname.length() <8 || updateNickname.length() > 20)
+            throw new CustomValidationException();
+
+        if (!updateNickname.equals(accountEntity.getNickname())){
+            if(accountRepository.findByNickname(updateNickname).isPresent()) throw new CustomValidationException("nickname");
+            accountEntity.changeNickname(updateNickname);
+        }
+        else if(accountRepository.findByNickname(updateNickname).isPresent()) throw new CustomValidationException("duplication");
+
+        return responseService.getSingleResponse("nickname 변경 완료");
+    }
 }
