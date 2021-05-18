@@ -1,6 +1,7 @@
 package com.soc.BackEnd.board;
 
 import com.soc.BackEnd.account.dto.BoardRequestDto;
+import com.soc.BackEnd.board.model.Board;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
