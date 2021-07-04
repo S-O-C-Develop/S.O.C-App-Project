@@ -8,8 +8,19 @@
 import SwiftUI
 
 struct ContentView: View {
+    
+    @StateObject var viewModel = LoginViewModel()
+    @AppStorage("log_Status") var logStatus = false
+    
     var body: some View {
-        LoginView()
+        VStack{
+            if !logStatus {
+                LoginView(viewModel: LoginViewModel())
+            }
+            else {
+                HomeView()
+            }
+        }
     }
 }
 
