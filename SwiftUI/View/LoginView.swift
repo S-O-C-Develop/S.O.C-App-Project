@@ -4,35 +4,48 @@
 //
 //  Created by 박준혁 on 2021/02/19.
 //
-
 import SwiftUI
 
 struct LoginView: View {
     
     @State var studentId = ""
     @State var password = ""
+    @State var isActive : Bool = false
     
-    @State var loginState = false
+    @ObservedObject var viewModel : LoginViewModel
+//    @EnvironmentObject private var viewModel : LoginViewModel
     
     var body: some View {
         NavigationView() {
             VStack {
                 SocImage()
-                UseremailTextField(studentId: $studentId)
-                PasswordSecureField(password: $password)
-                Button(action: {
-                    LoginPost()
-                }) {
-                    LoginButton()
-                }
+                UseremailTextField(studentId: $viewModel.LoginId)
+                PasswordSecureField(password: $viewModel.LoginPassword)
                 
-                Button(action: {
-                    LoginToken()
-                }) {
-                    LoginButton()
-                }
+//                UseremailTextField(studentId: self.$studentId)
+//                PasswordSecureField(password: self.$password)
+                
+                
+                Button(action: viewModel.LoginPost, label: {
+                    Text("로그인")
+                        .fontWeight(.bold)
+                        .frame(width:264, height: 40)
+                        .background(Color.blue)
+                        .foregroundColor(.white)
+                        .cornerRadius(10)
+                })
+                .alert(isPresented: $viewModel.error, content: {
+                    Alert(title: Text(viewModel.errorMsg))
+                })
+                .overlay(
+                    ZStack{
+                        if viewModel.isLoading{ LoadingScreen() }
+                    }
+                )
+                .environmentObject(viewModel)
+                
                 HStack{
-                    LinkSingUpView()
+                    LinkSingUpView(isActive: $isActive)
                     LinkPasswordFindView()
                 }
                 .padding(.top, 20)
@@ -44,7 +57,7 @@ struct LoginView: View {
 
 struct LoginView_Previews: PreviewProvider {
     static var previews: some View {
-        LoginView()
+        LoginView(viewModel: LoginViewModel() )
     }
 }
 
@@ -56,6 +69,7 @@ struct SocImage: View {
             .padding(.bottom, 30)
     }
 }
+
 
 struct UseremailTextField: View{
     
@@ -85,14 +99,20 @@ struct PasswordSecureField: View {
             .padding(.bottom, 15)
     }
 }
+//StudentIdView(LoginViewIsActive: $isActive),isActive: self.$isActive
 
 struct LinkSingUpView: View {
+    
+    @Binding var isActive : Bool
+    
     var body: some View {
-        NavigationLink(destination: SingUpView()){
+        NavigationLink(destination:StudentIdView(LoginViewIsActive: $isActive),isActive: self.$isActive){
             Text("회원가입")
                 .font(.headline)
                 .foregroundColor(.black)
-        }.padding(.trailing, 30)
+        }.isDetailLink(false)
+         .padding(.trailing, 30)
+        
     }
 }
 
@@ -105,14 +125,25 @@ struct LinkPasswordFindView: View {
         }
     }
 }
-
-struct LoginButton: View {
-    var body: some View {
-        Text("로그인")
-            .frame(width:264, height: 40)
-            .font(.headline)
-            .foregroundColor(.white)
-            .background(Color.blue)
-            .cornerRadius(5)
-    }
-}
+//
+//struct LoginButton: View {
+//    var body: some View {
+//        NavigationLink(destination: HomeView(), isActive:
+//                        .navigationBarHidden(false)
+//                        .navigationBarBackButtonHidden(true)
+//        ){
+//            Text("로그인")
+//                .fontWeight(.bold)
+//                .frame(width:264, height: 40)
+//                .background(Color.blue)
+//                .foregroundColor(.white)
+//                .cornerRadius(10)
+//        }
+//        Text("로그인")
+//            .frame(width:264, height: 40)
+//            .font(.headline)
+//            .foregroundColor(.white)
+//            .background(Color.blue)
+//            .cornerRadius(5)
+//    }
+//}
