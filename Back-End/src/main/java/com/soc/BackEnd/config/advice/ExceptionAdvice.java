@@ -35,6 +35,8 @@ public class ExceptionAdvice {
         if (e.getMessage() != null) {
             if (e.getMessage().equals("studentId")) return responseService.getFailResponse("중복되는 학번입니다.");
             else if (e.getMessage().equals("email")) return responseService.getFailResponse("중복되는 이메일입니다.");
+            else if (e.getMessage().equals("nickname")) return responseService.getFailResponse("중복되는 이메일입니다.");
+            else if (e.getMessage().equals("duplication")) return responseService.getFailResponse("원래의 닉네임과 중복됩니다.");
         }
         return responseService.getFailResponse("잘 못 된 입력 값입니다.");
     }
