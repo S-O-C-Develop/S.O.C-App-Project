@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -16,16 +15,13 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.example.soc.R;
-import com.example.soc.find.FindActivity;
-import com.example.soc.function.ApiClient;
-import com.example.soc.function.ApiService;
+import com.example.soc.func.ApiClient;
+import com.example.soc.func.ApiService;
 import com.example.soc.login.LoginActivity;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-
-import static android.content.ContentValues.TAG;
 
 public class SignUpActivity extends Activity {
     Button btnPrevious, btnNext, btnDoubleCheck;

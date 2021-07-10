@@ -1,19 +1,11 @@
 package com.example.soc.board;
 
-import android.annotation.SuppressLint;
-import android.media.Image;
 import android.os.Bundle;
-import android.view.ContextMenu;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 
@@ -22,6 +14,9 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.soc.R;
+import com.example.soc.board.Menu.Commu.Commu;
+import com.example.soc.board.Menu.Gomgmo.Gongmo;
+import com.example.soc.board.Menu.Notice.Notice;
 
 public class Board extends Fragment {
     ViewGroup viewGroup;
@@ -32,29 +27,34 @@ public class Board extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         setHasOptionsMenu(true);
-        viewGroup = (ViewGroup) inflater.inflate(R.layout.board, container, false);
+
+        viewGroup = (ViewGroup) inflater.inflate(R.layout.board_main, container, false);
+        getFragmentManager().beginTransaction().add(R.id.board, new Commu()).commit();
         name = (TextView) viewGroup.findViewById(R.id.board_name);
         menu = (ImageView) viewGroup.findViewById(R.id.board_menu);
+        name.setText("SOC - 커뮤니티");
         menu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 PopupMenu popup = new PopupMenu(getActivity().getApplicationContext(), v);
                 getActivity().getMenuInflater().inflate(R.menu.board_menu, popup.getMenu());
+
                 popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     @Override
+
                     public boolean onMenuItemClick(MenuItem item) {
                         switch(item.getItemId()) {
                             case R.id.board_menu1:
-                                name.setText("정보");
+                                name.setText("SOC - 커뮤니티");
+                                getFragmentManager().beginTransaction().replace(R.id.board, new Commu()).commit();
                                 break;
                             case R.id.board_menu2:
-                                name.setText("묻고 답하기");
+                                name.setText("SOC - 공지사항");
+                                getFragmentManager().beginTransaction().replace(R.id.board, new Notice()).commit();
                                 break;
                             case R.id.board_menu3:
-                                name.setText("공모전");
-                                break;
-                            case R.id.board_menu4:
-                                name.setText("대외활동");
+                                name.setText("SOC - 공모전");
+                                getFragmentManager().beginTransaction().replace(R.id.board, new Gongmo()).commit();
                                 break;
                         }
                         return false;

@@ -50,22 +50,21 @@
 
             <TextView
                 android:id="@+id/revnc"
-                android:layout_width="30dp"
+                android:layout_width="60dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="18"
+                android:layout_weight="20"
                 android:textAllCaps="false"
                 android:textColor="#FF0000"
                 android:textStyle="bold" />
 
             <Button
-                android:padding="15dp"
-                android:layout_width="62dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:backgroundTint="#0F84FF"
-                android:hint="다 음"
-                android:id="@+id/revnext"
-                android:textColorHint="@color/white"/>
+            android:id="@+id/revnext"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:text="@string/btn_next"
+            android:backgroundTint="#0F84FF"
+            android:textColor="@color/white" />
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>

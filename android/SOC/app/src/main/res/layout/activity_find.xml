@@ -2,143 +2,107 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
     android:orientation="vertical"
-    android:padding="30dp"
-    android:id="@+id/ll" >
+    android:id="@+id/ll"
+    android:background="@color/white">
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/register1"
-        android:textSize="20sp"
-        android:textColor="#000000"
+        android:text="비밀번호 찾기"
+        android:textSize="30dp"
+        android:textColor="@color/black"
         android:textStyle="bold"
-        android:layout_marginTop="20dp"
-        android:paddingLeft="10dp"
-        android:paddingBottom="20dp"/>
-
+        android:layout_marginTop="80dp"
+        android:layout_marginLeft="20dp"/>
     <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
+        android:layout_width="match_parent"
         android:orientation="vertical"
-        android:paddingLeft="5dp"
-        android:paddingRight="5dp"
-        android:layout_marginTop="10dp">
-
+        android:layout_height="match_parent"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
+        android:layout_marginTop="20dp">
         <EditText
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
             android:id="@+id/schoolnumber"
-            android:hint="@string/schoolnumber"
-            android:textSize="16dp"
-            android:padding="10dp" />
-
-    </LinearLayout>
-
+            android:textStyle="bold"
+            android:hint="학번"/>
     <LinearLayout
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:orientation="vertical"
-        android:paddingLeft="5dp"
-        android:paddingRight="5dp"
-        android:layout_marginTop="15dp">
-
+        android:orientation="horizontal">
         <EditText
-            android:hint="@string/email"
-            android:id="@+id/email"
-            android:layout_width="fill_parent"
+            android:hint="이메일"
+            android:textStyle="bold"
+            android:id="@+id/email_ad"
+            android:layout_width="200dp"
             android:layout_height="wrap_content"
-            android:textSize="16dp"
-            android:layout_marginBottom="10dp"
-            android:padding="10dp"
-            />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:orientation="horizontal"
-        android:paddingLeft="5dp"
-        android:paddingRight="5dp">
-
+        />
         <TextView
-            android:id="@+id/numbersend"
+            android:id="@+id/email_catholic"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/numbersend"
-            android:textSize="12dp"
-            android:textColor="#000000"
-            android:textStyle="bold" />
-
-        <View
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_weight="1"/>
-
-        <Button
-            android:id="@+id/btn_send"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="10dp"
-            android:text="@string/btn_send"
-            android:textColor="@color/white" />
-
+            android:text="\u0040catholic.ac.kr"
+            android:textSize="18dp"
+            android:textColor="@color/black" />
     </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:orientation="vertical"
-        android:paddingLeft="5dp"
-        android:paddingRight="5dp"
-        android:layout_marginTop="15dp">
-
-        <EditText
-            android:layout_width="fill_parent"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="16dp"
-            android:layout_marginBottom="10dp"
-            android:id="@+id/authenticationnumer"
-            android:hint="@string/authenticationnumer"
-            android:padding="10dp" />
+            android:weightSum="20">
 
-    </LinearLayout>
+            <TextView
+                android:id="@+id/sendcheck"
+                android:layout_width="60dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="20"
+                android:textAllCaps="false"
+                android:textColor="#000000"
+                android:textStyle="bold" />
 
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:orientation="horizontal"
-        android:paddingLeft="5dp"
-        android:paddingRight="5dp">
+            <Button
+                android:id="@+id/findsend"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:text="@string/btn_send"
+                android:backgroundTint="#0F84FF"
+                android:textColor="@color/white" />
+        </LinearLayout>
 
-        <TextView
-            android:id="@+id/falsenumber"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/falsenumber"
-            android:textSize="12dp"
-            android:textColor="#ED1C1C"
-            android:textStyle="bold" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/checknum"
+                    android:textStyle="bold"
+                    android:hint="인증번호"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:weightSum="20">
 
-        <View
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_weight="1"/>
+                    <TextView
+                        android:id="@+id/tfcheck"
+                        android:layout_width="60dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="20"
+                        android:textAllCaps="false"
+                        android:textColor="#FF0000"
+                        android:textStyle="bold" />
 
-        <Button
-            android:id="@+id/btn_next"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="10dp"
-            android:text="@string/btn_next"
-            android:textColor="@color/white" />
-
+                    <Button
+                        android:id="@+id/checknext"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="10dp"
+                        android:text="@string/btn_next"
+                        android:backgroundTint="#0F84FF"
+                        android:textColor="@color/white" />
+            </LinearLayout>
+            </LinearLayout>
     </LinearLayout>
 </LinearLayout>

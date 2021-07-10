@@ -1,4 +1,4 @@
-package com.example.soc.main;
+package com.example.soc.board.Menu.Notice;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -11,13 +11,12 @@ import androidx.fragment.app.Fragment;
 
 import com.example.soc.R;
 
-public class Community extends Fragment {
+public class SOC extends Fragment {
     ViewGroup viewGroup;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        viewGroup = (ViewGroup) inflater.inflate(R.layout.commu_main,container,false);
-
+        viewGroup = (ViewGroup) inflater.inflate(R.layout.board_notice_soc,container,false);
         return viewGroup;
     };
 }

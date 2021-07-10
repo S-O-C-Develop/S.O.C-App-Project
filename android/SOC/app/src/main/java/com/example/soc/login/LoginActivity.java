@@ -15,14 +15,13 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 
 import com.example.soc.find.FindActivity;
-import com.example.soc.function.ApiClient;
-import com.example.soc.function.ApiService;
-import com.example.soc.function.BackPressHandler;
+import com.example.soc.func.ApiClient;
+import com.example.soc.func.ApiService;
+import com.example.soc.func.BackPressHandler;
+import com.example.soc.main.LoadingActivity;
 import com.example.soc.main.MainActivity;
 import com.example.soc.R;
 import com.example.soc.signup.SignUpActivity;
-import com.example.soc.signup.SignUpData;
-import com.example.soc.signup.SignUpResponse;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -46,6 +45,7 @@ public class LoginActivity extends Activity {
         backPressHandler.onBackPressed();
     }
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,12 +60,7 @@ public class LoginActivity extends Activity {
         Button LoginButton = (Button) findViewById(R.id.login);
         Button SignButton = (Button) findViewById(R.id.sign);
         Button FindButton = (Button) findViewById(R.id.find);
-        SharedPreferences pref1 = getSharedPreferences("PREF", MODE_PRIVATE);
-       if(pref1.getString("id","").isEmpty() == false) {
-                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                startActivity(intent);
-                finish();
-        }
+
 
         SignButton.setOnClickListener(new OnClickListener() { //회원가입버튼 눌렀을 떄의 동작
 
@@ -97,7 +92,7 @@ public class LoginActivity extends Activity {
                             if (response.isSuccessful()) {
                                 LoginResponse res = response.body();
                                 Log.e(TAG, "Response:" + res.getSuccess());
-                                tokenManager.createSession(res.getData());
+                                tokenManager.createSession(res.getData()); //Loginresponse의 getData함수를 이용해 토큰을 저장
                                 SharedPreferences pref = getSharedPreferences("PREF", MODE_PRIVATE);
                                 Call<GetLogin> call1 = apiService.getuser(pref.getString("data", ""));
                                 call1.enqueue(new Callback<GetLogin>() {

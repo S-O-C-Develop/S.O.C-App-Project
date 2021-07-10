@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".board.Board">
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/Board"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="vertical" />
+    <LinearLayout
+        android:id="@+id/board"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+        <LinearLayout
+            android:layout_marginTop="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:weightSum="10"
+            android:orientation="horizontal">
+   <TextView
+       android:gravity="left"
+       android:id="@+id/board_name"
+       android:textSize="30dp"
+     android:textStyle="bold"
+    android:layout_gravity="center"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:layout_marginTop="8dp"
+       android:layout_marginLeft="20dp"
+       android:layout_weight="3" />
+
+            <ImageView
+                android:paddingTop="10dp"
+                android:layout_marginTop="8dp"
+                android:id="@+id/board_menu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="7"
+                android:backgroundTint="@color/black"
+                android:src="@drawable/ic_baseline_expand_more_24" />
+
+        </LinearLayout>
+</FrameLayout>
