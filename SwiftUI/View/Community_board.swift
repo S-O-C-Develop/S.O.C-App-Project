@@ -10,58 +10,28 @@ import SwiftUI
 struct Community_board: View {
     
     @Namespace var animationID
-    @State var currentTab = "Upcoming"
+    @State var currentTab = "문제"
     
     @StateObject var viewModel = PostViewModel()
     
     var body: some View {
-        ScrollView(.vertical, showsIndicators: false) {
+        
+        VStack{
+            TopBarView(title: "커뮤니티")
             
-            VStack(spacing: 15){
-                HStack(alignment: .bottom){
-                    Text("SOC - 커뮤니티")
-                        .font(.title.bold())
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                    
-                    Button {
-                        
-                    } label: {
-                        Text("ADD")
-                            .foregroundColor(.black)
-                            .padding(.vertical, 10)
-                            .padding(.horizontal, 20)
-                            .background(
-                                Capsule()
-                                    .stroke(Color.black,lineWidth: 1)
-                            )
-                    }
-                }
-                .padding(.top,8)
+            ScrollView(.vertical, showsIndicators: false) {
                 
-                // Custom Segment tab View...
-                HStack(spacing: 0){
-                    
-                    // simply creating array of tabs and iterating over it...
-                    
-                    ForEach(["문제", "정보"], id: \.self){tab in
-                        Board_TabButton(currentTab: $currentTab, title: tab, animationID: animationID)
-                    }
-                }
-                .padding(.top, 25)
                 
                 VStack(spacing: 15) {
                     
                     ForEach(viewModel.postings){ posting in
-                        
                         // posting Card View...
                         PostingCardView(posting: posting)
                     }
                 }
-                .padding(.top, 20)
+                .padding()
             }
-            .padding()
         }
-//        .background(Color("Bg"))
     }
 }
 
