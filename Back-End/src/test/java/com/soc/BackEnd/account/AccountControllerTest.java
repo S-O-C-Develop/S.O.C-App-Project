@@ -77,7 +77,7 @@ class AccountControllerTest {
                 .email("test@test.com")
                 .password(passwordEncoder.encode(rawPassword))
                 .isConfirm(false)
-                .roles(Collections.singletonList("ROLE_USER"))
+                .roles(Collections.singletonList(RoleType.ROLE_USER))
                 .emailToken(UUID.randomUUID().toString())
                 .build();
         accountRepository.save(accountEntity);
