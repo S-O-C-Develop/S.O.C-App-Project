@@ -1,6 +1,7 @@
 package com.soc.BackEnd.account.dto;
 
 import com.soc.BackEnd.account.Account;
+import com.soc.BackEnd.account.RoleType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -19,7 +20,7 @@ public class ResponseAccountDto {
     private String nickname;
     private String email;
     private boolean isConfirm;
-    private List<String> roles;
+    private List<RoleType> roles;
     private LocalDateTime createdDate;
     private LocalDateTime modifiedDate;
 
