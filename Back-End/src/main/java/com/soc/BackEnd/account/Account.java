@@ -49,9 +49,9 @@ public class Account extends BaseTimeEntity {
     private String oAuth;
 
 
-    @Column(nullable = false)
     @Enumerated(EnumType.STRING)
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.EAGER)
+    @Builder.Default
     private List<RoleType> roles = new ArrayList<>();
 
 
