@@ -1,10 +1,12 @@
 package com.soc.BackEnd.config.security;
 
 import com.soc.BackEnd.account.Account;
+import com.soc.BackEnd.account.RoleType;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.stream.Collectors;
 
@@ -18,7 +20,7 @@ public class CustomUserDetails implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return this.account.getRoles().stream().map(SimpleGrantedAuthority::new).collect(Collectors.toList());
+        return this.account.getRoles().stream().map(s ->new SimpleGrantedAuthority(s.toString())).collect(Collectors.toList());
     }
 
     @Override

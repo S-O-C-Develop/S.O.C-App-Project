@@ -21,25 +21,39 @@ public class Account extends BaseTimeEntity {
     private Long id;
 
     @Column(nullable = false, unique = true)
-    private String nickname;
+    private String email;
+
+    @Column(nullable = false)
+    private String emailToken;
+
+    private boolean isConfirm;
 
     @Column(nullable = false, unique = true)
-    private String studentId;
+    private String nickname;
 
     @Column(nullable = false)
     private String password;
 
     @Column(nullable = false, unique = true)
-    private String email;
+    private String phoneNumber;
 
-    private boolean isConfirm;
+    @Column(nullable = false, unique = true)
+    private String studentId;
 
-    @Column(nullable = false)
-    private String emailToken;
+    @Lob
+    @Basic(fetch = FetchType.EAGER)
+    @Column(nullable = true)
+    private String profileImageUrl;
 
+    @Column( nullable = false)
+    private String oAuth;
+
+
+    @Enumerated(EnumType.STRING)
     @ElementCollection(fetch = FetchType.EAGER)
     @Builder.Default
-    private List<String> roles = new ArrayList<>();
+    private List<RoleType> roles = new ArrayList<>();
+
 
     public void changeConfirm(){
         this.isConfirm = true;

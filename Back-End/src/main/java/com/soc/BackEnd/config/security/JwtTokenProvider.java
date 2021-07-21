@@ -1,5 +1,6 @@
 package com.soc.BackEnd.config.security;
 
+import com.soc.BackEnd.account.RoleType;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
@@ -34,7 +35,7 @@ public class JwtTokenProvider {
         secretKey = Base64.getEncoder().encodeToString(secretKey.getBytes());
     }
 
-    public String createToken(String studentId, List<String> roles){
+    public String createToken(String studentId, List<RoleType> roles){
         Claims claims = Jwts.claims().setSubject(studentId);
         claims.put("roles",roles);
         Date now = new Date();
