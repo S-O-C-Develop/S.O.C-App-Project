@@ -25,7 +25,7 @@ public class ResponseAccountDto {
     private LocalDateTime modifiedDate;
 
     public ResponseAccountDto(Account account){
-        this.id = account.getId();
+        this.id = account.getAccountId();
         this.studentId = account.getStudentId();
         this.nickname = account.getNickname();
         this.email = account.getEmail();
