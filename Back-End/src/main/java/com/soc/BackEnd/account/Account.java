@@ -18,7 +18,9 @@ import java.util.List;
 public class Account extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long accountId;
+
+    private String status;
 
     @Column(nullable = false, unique = true)
     private String email;
@@ -34,7 +36,7 @@ public class Account extends BaseTimeEntity {
     @Column(nullable = false)
     private String password;
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = true, unique = true)
     private String phoneNumber;
 
     @Column(nullable = false, unique = true)
@@ -45,7 +47,6 @@ public class Account extends BaseTimeEntity {
     @Column(nullable = true)
     private String profileImageUrl;
 
-    @Column( nullable = false)
     private String oAuth;
 
 
