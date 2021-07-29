@@ -1,5 +1,6 @@
 package com.soc.backend.board.repository;
 
+import com.soc.backend.board.dto.GetPostsPageRes;
 import com.soc.backend.board.entity.Board;
 import com.soc.backend.board.entity.Post;
 import org.assertj.core.api.Assertions;
@@ -11,17 +12,15 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.transaction.annotation.Transactional;
 
-
-
 @SpringBootTest
 @Transactional
 class PostRepositoryTest {
 
     @Autowired
-    private PostRepository postRepository;
+    PostRepository postRepository;
 
     @Autowired
-    private BoardRepository boardRepository;
+    BoardRepository boardRepository;
 
     @DisplayName("Board로 Post 조회 테스트")
     @Test
@@ -60,7 +59,7 @@ class PostRepositoryTest {
 
         //when
         Pageable pageable = Pageable.unpaged();
-        Page<Post> allByBoard = postRepository.findAllByBoard(pageable, testBoard);
+        Page<GetPostsPageRes> allByBoard = postRepository.findAllByBoard(pageable, testBoard);
         int contentCnt = allByBoard.getSize();
         int pageCnt = allByBoard.getTotalPages();
 
