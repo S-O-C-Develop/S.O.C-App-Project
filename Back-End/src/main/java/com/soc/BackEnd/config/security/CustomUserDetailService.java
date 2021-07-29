@@ -1,8 +1,8 @@
-package com.soc.BackEnd.config.security;
+package com.soc.backend.config.security;
 
-import com.soc.BackEnd.account.Account;
-import com.soc.BackEnd.account.AccountRepository;
-import com.soc.BackEnd.config.advice.exception.CustomUserNotFoundException;
+import com.soc.backend.account.Account;
+import com.soc.backend.account.AccountRepository;
+import com.soc.backend.config.advice.exception.CustomUserNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

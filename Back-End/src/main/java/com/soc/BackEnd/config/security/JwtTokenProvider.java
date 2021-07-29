@@ -1,6 +1,6 @@
-package com.soc.BackEnd.config.security;
+package com.soc.backend.config.security;
 
-import com.soc.BackEnd.account.RoleType;
+import com.soc.backend.account.RoleType;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;

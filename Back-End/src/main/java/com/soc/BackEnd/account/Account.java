@@ -1,6 +1,6 @@
-package com.soc.BackEnd.account;
+package com.soc.backend.account;
 
-import com.soc.BackEnd.config.BaseTimeEntity;
+import com.soc.backend.config.BaseTimeEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;

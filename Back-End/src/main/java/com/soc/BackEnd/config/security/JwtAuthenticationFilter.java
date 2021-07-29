@@ -1,4 +1,4 @@
-package com.soc.BackEnd.config.security;
+package com.soc.backend.config.security;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;

@@ -1,8 +1,8 @@
-package com.soc.BackEnd.account.mail;
+package com.soc.backend.account.mail;
 
-import com.soc.BackEnd.account.Account;
-import com.soc.BackEnd.account.AccountRepository;
-import com.soc.BackEnd.config.advice.exception.CustomUserNotFoundException;
+import com.soc.backend.account.Account;
+import com.soc.backend.account.AccountRepository;
+import com.soc.backend.config.advice.exception.CustomUserNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Profile;

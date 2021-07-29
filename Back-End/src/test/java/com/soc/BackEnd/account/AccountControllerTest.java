@@ -1,8 +1,8 @@
-package com.soc.BackEnd.account;
+package com.soc.backend.account;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.soc.BackEnd.account.dto.LoginDto;
-import com.soc.BackEnd.account.dto.SignupDto;
+import com.soc.backend.account.dto.LoginDto;
+import com.soc.backend.account.dto.SignupDto;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,10 +45,10 @@ class AccountControllerTest {
     public void signupTest() throws Exception{
         // given
         SignupDto signupDto = SignupDto.builder()
-                .studentId("999999999")
-                .nickname("testUser")
-                .password("1234567891")
-                .email("test@naver.com")
+                .studentId("123456789")
+                .nickname("vividswan")
+                .password("12345678910")
+                .email("vividswan@naver.com")
                 .build();
 
         // when
@@ -68,13 +68,13 @@ class AccountControllerTest {
     @Test
     public void loginTest() throws Exception{
         //given
-        String studentId = "123456788";
+        String studentId = "123456789";
         String rawPassword = "123456789";
 
         Account accountEntity = Account.builder()
                 .studentId(studentId)
-                .nickname("testUser2")
-                .email("test2@test.com")
+                .nickname("testUser")
+                .email("test@test.com")
                 .password(passwordEncoder.encode(rawPassword))
                 .isConfirm(false)
                 .roles(Collections.singletonList(RoleType.ROLE_USER))

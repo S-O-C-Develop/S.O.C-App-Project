@@ -1,7 +1,7 @@
-package com.soc.BackEnd.board.repository;
+package com.soc.backend.board.repository;
 
-import com.soc.BackEnd.board.entity.Board;
-import com.soc.BackEnd.board.entity.Post;
+import com.soc.backend.board.entity.Board;
+import com.soc.backend.board.entity.Post;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

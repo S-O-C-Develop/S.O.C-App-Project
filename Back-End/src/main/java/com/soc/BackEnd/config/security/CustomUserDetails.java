@@ -1,12 +1,10 @@
-package com.soc.BackEnd.config.security;
+package com.soc.backend.config.security;
 
-import com.soc.BackEnd.account.Account;
-import com.soc.BackEnd.account.RoleType;
+import com.soc.backend.account.Account;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.stream.Collectors;
 

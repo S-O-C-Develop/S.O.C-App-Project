@@ -1,6 +1,6 @@
-package com.soc.BackEnd.board.entity;
+package com.soc.backend.board.entity;
 
-import com.soc.BackEnd.account.Account;
+import com.soc.backend.account.Account;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
