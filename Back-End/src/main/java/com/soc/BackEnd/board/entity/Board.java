@@ -13,7 +13,9 @@ import javax.persistence.*;
 @Builder
 @Getter
 @Entity
-public class Board {
+public class
+
+Board {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long boardId;
@@ -27,10 +29,10 @@ public class Board {
     @Column(nullable = false)
     String category;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     String korName;
 
-    @Column(nullable  = true)
+    @Column(nullable  = true, unique = true)
     String engName;
 
     Integer grade;
