@@ -16,7 +16,7 @@ public class SwaggerConfiguration {
     @Bean
     public Docket swaggerApi() {
         return new Docket(DocumentationType.SWAGGER_2).apiInfo(swaggerInfo()).select()
-                .apis(RequestHandlerSelectors.basePackage("com.soc.BackEnd"))
+                .apis(RequestHandlerSelectors.basePackage("com.soc.backend"))
                 .paths(PathSelectors.any())
                 .build()
                 .useDefaultResponseMessages(false);
@@ -25,6 +25,6 @@ public class SwaggerConfiguration {
     private ApiInfo swaggerInfo() {
         return new ApiInfoBuilder().title("S-O-C-Develop")
                 .description("S-O-C App Back-End 연동 문서")
-                .license("vividswan").licenseUrl("https://vividswan.github.io/").version("1").build();
+                .license("© 2021. vividswan").licenseUrl("https://vividswan.github.io/").version("1").build();
     }
 }
