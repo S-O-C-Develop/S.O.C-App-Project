@@ -6,6 +6,8 @@ import com.soc.backend.account.dto.ResponseAccountDto;
 import com.soc.backend.account.dto.SignupDto;
 import com.soc.backend.api.CommonResponse;
 import com.soc.backend.api.SingleResponse;
+import com.soc.backend.config.advice.exception.CustomDynamicExceptionState;
+import com.soc.backend.config.advice.exception.CustomDynamicException;
 import com.soc.backend.config.security.CustomUserDetails;
 import io.swagger.annotations.*;
 import lombok.RequiredArgsConstructor;
@@ -14,6 +16,8 @@ import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+
+import static com.soc.backend.utils.CustomParsing.getErrorString;
 
 
 @Api(tags = {"Account API"})
@@ -27,13 +31,17 @@ public class AccountController {
     @ApiOperation(value = "회원 가입 API", notes = "학번, 닉네임,비밀번호, 이메일 전송")
     @PostMapping(value = "/sign-up")
     public CommonResponse signUp(@ApiParam(value = "회원가입 요청 객체", required = true) @RequestBody @Valid SignupDto dto, Errors errors){
-        return accountService.signUp(dto, errors);
+        if (errors.hasErrors())
+            throw new CustomDynamicException((new CustomDynamicExceptionState(4000, getErrorString(errors))));
+        return accountService.signUp(dto);
     }
 
     @ApiOperation(value = "로그인 API",notes = "학번, 비밀번호 전송")
     @PostMapping(value =  "/sign-in")
     public SingleResponse<String> signIn(@ApiParam(value = "로그인 요청 객체",required = true) @RequestBody @Valid LoginDto dto, Errors errors){
-        return accountService.signIn(dto, errors);
+        if (errors.hasErrors())
+            throw new CustomDynamicException((new CustomDynamicExceptionState(4000, getErrorString(errors))));
+        return accountService.signIn(dto);
     }
 
     @ApiImplicitParams({
@@ -53,8 +61,10 @@ public class AccountController {
     @PutMapping(value = "/account/password")
     public SingleResponse<String> changePwd(@ApiParam(value = "비밀번호 변경 객체", required = true) @RequestBody @Valid PasswordUpdateDto dto, Errors errors,
                                             @AuthenticationPrincipal CustomUserDetails customUserDetails){
+        if (errors.hasErrors())
+            throw new CustomDynamicException((new CustomDynamicExceptionState(4000, getErrorString(errors))));
         String studentId = customUserDetails.getUsername();
-        return accountService.changePwd(dto, errors, studentId);
+        return accountService.changePwd(dto, studentId);
     }
 
     @ApiImplicitParams({
@@ -67,5 +77,6 @@ public class AccountController {
         String studentId = customUserDetails.getUsername();
         return accountService.changeNickname(updateNickname, studentId);
     }
+
 
 }
