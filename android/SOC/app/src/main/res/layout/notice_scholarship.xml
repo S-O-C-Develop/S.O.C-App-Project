@@ -1,13 +1,16 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".board.Menu.Notice.Notice_scholarship"
-    android:background="@color/white">
-    <!--리사이클러뷰-->
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/janghak"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scrollbars="vertical" />
-</FrameLayout>
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    tools:context="com.example.soc.board.Menu.Notice.Notice_scholarship">
+    <!--메인 페이지-->
+    <WebView
+        android:layout_marginTop="90dp"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:id="@+id/scholarship_webView"
+        >
+    </WebView>
+</LinearLayout>

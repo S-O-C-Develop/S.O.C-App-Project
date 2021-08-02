@@ -122,50 +122,13 @@
         android:layout_marginTop="20dp"
         android:textSize="25dp"/>
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="30dp"
-        android:layout_marginTop="10dp">
 
-        <CheckBox
-            android:id="@+id/a"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="1학년"
-            android:textSize="15dp"
-            android:layout_margin="5dp"/>
-
-        <CheckBox
-            android:id="@+id/b"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:text="2학년"
-            android:textSize="15dp" />
-
-        <CheckBox
-            android:id="@+id/c"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="3학년"
-            android:textSize="15dp"
-            android:layout_margin="5dp" />
-
-        <CheckBox
-            android:id="@+id/d"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="4학년"
-            android:textSize="15dp"
-            android:layout_margin="5dp" />
-    </LinearLayout>
 
     <Button
         android:id="@+id/sign"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="250dp"
         android:layout_marginLeft="300dp"
         android:backgroundTint="#0F84FF"
         android:text="확인"

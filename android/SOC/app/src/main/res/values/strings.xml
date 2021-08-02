@@ -1,5 +1,8 @@
 <resources>
     <string name="app_name">SOC</string>
+    <string name="grade">학년</string>
+    <string name="semester">학기</string>
+    <string name="subject">과목</string>
     <string name="schoolnumber">학번</string>
     <string name="password">비밀번호</string>
     <string name="passwordconfirm">비밀번호 확인</string>
@@ -27,4 +30,73 @@
     <string name="permission_2">사진 및 파일을 저장하기 위하여 접근 권한이 필요합니다.</string>
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+
+    <string-array name = "grade">
+        <item>1학년</item>
+        <item>2학년</item>
+        <item>3학년</item>
+        <item>4학년</item>
+    </string-array>
+    <string-array name = "semester">
+        <item>1학기</item>
+        <item>2학기</item>
+    </string-array>
+    <string-array name = "gr1_1se">
+        <item>프로그래밍및실습1</item>
+    </string-array>
+    <string-array name = "gr1_2se">
+        <item>프로그래밍및실습2</item>
+    </string-array>
+    <string-array name = "gr2_1se">
+        <item>공학수학1</item>
+        <item>프로그래밍응용</item>
+        <item>회로이론및실험</item>
+        <item>전자기학</item>
+        <item>자료구조와알고리즘</item>
+    </string-array>
+    <string-array name = "gr2_2se">
+        <item>공학수학2</item>
+        <item>객체지향프로그래밍기초</item>
+        <item>논리회로및실험</item>
+        <item>전자회로1및실험</item>
+        <item>컴퓨터구조</item>
+        <item>확률과통계</item>
+        <item>신호및시스템</item>
+    </string-array>
+    <string-array name = "gr3_1se">
+        <item>데이터통신</item>
+        <item>반도체공학</item>
+        <item>선형대수</item>
+        <item>전자회로2및실험</item>
+        <item>정보암호화</item>
+        <item>통신이론</item>
+        <item>디지털시스템설계</item>
+    </string-array>
+    <string-array name = "gr3_2se">
+        <item>디지털신호처리</item>
+        <item>디지털통신</item>
+        <item>반도체프로세스</item>
+        <item>초고주파공학</item>
+        <item>정보암호화</item>
+        <item>컴퓨터네트워킹</item>
+        <item>모바일정보통신종합설계</item>
+    </string-array>
+    <string-array name = "gr4_1se">
+        <item>영상처리</item>
+        <item>랜덤프로세스</item>
+        <item>아날로그VLSI설계</item>
+        <item>정보통신공학캡스톤디자인</item>
+        <item>전자공학캡스톤디자인</item>
+        <item>통신부호화이론</item>
+        <item>네트워크보안과블록체인</item>
+        <item>임베디드시스템</item>
+    </string-array>
+    <string-array name = "gr4_2se">
+        <item>디지털VLSI설계</item>
+        <item>무선통신시스템</item>
+        <item>종합설계</item>
+        <item>반도체제조기술</item>
+        <item>보안시스템</item>
+        <item>멀티미디어통신</item>
+    </string-array>
 </resources>

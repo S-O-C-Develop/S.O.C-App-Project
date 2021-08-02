@@ -14,9 +14,9 @@ import androidx.viewpager.widget.ViewPager;
 import com.example.soc.R;
 import com.google.android.material.tabs.TabLayout;
 
-public class Comty extends Fragment {
+public class Comty extends Fragment implements ViewPager.OnPageChangeListener{
     ViewGroup viewGroup;
-
+    CommuPagerAdapter commuPagerAdapter;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -25,7 +25,30 @@ public class Comty extends Fragment {
         adapter.setAdapter(new CommuPagerAdapter((getChildFragmentManager())));
         TabLayout mTab = (TabLayout) viewGroup.findViewById(R.id.boardtabs);
         mTab.setupWithViewPager(adapter);
+        commuPagerAdapter = new CommuPagerAdapter(getChildFragmentManager());
         return viewGroup;
+    }
+
+    @Override
+    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+    }
+
+    @Override
+    public void onPageSelected(int position) {
+        switch (position) {
+            case 0:
+                refresh();
+                break;
+        }
+    }
+
+    @Override
+    public void onPageScrollStateChanged(int state) {
+
+    }
+    private void refresh() {
+       commuPagerAdapter.notifyDataSetChanged();
     }
 }
 

@@ -21,6 +21,7 @@ public class MainActivity extends AppCompatActivity {
     private Home menu1Fragment = new Home();
     private Board menu2Fragment = new Board();
     private Community menu3Fragment = new Community();
+    private Sstudy menu4Fragment = new Sstudy();
     private BottomNavigationView bottomNavigationView;
     private FragmentTransaction ft;
     @Override
@@ -51,6 +52,9 @@ public class MainActivity extends AppCompatActivity {
                         setFrag(2);
                         break;
                     }
+                    case R.id.navigation_menu4: {
+                        setFrag(3);
+                    }
                 }
                 return true;
             }
@@ -71,6 +75,10 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case 2:
                 ft.replace(R.id.layout_main_frame,menu3Fragment);
+                ft.commit();
+                break;
+            case 3:
+                ft.replace(R.id.layout_main_frame,menu4Fragment);
                 ft.commit();
                 break;
         }

@@ -31,6 +31,10 @@ Comty_problem problem = new Comty_problem();
         }
         }
     private static int PAGE_NUMBER = 2;
+    @Override
+    public int getItemPosition(Object object) {
+        return POSITION_NONE;
+    }
 
     @Override
     public int getCount() {
@@ -47,10 +51,7 @@ Comty_problem problem = new Comty_problem();
         }
     }
 
-    @Override
-    public int getItemPosition(Object object) {
-        return POSITION_NONE;
-    }
+
 
 
 

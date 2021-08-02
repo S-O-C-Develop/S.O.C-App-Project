@@ -111,7 +111,9 @@ public class LoginActivity extends Activity {
                                 startActivity(i);
                                 finish();
                             } else{
-                                showDialog();
+                                Intent i = new Intent(getApplicationContext(), MainActivity.class);
+                                startActivity(i);
+                                finish();
                             }
                         }
 

@@ -19,13 +19,16 @@ import java.util.List;
 public class Comty_problem_RVA extends RecyclerView.Adapter<Comty_problem_RVA.MyViewHolder> {
     private final ArrayList<Compty_problem_Response> mDataset;
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        public TextView title, time, content, nickname, reply;
+        public TextView time, content, nickname, reply;
         public ImageView image1, image2;
 
         //ViewHolder
         public MyViewHolder(View view) {
             super(view);
-            title = (TextView) view.findViewById(R.id.board_title);
+            nickname = (TextView) view.findViewById(R.id.pro_nickname);
+            content = (TextView) view.findViewById(R.id.pro_cotent);
+            time = (TextView) view.findViewById(R.id.pro_time);
+            reply = (TextView) view.findViewById(R.id.pro_reply);
         }
     }
 
@@ -44,7 +47,10 @@ public class Comty_problem_RVA extends RecyclerView.Adapter<Comty_problem_RVA.My
 
     @Override
     public void onBindViewHolder(@NonNull Comty_problem_RVA.MyViewHolder holder, int position) {
-        holder.title.setText(mDataset.get(position).getTitle());
+        holder.nickname.setText(mDataset.get(position).getNickname());
+        holder.time.setText(mDataset.get(position).getTime());
+        holder.reply.setText(mDataset.get(position).getReply());
+        holder.content.setText(mDataset.get(position).getContent());
 
     }
 

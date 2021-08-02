@@ -14,7 +14,7 @@
         android:layout_gravity="center_vertical">
 
         <TextView
-            android:id="@+id/nickname"
+            android:id="@+id/pro_nickname"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="nickname"
@@ -23,7 +23,7 @@
             android:textColor="@android:color/black"/>
 
         <TextView
-            android:id="@+id/time"
+            android:id="@+id/pro_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="time"
@@ -34,17 +34,6 @@
         android:layout_width="match_parent"
         android:layout_height="250dp"
         android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:text="TITLE"
-            android:textColor="@android:color/black"
-            android:textSize="20dp"
-            android:textStyle="bold" />
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -52,7 +41,7 @@
        >
 
             <ImageView
-                android:id="@+id/image1"
+                android:id="@+id/pro_image1"
                 android:layout_width="match_parent"
                 android:layout_height="120dp"
                 android:layout_gravity="center_vertical"
@@ -66,7 +55,7 @@
                 android:background="#AAA3A3"
                 android:layout_margin="5dp"></View>
             <ImageView
-                android:id="@+id/image2"
+                android:id="@+id/pro_image2"
                 android:layout_width="match_parent"
                 android:layout_height="120dp"
                 android:layout_gravity="center_vertical"
@@ -77,7 +66,7 @@
         </LinearLayout>
 
         <TextView
-            android:id="@+id/cotent"
+            android:id="@+id/pro_cotent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="This is a very long text and we need to show 3...(dots)"
@@ -91,7 +80,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
         <TextView
-            android:id="@+id/reply"
+            android:id="@+id/pro_reply"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="5dp"

@@ -154,6 +154,14 @@ public class SignUpActivity extends Activity {
 
             }
         });
+
+        btnPrevious.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                      finish();
+            }
+        });
         btnNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

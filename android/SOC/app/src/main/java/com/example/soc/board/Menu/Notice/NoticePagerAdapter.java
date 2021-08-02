@@ -22,9 +22,9 @@ Notice_soc soc = new Notice_soc();
             case 0:
                 return college;
             case 1:
-                return major;
-            case 2:
                 return scholar;
+            case 2:
+                return major;
             case 3:
                 return soc;
             default:
