@@ -1,4 +1,4 @@
-package com.soc.BackEnd.account.dto;
+package com.soc.backend.account.dto;
 
 import lombok.*;
 import org.hibernate.validator.constraints.Length;

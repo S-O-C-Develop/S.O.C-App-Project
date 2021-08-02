@@ -1,4 +1,4 @@
-package com.soc.BackEnd.account.mail;
+package com.soc.backend.account.mail;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

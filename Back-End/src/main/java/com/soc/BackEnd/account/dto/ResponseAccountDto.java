@@ -1,7 +1,7 @@
-package com.soc.BackEnd.account.dto;
+package com.soc.backend.account.dto;
 
-import com.soc.BackEnd.account.Account;
-import com.soc.BackEnd.account.RoleType;
+import com.soc.backend.account.Account;
+import com.soc.backend.account.RoleType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -25,7 +25,7 @@ public class ResponseAccountDto {
     private LocalDateTime modifiedDate;
 
     public ResponseAccountDto(Account account){
-        this.id = account.getId();
+        this.id = account.getAccountId();
         this.studentId = account.getStudentId();
         this.nickname = account.getNickname();
         this.email = account.getEmail();

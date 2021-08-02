@@ -1,4 +1,4 @@
-package com.soc.BackEnd.account;
+package com.soc.backend.account;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

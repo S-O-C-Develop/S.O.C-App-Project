@@ -1,43 +1,32 @@
-package com.soc.BackEnd.config.advice;
+package com.soc.backend.config.advice;
 
-import com.soc.BackEnd.api.CommonResponse;
-import com.soc.BackEnd.api.ResponseService;
-import com.soc.BackEnd.config.advice.exception.CustomUserNotFoundException;
-import com.soc.BackEnd.config.advice.exception.CustomValidationException;
+import com.soc.backend.api.CommonResponse;
+import com.soc.backend.config.advice.exception.CustomException;
+import com.soc.backend.config.advice.exception.CustomDynamicException;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import javax.servlet.http.HttpServletRequest;
-
 @RequiredArgsConstructor
+@Slf4j
 @RestControllerAdvice
 public class ExceptionAdvice {
-    private final ResponseService responseService;
 
-    @ExceptionHandler(Exception.class)
+    @ExceptionHandler(CustomException.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    protected CommonResponse defaultException(HttpServletRequest req, Exception e){
-        return responseService.getFailResponse("Default Error");
+    protected CommonResponse customException(CustomException customException) {
+        log.warn(customException.getCustomExceptionStatus().getMessage());
+        return new CommonResponse(customException.getCustomExceptionStatus());
     }
 
-    @ExceptionHandler(CustomUserNotFoundException.class)
+    @ExceptionHandler(RuntimeException.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    protected CommonResponse userNotFoundException(HttpServletRequest req, CustomUserNotFoundException e){
-        return responseService.getFailResponse("잘 못 된 User 정보 입니다.");
+    protected CommonResponse customException(CustomDynamicException customDynamicException) {
+        log.warn(customDynamicException.getCustomDynamicExceptionState().getMessage());
+        return new CommonResponse(customDynamicException.getCustomDynamicExceptionState());
     }
 
-    @ExceptionHandler(CustomValidationException.class)
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    protected CommonResponse validationException(HttpServletRequest req, CustomValidationException e) {
-        if (e.getMessage() != null) {
-            if (e.getMessage().equals("studentId")) return responseService.getFailResponse("중복되는 학번입니다.");
-            else if (e.getMessage().equals("email")) return responseService.getFailResponse("중복되는 이메일입니다.");
-            else if (e.getMessage().equals("nickname")) return responseService.getFailResponse("중복되는 이메일입니다.");
-            else if (e.getMessage().equals("duplication")) return responseService.getFailResponse("원래의 닉네임과 중복됩니다.");
-        }
-        return responseService.getFailResponse("잘 못 된 입력 값입니다.");
-    }
 }

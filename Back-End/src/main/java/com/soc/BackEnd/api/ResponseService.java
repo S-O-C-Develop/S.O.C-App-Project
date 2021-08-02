@@ -1,4 +1,4 @@
-package com.soc.BackEnd.api;
+package com.soc.backend.api;
 
 import org.springframework.stereotype.Service;
 

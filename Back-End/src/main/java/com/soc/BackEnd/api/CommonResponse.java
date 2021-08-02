@@ -1,5 +1,7 @@
-package com.soc.BackEnd.api;
+package com.soc.backend.api;
 
+import com.soc.backend.config.advice.exception.CustomDynamicExceptionState;
+import com.soc.backend.config.advice.exception.CustomExceptionStatus;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
@@ -21,5 +23,15 @@ public class CommonResponse {
     public CommonResponse(String msg){
         this.message = msg;
     };
+    public CommonResponse(CustomExceptionStatus customExceptionStatus){
+        this.isSuccess = customExceptionStatus.isSuccess();
+        this.code = customExceptionStatus.getCode();
+        this.message = customExceptionStatus.getMessage();
+    }
+    public CommonResponse(CustomDynamicExceptionState customDynamicExceptionState){
+        this.isSuccess = customDynamicExceptionState.isSuccess();
+        this.code = customDynamicExceptionState.getCode();
+        this.message = customDynamicExceptionState.getMessage();
+    }
     
 }
