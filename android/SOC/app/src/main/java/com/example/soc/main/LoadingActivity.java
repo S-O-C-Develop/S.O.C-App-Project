@@ -30,7 +30,6 @@ public class LoadingActivity extends Activity {
                     finish();
                 }
             }, 2000);
-
         }
         else {
             Handler handler = new Handler();

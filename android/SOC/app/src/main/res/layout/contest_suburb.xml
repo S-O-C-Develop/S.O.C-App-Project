@@ -1,13 +1,11 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+<androidx.recyclerview.widget.RecyclerView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/recycle_1boon"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".board.Menu.Contest.Contest_suburb"
-    android:background="@color/white">
-    <!--리사이클러뷰-->
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/suburb"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scrollbars="vertical" />
-</FrameLayout>
+    android:layout_marginTop="140dp" />
+</LinearLayout>

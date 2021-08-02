@@ -23,12 +23,12 @@ public class Comty_problem_search extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_comty_problem_condition_search);
         Button init = (Button) findViewById(R.id.init);
-        Button reg_b = (Button) findViewById(R.id.reg_button);
+        Button reg_b = (Button) findViewById(R.id.sign);
 
         reg_b.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                finish();
             }
         });
 
