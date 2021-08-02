@@ -27,7 +27,7 @@ public class Contest_suburbAdapter extends RecyclerView.Adapter<Contest_suburbAd
     @Override
     public void onBindViewHolder(@NonNull Contest_suburbAdapter.ItemViewHolder itemViewHolder, int i) {
         itemViewHolder.onBind(listData.get(i));
-        String defaulturl="https://www.wevity.com";
+        String defaulturl="https://www.thinkcontest.com";
         final String url=defaulturl+listData.get(i).getClickUrl().toString();
         itemViewHolder.subimage.setOnClickListener(new View.OnClickListener() {
             @Override

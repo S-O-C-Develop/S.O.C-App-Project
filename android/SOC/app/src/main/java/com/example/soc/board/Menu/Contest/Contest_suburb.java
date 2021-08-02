@@ -28,7 +28,7 @@ public class Contest_suburb extends Fragment {
     private View view;
     RecyclerView recyclerView;
     Contest_suburbAdapter adapter;
-    String suburburl="https://www.wevity.com/?c=find&s=1&gub=1&cidx=22";
+    String suburburl="https://www.thinkcontest.com/Contest/CateField.html?c=11";
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -57,15 +57,15 @@ public class Contest_suburb extends Fragment {
         protected Void doInBackground(Void... voids) {
             try {
                 Document doc = Jsoup.connect(suburburl).get();
-                final Elements title = doc.select("div.main-section li a img");
-                final Elements img = doc.select("div.main-section li img");
-                final Elements click = doc.select("div.hide-tit a");
+                final Elements title = doc.select("ul.contest-banner-list li h4");
+                final Elements img = doc.select("ul.contest-banner-list li img");
+                final Elements click = doc.select("ul.contest-banner-list li a");
                 Handler handler = new Handler(Looper.getMainLooper());
                 handler.post(new Runnable() {
                     @Override
                     public void run() {
                         for (Element element : title) {
-                            listTitle.add(element.attr("alt"));
+                            listTitle.add(element.text());
                         }
                         for (Element element : img) {
                             listUrl.add(element.attr("src"));
@@ -74,7 +74,7 @@ public class Contest_suburb extends Fragment {
                             clickUrl.add(element.attr("href"));
 
                         }
-                        for (int i = 0; i < 5; i++) {
+                        for (int i = 0; i < 8; i++) {
                             System.out.println( "========================" );
                             System.out.println( listTitle);
                             System.out.println( listUrl);
@@ -84,7 +84,7 @@ public class Contest_suburb extends Fragment {
                             String url = listUrl.get(i);
                             int temp = url.lastIndexOf("=");
                             data.setTitle(listTitle.get(i));
-                            data.setImageUrl("https://www.wevity.com" + url.substring(temp + 1, url.length()));
+                            data.setImageUrl("https://www.thinkcontest.com" + url.substring(temp + 1, url.length()));
                             System.out.println(data.getImageUrl());
                             data.setClickUrl(clickUrl.get(i));
                             // 제대로 값이 들어감을 확인
