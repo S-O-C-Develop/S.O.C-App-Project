@@ -14,8 +14,8 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.soc.R;
-import com.example.soc.board.Menu.Commu.Commu;
-import com.example.soc.board.Menu.Gomgmo.Gongmo;
+import com.example.soc.board.Menu.Comty.Comty;
+import com.example.soc.board.Menu.Contest.Contest;
 import com.example.soc.board.Menu.Notice.Notice;
 
 public class Board extends Fragment {
@@ -29,7 +29,7 @@ public class Board extends Fragment {
         setHasOptionsMenu(true);
 
         viewGroup = (ViewGroup) inflater.inflate(R.layout.board_main, container, false);
-        getFragmentManager().beginTransaction().add(R.id.board, new Commu()).commit();
+        getFragmentManager().beginTransaction().add(R.id.board, new Comty()).commit();
         name = (TextView) viewGroup.findViewById(R.id.board_name);
         menu = (ImageView) viewGroup.findViewById(R.id.board_menu);
         name.setText("SOC - 커뮤니티");
@@ -46,7 +46,7 @@ public class Board extends Fragment {
                         switch(item.getItemId()) {
                             case R.id.board_menu1:
                                 name.setText("SOC - 커뮤니티");
-                                getFragmentManager().beginTransaction().replace(R.id.board, new Commu()).commit();
+                                getFragmentManager().beginTransaction().replace(R.id.board, new Comty()).commit();
                                 break;
                             case R.id.board_menu2:
                                 name.setText("SOC - 공지사항");
@@ -54,7 +54,7 @@ public class Board extends Fragment {
                                 break;
                             case R.id.board_menu3:
                                 name.setText("SOC - 공모전");
-                                getFragmentManager().beginTransaction().replace(R.id.board, new Gongmo()).commit();
+                                getFragmentManager().beginTransaction().replace(R.id.board, new Contest()).commit();
                                 break;
                         }
                         return false;

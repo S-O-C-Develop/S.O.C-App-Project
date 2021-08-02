@@ -5,14 +5,11 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
-import com.example.soc.board.Menu.Commu.Infor;
-import com.example.soc.board.Menu.Commu.QnA;
-
 public class NoticePagerAdapter extends FragmentPagerAdapter {
-HakSa hakSa = new HakSa();
-Department depart = new Department();
-JangHak janghak = new JangHak();
-SOC soc = new SOC();
+Notice_college college = new Notice_college();
+Notice_major major = new Notice_major();
+Notice_scholarship scholar = new Notice_scholarship();
+Notice_soc soc = new Notice_soc();
     public NoticePagerAdapter(@NonNull FragmentManager fm) {
         super(fm);
         getItem(0);
@@ -23,11 +20,11 @@ SOC soc = new SOC();
     public Fragment getItem(int position) {
         switch(position) {
             case 0:
-                return hakSa;
+                return college;
             case 1:
-                return janghak;
+                return major;
             case 2:
-                return depart;
+                return scholar;
             case 3:
                 return soc;
             default:

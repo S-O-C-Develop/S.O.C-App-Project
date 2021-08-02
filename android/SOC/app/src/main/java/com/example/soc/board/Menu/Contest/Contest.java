@@ -1,4 +1,4 @@
-package com.example.soc.board.Menu.Notice;
+package com.example.soc.board.Menu.Contest;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -13,15 +13,15 @@ import androidx.viewpager.widget.ViewPager;
 import com.example.soc.R;
 import com.google.android.material.tabs.TabLayout;
 
-public class Notice extends Fragment {
+public class Contest extends Fragment {
     ViewGroup viewGroup;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        viewGroup = (ViewGroup) inflater.inflate(R.layout.notice,container,false);
-        ViewPager adapter = (ViewPager) viewGroup.findViewById(R.id.noticeViewPager);
-        adapter.setAdapter(new NoticePagerAdapter((getChildFragmentManager())));
-        TabLayout mTab = (TabLayout) viewGroup.findViewById(R.id.noticetabs);
+        viewGroup = (ViewGroup) inflater.inflate(R.layout.contest,container,false);
+        ViewPager adapter = (ViewPager) viewGroup.findViewById(R.id.contestViewPager);
+        adapter.setAdapter(new ContestPagerAdapter((getChildFragmentManager())));
+        TabLayout mTab = (TabLayout) viewGroup.findViewById(R.id.contesttabs);
         mTab.setupWithViewPager(adapter);
         return viewGroup;
     };

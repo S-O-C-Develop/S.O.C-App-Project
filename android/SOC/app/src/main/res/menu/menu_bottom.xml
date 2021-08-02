@@ -9,8 +9,13 @@
         android:icon="@drawable/ic_baseline_menu_book_24"
         android:title="게시판"/>
     <item
+        android:id="@+id/navigation_menu4"
+        android:icon="@drawable/ic_baseline_settings_24"
+        android:title="S-Study"
+        />
+    <item
         android:id="@+id/navigation_menu3"
         android:icon="@drawable/ic_baseline_settings_24"
-        android:title="설정"
-/>
+        android:title="설정"/>
+
 </menu>

@@ -5,11 +5,6 @@
     android:layout_height="match_parent"
     tools:context=".board.Board">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/Board"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scrollbars="vertical" />
     <LinearLayout
         android:id="@+id/board"
         android:orientation="vertical"
@@ -44,6 +39,5 @@
                 android:layout_weight="7"
                 android:backgroundTint="@color/black"
                 android:src="@drawable/ic_baseline_expand_more_24" />
-
         </LinearLayout>
 </FrameLayout>
