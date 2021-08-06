@@ -1,5 +1,6 @@
 package com.soc.backend.account;
 
+import com.soc.backend.account.dto.SignupDto;
 import com.soc.backend.config.BaseTimeEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -7,8 +8,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.UUID;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -49,12 +49,8 @@ public class Account extends BaseTimeEntity {
 
     private String oAuth;
 
-
     @Enumerated(EnumType.STRING)
-    @ElementCollection(fetch = FetchType.EAGER)
-    @Builder.Default
-    private List<RoleType> roles = new ArrayList<>();
-
+    private RoleType role;
 
     public void changeConfirm(){
         this.isConfirm = true;
@@ -65,4 +61,15 @@ public class Account extends BaseTimeEntity {
     }
 
     public void changeNickname(String nickname) { this.nickname = nickname; }
+
+    public static Account createAccount(SignupDto dto) {
+        return Account.builder()
+                .studentId(dto.getStudentId())
+                .nickname(dto.getNickname())
+                .email(dto.getEmail())
+                .role(RoleType.ROLE_USER)
+                .isConfirm(false)
+                .emailToken(UUID.randomUUID().toString())
+                .build();
+    }
 }
