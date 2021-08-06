@@ -7,18 +7,9 @@ import java.util.List;
 @Service
 public class ResponseService {
 
-    public <T> SingleResponse<T> getSingleResponse(T data){
-        SingleResponse<T> res = new SingleResponse<>();
+    public <T> DataResponse<T> getSingleResponse(T data){
+        DataResponse<T> res = new DataResponse<>();
         res.setData(data);
-        res.setCode(0);
-        res.setMessage("Success");
-        res.setSuccess(true);
-        return res;
-    }
-
-    public <T> ListResponse<T> getListResponse(List<T> list){
-        ListResponse<T> res = new ListResponse<>();
-        res.setList(list);
         res.setCode(0);
         res.setMessage("Success");
         res.setSuccess(true);

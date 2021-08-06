@@ -8,7 +8,7 @@ import com.soc.backend.account.mail.MailService;
 import com.soc.backend.account.mail.MessageData;
 import com.soc.backend.api.CommonResponse;
 import com.soc.backend.api.ResponseService;
-import com.soc.backend.api.SingleResponse;
+import com.soc.backend.api.DataResponse;
 import com.soc.backend.config.advice.exception.CustomException;
 import com.soc.backend.config.advice.exception.CustomExceptionStatus;
 import com.soc.backend.config.security.JwtTokenProvider;
@@ -71,7 +71,7 @@ public class AccountService {
         mailService.sendMessage(messageData);
     }
 
-    public SingleResponse<String> signIn(LoginDto dto) {
+    public DataResponse<String> signIn(LoginDto dto) {
 
         Optional<Account> optionalAccount = accountRepository.findByStudentId(dto.getStudentId());
         if (!optionalAccount.isPresent()) throw new CustomException(CustomExceptionStatus.ACCOUNT_NOT_FOUND);
@@ -85,7 +85,7 @@ public class AccountService {
 
     }
 
-    public SingleResponse<ResponseAccountDto> getAccount(String studentId) {
+    public DataResponse<ResponseAccountDto> getAccount(String studentId) {
         Optional<Account> optionalAccount = accountRepository.findByStudentId(studentId);
         if (!optionalAccount.isPresent()) {
             throw new CustomException(CustomExceptionStatus.ACCOUNT_NOT_FOUND);
@@ -93,7 +93,7 @@ public class AccountService {
         return responseService.getSingleResponse(new ResponseAccountDto(optionalAccount.get()));
     }
 
-    public SingleResponse<String> changePwd(PasswordUpdateDto dto, String userName) {
+    public DataResponse<String> changePwd(PasswordUpdateDto dto, String userName) {
         Optional<Account> optionalAccount = accountRepository.findByStudentId(userName);
         if (!optionalAccount.isPresent()) {
             throw new CustomException(CustomExceptionStatus.ACCOUNT_NOT_FOUND);
@@ -106,7 +106,7 @@ public class AccountService {
         return responseService.getSingleResponse("비밀번호 변경 완료");
     }
 
-    public SingleResponse<String> changeNickname(String updateNickname, String userName) {
+    public DataResponse<String> changeNickname(String updateNickname, String userName) {
         Optional<Account> optionalAccount = accountRepository.findByStudentId(userName);
         if (!optionalAccount.isPresent()) throw new CustomException(CustomExceptionStatus.ACCOUNT_NOT_FOUND);
         Account accountEntity = optionalAccount.get();

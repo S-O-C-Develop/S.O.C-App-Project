@@ -6,7 +6,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class SingleResponse<T> extends CommonResponse {
+public class DataResponse<T> extends CommonResponse {
     @ApiModelProperty(value = "응답 Data")
     private T data;
 }

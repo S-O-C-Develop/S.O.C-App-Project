@@ -1,6 +1,6 @@
 package com.soc.backend.board.controller;
 
-import com.soc.backend.api.SingleResponse;
+import com.soc.backend.api.DataResponse;
 import com.soc.backend.board.dto.GetPostsPageRes;
 import com.soc.backend.board.service.PostService;
 import io.swagger.annotations.Api;
@@ -22,8 +22,10 @@ public class PostController {
     private final PostService postService;
 
     @GetMapping("/posts/boards/{boardId}")
-    public SingleResponse<Page<GetPostsPageRes>> getPostsByBoard(@PageableDefault(size = 10, page = 0) Pageable pageable, @PathVariable(name = "boardId") Long boardId) {
+    public DataResponse<Page<GetPostsPageRes>> getPostsByBoard(@PageableDefault(size = 10, page = 0) Pageable pageable, @PathVariable(name = "boardId") Long boardId) {
         return postService.getPostsByBoard(pageable, boardId);
     }
+
+
 
 }
