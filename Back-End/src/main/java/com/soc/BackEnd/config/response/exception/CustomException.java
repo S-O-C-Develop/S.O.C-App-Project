@@ -1,4 +1,4 @@
-package com.soc.backend.config.advice.exception;
+package com.soc.backend.config.response.exception;
 
 
 import lombok.AllArgsConstructor;

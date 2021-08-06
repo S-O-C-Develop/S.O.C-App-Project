@@ -2,8 +2,8 @@ package com.soc.backend.account.mail;
 
 import com.soc.backend.account.Account;
 import com.soc.backend.account.AccountRepository;
-import com.soc.backend.config.advice.exception.CustomException;
-import com.soc.backend.config.advice.exception.CustomExceptionStatus;
+import com.soc.backend.config.response.exception.CustomException;
+import com.soc.backend.config.response.exception.CustomExceptionStatus;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Profile;

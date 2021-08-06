@@ -2,8 +2,8 @@ package com.soc.backend.config.security;
 
 import com.soc.backend.account.Account;
 import com.soc.backend.account.AccountRepository;
-import com.soc.backend.config.advice.exception.CustomException;
-import com.soc.backend.config.advice.exception.CustomExceptionStatus;
+import com.soc.backend.config.response.exception.CustomException;
+import com.soc.backend.config.response.exception.CustomExceptionStatus;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
