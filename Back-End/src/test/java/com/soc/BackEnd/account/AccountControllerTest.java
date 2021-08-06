@@ -46,9 +46,9 @@ class AccountControllerTest {
         // given
         SignupDto signupDto = SignupDto.builder()
                 .studentId("123456789")
-                .nickname("vividswan")
+                .nickname("vividswanTest")
                 .password("12345678910")
-                .email("vividswan@naver.com")
+                .email("vividswanTest@naver.com")
                 .build();
 
         // when
@@ -58,9 +58,10 @@ class AccountControllerTest {
 
         //then
         perform.andExpect(status().isOk())
-                .andExpect(jsonPath("$.message").value("Success"))
-                .andExpect(jsonPath("$.code").value(0))
-                .andExpect(jsonPath("$.success").value(true));
+                .andExpect(jsonPath("$.message").value("요청에 성공하였습니다."))
+                .andExpect(jsonPath("$.code").value(1000))
+                .andExpect(jsonPath("$.isSuccess").value(true))
+                .andExpect(jsonPath("$.result").exists());
 
     }
 
@@ -94,9 +95,9 @@ class AccountControllerTest {
 
         //then
         perform.andExpect(status().isOk())
-                .andExpect(jsonPath("$.message").value("Success"))
-                .andExpect(jsonPath("$.code").value(0))
-                .andExpect(jsonPath("$.success").value(true))
-                .andExpect(jsonPath("$.data").exists());
+                .andExpect(jsonPath("$.message").value("요청에 성공하였습니다."))
+                .andExpect(jsonPath("$.code").value(1000))
+                .andExpect(jsonPath("$.isSuccess").value(true))
+                .andExpect(jsonPath("$.result").exists());
     }
 }
