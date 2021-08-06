@@ -1,17 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+
+
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:padding="16dp"
-    android:orientation="vertical">
+    android:padding="16dp">
+    <LinearLayout
+        android:id="@+id/ll_write"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
         <ImageButton
-        android:id="@+id/backbutton"
+        android:id="@+id/backbutton_write"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="left"
@@ -20,7 +26,6 @@
         android:src="@drawable/ic_baseline_arrow_back_24"/>
     </LinearLayout>
     <LinearLayout
-        android:layout_marginTop="10dp"
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -43,47 +48,87 @@
             android:layout_height="30dp"
             android:spinnerMode="dialog"
             android:prompt="@string/subject" />
-
     </LinearLayout>
-    <LinearLayout
+    <ImageButton
         android:layout_marginTop="10dp"
-        android:layout_width="match_parent"
-        android:layout_height="150dp"
-        android:orientation="horizontal">
-        <ImageView
+        android:layout_width="30dp"
+        android:layout_height="20dp"
+        android:layout_gravity="right"
+        android:id="@+id/wirte_imgBt"
+        android:src="@drawable/ic_baseline_camera_alt_24"
+        android:background="@android:color/transparent"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
             android:layout_marginTop="5dp"
-            android:id="@+id/img1"
-            android:scaleType="center"
-            android:layout_width="200dp"
-            android:layout_weight="1"
-            android:background="@drawable/roundrect"
-            android:src="@drawable/ic_baseline_photo_camera_back_24"
-            android:layout_height="140dp"/>
-        <ImageView
-            android:layout_marginTop="5dp"
-            android:id="@+id/img2"
-            android:scaleType="center"
-            android:layout_width="200dp"
-            android:layout_weight="1"
-            android:background="@drawable/roundrect"
-            android:src="@drawable/ic_baseline_photo_camera_back_24"
-            android:layout_height="140dp"/>
-    </LinearLayout>
+            android:layout_marginBottom="10dp"
+            android:background="#8A8686"
+            ></View>
+
     <EditText
         android:id="@+id/content_et"
-        android:padding="16dp"
+        android:textStyle="bold"
+        android:background="@android:color/transparent"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:background="#eeeeee"
+
+        android:gravity="top"
         android:hint="내용을 입력하세요."
         />
+        <RelativeLayout
+            android:layout_gravity="left"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
 
+            android:layout_marginBottom="10dp"
+            android:orientation="horizontal">
+            <ImageView
+                android:layout_marginTop="5dp"
+                android:id="@+id/img1_write"
+                android:scaleType="center"
+                android:layout_marginLeft="5dp"
+                android:layout_width="180dp"
+                android:layout_marginRight="5dp"
+                android:layout_height="180dp"/>
+            <ImageButton
+                android:id="@+id/delete_image1"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_alignParentRight="true"
+                android:src="@drawable/ic_baseline_clear_24"
+                android:background="#00ff0000"
+                android:layout_marginRight="199dp" />
+
+            <ImageView
+                android:layout_toRightOf="@+id/img1_write"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="5dp"
+                android:id="@+id/img2_write"
+                android:scaleType="center"
+                android:layout_width="180dp"
+                android:layout_weight="1"
+                android:layout_height="180dp"/>
+
+            <ImageButton
+                android:id="@+id/delete_image2"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_alignParentRight="true"
+                android:background="#00ff0000"
+                android:layout_marginRight="6dp"
+                android:src="@drawable/ic_baseline_clear_24"
+                />
+        </RelativeLayout>
     <Button
         android:id="@+id/reg_button"
-        android:layout_width="match_parent"
+        android:layout_width="300dp"
+        android:layout_gravity="center"
         android:layout_height="wrap_content"
         android:backgroundTint="#0F84FF"
         android:text="등록하기"
         android:textColor="#FFFFFF" />
-</LinearLayout>
+    </LinearLayout>
+
+</RelativeLayout>

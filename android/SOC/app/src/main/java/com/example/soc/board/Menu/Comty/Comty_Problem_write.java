@@ -1,110 +1,99 @@
 package com.example.soc.board.Menu.Comty;
-
 import android.Manifest;
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.ClipData;
-import android.content.ContentResolver;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.MultiTransformation;
-import com.bumptech.glide.load.resource.bitmap.CenterCrop;
-import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
-import com.bumptech.glide.request.RequestOptions;
-import com.example.soc.login.LoginActivity;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
-
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.fragment.app.FragmentTransaction;
-
-import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.example.soc.R;
 import com.gun0912.tedpermission.PermissionListener;
 import com.gun0912.tedpermission.TedPermission;
-
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 
-public class Comty_Problem_write extends AppCompatActivity{
-    private static final int PICK_FROM_ALBUM = 201;
-    private static final int PICK_FROM_ALBUM2 = 202;
+
+public class Comty_Problem_write extends  AppCompatActivity{
+    private static final int PICK_FROM_ALBUM = 100;
     private ImageView image1;
     private ImageView image2;
+    private ImageButton image1_del, image2_del;
     private TextView nickname,content,time;
     private Spinner gradeSpinner, semesterSpinner, subjectSpinner;
     private ArrayAdapter<String> arrayAdapter;
     public static final String EXTRA_ADDRESS = "address";
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_comty__problem_write);
+
+        //스피너
         gradeSpinner = (Spinner) findViewById(R.id.spinner1);
-        arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, (String[]) getResources().getStringArray(R.array.grade));
+        arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, (String[]) getResources().getStringArray(R.array.grade)); //스피너를 위한 배열 어댑터 선언
         arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         gradeSpinner.setAdapter(arrayAdapter);
-
         semesterSpinner = (Spinner) findViewById(R.id.spinner2);
         subjectSpinner = (Spinner) findViewById(R.id.spinner3);
-
         initAddressSpinner();
 
+        //이미지뷰
         tedPermission(); //사진 권한 접근
 
-        image1 = (ImageView) findViewById(R.id.img1);
-        image2 = (ImageView) findViewById(R.id.img2);
+       image1 = (ImageView) findViewById(R.id.img1_write);
+       image2 = (ImageView) findViewById(R.id.img2_write);
+       image1_del = (ImageButton) findViewById(R.id.delete_image1);
+        image1_del.setVisibility(View.INVISIBLE);
+       image2_del = (ImageButton) findViewById(R.id.delete_image2);
+        image2_del.setVisibility(View.INVISIBLE);
+        ImageButton imageBtn= (ImageButton) findViewById(R.id.wirte_imgBt);
+        ImageButton backbutton = (ImageButton) findViewById(R.id.backbutton_write);
+        imageBtn.setOnClickListener(new View.OnClickListener() { //이미지뷰 사진넣기
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_PICK);
+                intent.setType("image/*");
+                intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
+                intent.setData(MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                startActivityForResult(intent,PICK_FROM_ALBUM);
+            }
+        });
+
+        //글쓰기 등록버튼
         Button reg_button = (Button) findViewById(R.id.reg_button);
-        ImageButton backbutton = (ImageButton) findViewById(R.id.backbutton);
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         reg_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 DialogClick(v);
             }
         });
+
+        //뒤로가기 버튼
         backbutton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 finish();
             }
         });
 
-        image1.setOnClickListener(new View.OnClickListener() { //이미지뷰 사진넣기기
-            public void onClick(View v) {
-                Intent intent = new Intent(Intent.ACTION_PICK);
-                intent.setDataAndType(android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
-                startActivityForResult(intent, PICK_FROM_ALBUM);
-            }
-        });
-        image2.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                Intent intent = new Intent(Intent.ACTION_PICK);
-                intent.setDataAndType(android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
-                startActivityForResult(intent, PICK_FROM_ALBUM2);
+        //화면클릭시 키보드 숨김
+        LinearLayout ll1 = (LinearLayout) findViewById(R.id.ll_write);
+        ll1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
             }
         });
     }
@@ -225,24 +214,60 @@ public class Comty_Problem_write extends AppCompatActivity{
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        Uri selectedImageUri;
-        RequestOptions option1 = new RequestOptions().centerCrop();
-        MultiTransformation option2 = new MultiTransformation(new CenterCrop(), new RoundedCorners(8));
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == RESULT_OK && data != null && data.getData() != null) {
-            switch (requestCode) {
-                case PICK_FROM_ALBUM:
-                    selectedImageUri = data.getData();
-                    Glide.with(getApplicationContext()).load(selectedImageUri).apply(option1).into(image1);
-                    break;
-                case PICK_FROM_ALBUM2:
-                    selectedImageUri = data.getData();
-                    Glide.with(getApplicationContext()).load(selectedImageUri).apply(RequestOptions.bitmapTransform(option2)).into(image2);
-                    break;
+        if (requestCode == PICK_FROM_ALBUM && resultCode == RESULT_OK) {
+            ClipData clipData = data.getClipData();
+            Log.i("clipdata", String.valueOf(clipData.getItemCount()));
+             if (clipData.getItemCount() == 1) {
+                 Uri urione = clipData.getItemAt(0).getUri();
+                 image1.setImageURI(urione);
+                 image1_del.setVisibility(View.VISIBLE);
+                 image1_del.setOnClickListener(new View.OnClickListener() {
+                     @Override
+                     public void onClick(View v) {
+                        image1.setImageResource(0);
+                         image1_del.setVisibility(View.INVISIBLE);
+                     }
+                 });
+             }
+             else if (clipData.getItemCount() == 2) {
+                 image1_del.setVisibility(View.VISIBLE);
+                 image1_del.setOnClickListener(new View.OnClickListener() {
+                     @Override
+                     public void onClick(View v) {
+                         image1.setImageResource(0);
+                         image1_del.setVisibility(View.INVISIBLE);
+                     }
+                 });
+                 image2_del.setVisibility(View.VISIBLE);
+                 image2_del.setOnClickListener(new View.OnClickListener() {
+                     @Override
+                     public void onClick(View v) {
+                         image2.setImageResource(0);
+                         image2_del.setVisibility(View.INVISIBLE);
+                     }
+                 });
+                for (int i = 0; i <clipData.getItemCount(); i++) {
+                    Uri uritwo = clipData.getItemAt(i).getUri();
+                    switch (i) {
+                        case 0:
+                            image1.setImageURI(uritwo);
+                            break;
+                        case 1:
+                            image2.setImageURI(uritwo);
+                    }
+                }
+            }
+            else if (clipData.getItemCount() > 3) {
+                Toast.makeText(this, "사진은 2장까지 선택 가능합니다.", Toast.LENGTH_LONG).show();
+            }
+            // setting 1st selected image into image switcher
+            // show this if no image is selected
+            else {
+                Toast.makeText(this, "You haven't picked Image", Toast.LENGTH_LONG).show();
             }
         }
-    }
-
+        }
     public void DialogClick(View view) {
         AlertDialog.Builder msgBuilder = new AlertDialog.Builder(Comty_Problem_write.this)
                 .setTitle("알림")
