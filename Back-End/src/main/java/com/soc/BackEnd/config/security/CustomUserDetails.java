@@ -5,6 +5,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.stream.Collectors;
 
@@ -12,13 +13,19 @@ public class CustomUserDetails implements UserDetails {
 
     private Account account;
 
+    public Account getAccount() {
+        return account;
+    }
+
     public CustomUserDetails(Account account){
         this.account = account;
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return this.account.getRoles().stream().map(s ->new SimpleGrantedAuthority(s.toString())).collect(Collectors.toList());
+        Collection<GrantedAuthority> collect = new ArrayList<>();
+        collect.add(new SimpleGrantedAuthority(account.getRole().toString()));
+        return collect;
     }
 
     @Override

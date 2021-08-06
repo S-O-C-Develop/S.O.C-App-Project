@@ -7,8 +7,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -49,12 +47,8 @@ public class Account extends BaseTimeEntity {
 
     private String oAuth;
 
-
     @Enumerated(EnumType.STRING)
-    @ElementCollection(fetch = FetchType.EAGER)
-    @Builder.Default
-    private List<RoleType> roles = new ArrayList<>();
-
+    private RoleType role;
 
     public void changeConfirm(){
         this.isConfirm = true;

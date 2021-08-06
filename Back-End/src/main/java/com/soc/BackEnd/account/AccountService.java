@@ -50,7 +50,7 @@ public class AccountService {
                 .nickname(dto.getNickname())
                 .password(passwordEncoder.encode(dto.getPassword()))
                 .email(dto.getEmail())
-                .roles(Collections.singletonList(RoleType.ROLE_USER))
+                .role(RoleType.ROLE_USER)
                 .isConfirm(false)
                 .emailToken(UUID.randomUUID().toString())
                 .build();
@@ -80,7 +80,7 @@ public class AccountService {
             throw new CustomException(CustomExceptionStatus.PASSWORD_NOT_CORRECT);
         }
 
-        return responseService.getSingleResponse(jwtTokenProvider.createToken(accountEntity.getStudentId(),accountEntity.getRoles()));
+        return responseService.getSingleResponse(jwtTokenProvider.createToken(accountEntity.getStudentId(),accountEntity.getRole()));
 
 
     }

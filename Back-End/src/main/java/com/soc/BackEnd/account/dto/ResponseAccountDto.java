@@ -8,7 +8,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Getter
 @NoArgsConstructor
@@ -20,9 +19,8 @@ public class ResponseAccountDto {
     private String nickname;
     private String email;
     private boolean isConfirm;
-    private List<RoleType> roles;
+    private RoleType roles;
     private LocalDateTime createdDate;
-    private LocalDateTime modifiedDate;
 
     public ResponseAccountDto(Account account){
         this.id = account.getAccountId();
@@ -30,9 +28,8 @@ public class ResponseAccountDto {
         this.nickname = account.getNickname();
         this.email = account.getEmail();
         this.isConfirm = account.isConfirm();
-        this.roles = account.getRoles();
+        this.roles = account.getRole();
         this.createdDate = account.getCreatedDate();
-        this.modifiedDate = account.getModifiedDate();
     }
 
 }
