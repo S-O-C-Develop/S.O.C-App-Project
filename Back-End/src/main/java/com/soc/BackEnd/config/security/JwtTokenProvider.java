@@ -25,10 +25,10 @@ public class JwtTokenProvider {
 
     private final UserDetailsService userDetailsService;
 
-    @Value("jwt.secret")
+    @Value("${jwt.secret}")
     private String secretKey;
 
-    private long tokenValidity = 60 * 60 * 1000L;
+    private long tokenValidity = 30 * 24 * 60 * 60 * 1000L;
 
     @PostConstruct
     protected void init(){
