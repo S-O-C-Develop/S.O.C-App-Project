@@ -1,5 +1,6 @@
 package com.soc.backend.config;
 
+import io.swagger.annotations.SwaggerDefinition;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import springfox.documentation.builders.ApiInfoBuilder;
@@ -19,6 +20,7 @@ public class SwaggerConfiguration {
                 .apis(RequestHandlerSelectors.basePackage("com.soc.backend"))
                 .paths(PathSelectors.any())
                 .build()
+                .host("prod.soc-project.site")
                 .useDefaultResponseMessages(false);
     }
 
