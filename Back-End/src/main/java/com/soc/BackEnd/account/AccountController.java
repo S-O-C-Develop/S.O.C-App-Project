@@ -50,8 +50,7 @@ public class AccountController {
     @ApiOperation(value = "로그인한 회원 조회", notes = "학번(studentId)으로 회원을 조회한다")
     @GetMapping(value = "/get-account")
     public DataResponse<ResponseAccountDto> getAccount(@AuthenticationPrincipal CustomUserDetails customUserDetails) {
-        String studentId = customUserDetails.getUsername();
-        return accountService.getAccount(studentId);
+        return accountService.getAccount(customUserDetails);
     }
 
     @ApiImplicitParams({
@@ -63,8 +62,7 @@ public class AccountController {
                                           @AuthenticationPrincipal CustomUserDetails customUserDetails){
         if (errors.hasErrors())
             throw new CustomDynamicException((new CustomDynamicExceptionState(4000, getErrorString(errors))));
-        String studentId = customUserDetails.getUsername();
-        return accountService.changePwd(dto, studentId);
+        return accountService.changePwd(dto, customUserDetails);
     }
 
     @ApiImplicitParams({
@@ -75,7 +73,7 @@ public class AccountController {
     public DataResponse<String> changeNickname(@ApiParam(value = "변경 될 닉네임", required = true) @RequestParam String updateNickname,
                                                @AuthenticationPrincipal CustomUserDetails customUserDetails){
         String studentId = customUserDetails.getUsername();
-        return accountService.changeNickname(updateNickname, studentId);
+        return accountService.changeNickname(updateNickname, customUserDetails);
     }
 
 

@@ -11,13 +11,13 @@ import com.soc.backend.api.ResponseService;
 import com.soc.backend.api.DataResponse;
 import com.soc.backend.config.advice.exception.CustomException;
 import com.soc.backend.config.advice.exception.CustomExceptionStatus;
+import com.soc.backend.config.security.CustomUserDetails;
 import com.soc.backend.config.security.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.Collections;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -85,20 +85,13 @@ public class AccountService {
 
     }
 
-    public DataResponse<ResponseAccountDto> getAccount(String studentId) {
-        Optional<Account> optionalAccount = accountRepository.findByStudentId(studentId);
-        if (!optionalAccount.isPresent()) {
-            throw new CustomException(CustomExceptionStatus.ACCOUNT_NOT_FOUND);
-        }
-        return responseService.getSingleResponse(new ResponseAccountDto(optionalAccount.get()));
+    public DataResponse<ResponseAccountDto> getAccount(CustomUserDetails customUserDetails) {
+        Account account = customUserDetails.getAccount();
+        return responseService.getSingleResponse(new ResponseAccountDto(account));
     }
 
-    public DataResponse<String> changePwd(PasswordUpdateDto dto, String userName) {
-        Optional<Account> optionalAccount = accountRepository.findByStudentId(userName);
-        if (!optionalAccount.isPresent()) {
-            throw new CustomException(CustomExceptionStatus.ACCOUNT_NOT_FOUND);
-        }
-        Account accountEntity = optionalAccount.get();
+    public DataResponse<String> changePwd(PasswordUpdateDto dto, CustomUserDetails customUserDetails) {
+        Account accountEntity = customUserDetails.getAccount();
         if(!passwordEncoder.matches(dto.getBeforePassword(),accountEntity.getPassword())){
             throw new CustomException(CustomExceptionStatus.PASSWORD_NOT_CORRECT);
         }
@@ -106,16 +99,14 @@ public class AccountService {
         return responseService.getSingleResponse("비밀번호 변경 완료");
     }
 
-    public DataResponse<String> changeNickname(String updateNickname, String userName) {
-        Optional<Account> optionalAccount = accountRepository.findByStudentId(userName);
-        if (!optionalAccount.isPresent()) throw new CustomException(CustomExceptionStatus.ACCOUNT_NOT_FOUND);
-        Account accountEntity = optionalAccount.get();
+    public DataResponse<String> changeNickname(String updateNickname, CustomUserDetails customUserDetails) {
+        Account account = customUserDetails.getAccount();
         if(updateNickname.length() <8 || updateNickname.length() > 20)
             throw new CustomException(CustomExceptionStatus.NICKNAME_VALIDATION_ERROR);
 
-        if (!updateNickname.equals(accountEntity.getNickname())){
+        if (!updateNickname.equals(account.getNickname())){
             if(accountRepository.findByNickname(updateNickname).isPresent()) throw new CustomException(CustomExceptionStatus.NICKNAME_DUPLICATION_SELF);;
-            accountEntity.changeNickname(updateNickname);
+            account.changeNickname(updateNickname);
         }
         else if(accountRepository.findByNickname(updateNickname).isPresent()) throw new CustomException(CustomExceptionStatus.NICKNAME_DUPLICATION);
 
