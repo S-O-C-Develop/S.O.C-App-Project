@@ -37,6 +37,8 @@ public enum CustomExceptionStatus {
     POST_USERS_INVALID_PASSWORD(false, 2021, "비밀번호 형식을 확인해주세요."),
     POST_USERS_EMPTY_PASSWORD(false, 2022, "비밀번호를 입력해주세요"),
     POST_USERS_EXISTS_STUDENTID(false, 2023, "중복된 학번입니다."),
+    POST_USERS_INVALID_STUDENTID(false, 2024, "학번의 형식을 확인해주세요."),
+    POST_USERS_EMPTY_STUDENTID(false, 2025, "학번을 입력해주세요."),
 
 
 

@@ -1,5 +1,6 @@
 package com.soc.backend.config.security;
 
+import com.soc.backend.config.response.exception.CustomAuthenticationEntryPoint;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -45,8 +46,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(WebSecurity web) throws Exception {
-        web.ignoring().antMatchers("/v2/api-docs", "/swagger-resources/**",
-                "/swagger-ui.html", "/webjars/**", "/swagger/**");
+        web.ignoring().antMatchers("/v2/api-docs/**", "/swagger-resources/**",
+                "/swagger-ui/**", "/webjars/**", "/swagger/**","/swagger.json");
     }
 
     @Override
@@ -57,11 +58,14 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeRequests()
-                .antMatchers("/api/sign-up", "/api/sign-in").permitAll()
+                .antMatchers("/errors/**", "/api/sign-up", "/api/sign-in", "/api/posts/board/**").permitAll()
                 .requestMatchers(CorsUtils::isPreFlightRequest).permitAll()
                 .anyRequest().hasRole("USER")
                 .and()
-                .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class);
+                    .exceptionHandling()
+                    .authenticationEntryPoint(new CustomAuthenticationEntryPoint())
+                .and()
+                    .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class);
 
     }
 

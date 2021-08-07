@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class ResponseAccountDto {
+public class ResponseAccountRes {
     private Long id;
     private String studentId;
     private String nickname;
@@ -22,7 +22,7 @@ public class ResponseAccountDto {
     private RoleType roles;
     private LocalDateTime createdDate;
 
-    public ResponseAccountDto(Account account){
+    public ResponseAccountRes(Account account){
         this.id = account.getAccountId();
         this.studentId = account.getStudentId();
         this.nickname = account.getNickname();
