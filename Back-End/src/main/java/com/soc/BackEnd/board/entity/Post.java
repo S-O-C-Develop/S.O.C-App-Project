@@ -1,12 +1,16 @@
 package com.soc.backend.board.entity;
 
 import com.soc.backend.account.Account;
+import com.soc.backend.board.dto.CreatePostReq;
+import com.soc.backend.config.enums.Status;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+
+import static com.soc.backend.config.enums.Status.*;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -19,7 +23,8 @@ public class Post {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long postId;
 
-    private String status;
+    @Enumerated(EnumType.STRING)
+    private Status status;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "boardId")
@@ -29,24 +34,29 @@ public class Post {
     @JoinColumn(name = "accountId")
     private Account account;
 
-    private String author;
-
     @Column(nullable = false)
     private String title;
 
-    @Lob
-    @Basic(fetch = FetchType.EAGER)
     @Column(nullable = false)
     private String contents;
 
-    @Lob
-    @Basic(fetch = FetchType.EAGER)
     private String firstImageUrl;
 
-    @Lob
-    @Basic(fetch = FetchType.EAGER)
     private String secondImageUrl;
 
-    private Long reportCount = 0L;
+    private Long reportCount;
+
+    public static Post createPost(CreatePostReq req, Board board, Account account) {
+        return Post.builder()
+                .board(board)
+                .account(account)
+                .status(VALID)
+                .title(req.getTitle())
+                .contents(req.getContents())
+                .firstImageUrl(req.getFirstImageUrl())
+                .secondImageUrl(req.getSecondImageUrl())
+                .reportCount(0L)
+                .build();
+    }
 
 }
