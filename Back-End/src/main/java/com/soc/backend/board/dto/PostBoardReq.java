@@ -15,14 +15,14 @@ import javax.validation.constraints.*;
 public class PostBoardReq {
 
     @NotBlank
-    @Pattern(regexp = "^[\\sㄱ-ㅎ가-힣a-zA-Z0-9_-]{3,20}$")
+    @Pattern(regexp = "^[0-9a-zA-Z가-힣\\s]{1,20}$")
     String category;
 
     @NotBlank
-    @Pattern(regexp = "^[\\sㄱ-ㅎ가-힣0-9_-]{3,20}$")
+    @Pattern(regexp = "^[0-9a-zA-Z가-힣\\s]{1,20}$")
     String korName;
 
-    @Pattern(regexp = "^[\\sa-zA-Z0-9_-]{3,20}$")
+    @Pattern(regexp = "^[\\sa-zA-Z0-9_-]{1,20}$")
     String engName;
 
     @Min(value = 1)
