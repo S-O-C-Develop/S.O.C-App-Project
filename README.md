@@ -31,6 +31,10 @@
 - gradle
 - spring-boot 2.4.2
 
+### iOS
+- Swift 5.3
+- Swift Ui 2.0
+- Xcode 12.5.1
 
 ## Usage
 
