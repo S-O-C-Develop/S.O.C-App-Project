@@ -1,7 +1,8 @@
 package com.soc.backend.account;
 
-import com.soc.backend.account.dto.SignupDto;
+import com.soc.backend.account.dto.SignupReq;
 import com.soc.backend.config.BaseTimeEntity;
+import com.soc.backend.config.enums.Status;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -9,6 +10,8 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.UUID;
+
+import static com.soc.backend.config.enums.Status.*;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -20,7 +23,8 @@ public class Account extends BaseTimeEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long accountId;
 
-    private String status;
+    @Enumerated(EnumType.STRING)
+    private Status status;
 
     @Column(nullable = false, unique = true)
     private String email;
@@ -42,9 +46,6 @@ public class Account extends BaseTimeEntity {
     @Column(nullable = false, unique = true)
     private String studentId;
 
-    @Lob
-    @Basic(fetch = FetchType.EAGER)
-    @Column(nullable = true)
     private String profileImageUrl;
 
     private String oAuth;
@@ -62,9 +63,10 @@ public class Account extends BaseTimeEntity {
 
     public void changeNickname(String nickname) { this.nickname = nickname; }
 
-    public static Account createAccount(SignupDto dto) {
+    public static Account createAccount(SignupReq dto) {
         return Account.builder()
                 .studentId(dto.getStudentId())
+                .status(VALID)
                 .nickname(dto.getNickname())
                 .email(dto.getEmail())
                 .role(RoleType.ROLE_USER)

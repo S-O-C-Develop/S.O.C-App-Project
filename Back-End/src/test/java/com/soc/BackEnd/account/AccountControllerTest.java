@@ -1,8 +1,8 @@
 package com.soc.backend.account;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.soc.backend.account.dto.LoginDto;
-import com.soc.backend.account.dto.SignupDto;
+import com.soc.backend.account.dto.LoginReq;
+import com.soc.backend.account.dto.SignupReq;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +15,6 @@ import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.transaction.annotation.Transactional;
 
 
-import java.util.Collections;
 import java.util.UUID;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -44,7 +43,7 @@ class AccountControllerTest {
     @Test
     public void signupTest() throws Exception{
         // given
-        SignupDto signupDto = SignupDto.builder()
+        SignupReq signupReq = SignupReq.builder()
                 .studentId("123456789")
                 .nickname("vividswanTest")
                 .password("12345678910")
@@ -53,7 +52,7 @@ class AccountControllerTest {
 
         // when
         final ResultActions perform = mockMvc.perform(post("/api/sign-up")
-                .content(objectMapper.writeValueAsString(signupDto))
+                .content(objectMapper.writeValueAsString(signupReq))
                 .contentType(MediaType.APPLICATION_JSON));
 
         //then
@@ -83,14 +82,14 @@ class AccountControllerTest {
                 .build();
         accountRepository.save(accountEntity);
 
-        LoginDto loginDto = LoginDto.builder()
+        LoginReq loginReq = LoginReq.builder()
                 .studentId(studentId)
                 .password(rawPassword)
                 .build();
 
         //when
         final ResultActions perform = mockMvc.perform(post("/api/sign-in")
-                .content(objectMapper.writeValueAsString(loginDto))
+                .content(objectMapper.writeValueAsString(loginReq))
                 .contentType(MediaType.APPLICATION_JSON));
 
         //then

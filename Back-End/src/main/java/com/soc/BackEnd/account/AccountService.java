@@ -3,7 +3,6 @@ package com.soc.backend.account;
 import com.soc.backend.account.dto.*;
 import com.soc.backend.account.mail.MailService;
 import com.soc.backend.account.mail.MessageData;
-import com.soc.backend.config.response.ResponseService;
 import com.soc.backend.config.response.exception.CustomException;
 import com.soc.backend.config.response.exception.CustomExceptionStatus;
 import com.soc.backend.config.security.CustomUserDetails;
@@ -25,10 +24,11 @@ public class AccountService {
     private final JwtTokenProvider jwtTokenProvider;
     private final MailService mailService;
 
-    public Long signUp(SignupDto dto) {
+    public Long signUp(SignupReq dto) {
 
-        if(accountRepository.findByEmail(dto.getEmail()).isPresent())
+        if(accountRepository.findByEmail(dto.getEmail()).isPresent()){
             throw new CustomException(CustomExceptionStatus.DUPLICATED_EMAIL);
+        }
         if(accountRepository.findByStudentId(dto.getStudentId()).isPresent()){
             throw new CustomException(CustomExceptionStatus.POST_USERS_EXISTS_STUDENTID);
         }
@@ -56,25 +56,24 @@ public class AccountService {
         mailService.sendMessage(messageData);
     }
 
-    public SignInRes signIn(LoginDto dto) {
+    public SignInRes signIn(LoginReq dto) {
 
-        Optional<Account> optionalAccount = accountRepository.findByStudentId(dto.getStudentId());
-        if (!optionalAccount.isPresent()) throw new CustomException(CustomExceptionStatus.FAILED_TO_LOGIN);
-        Account accountEntity = optionalAccount.get();
-        if(!passwordEncoder.matches(dto.getPassword(),accountEntity.getPassword())){
+        Account account = accountRepository.findByStudentId(dto.getStudentId())
+                .orElseThrow(() -> new CustomException(CustomExceptionStatus.FAILED_TO_LOGIN));
+        if(!passwordEncoder.matches(dto.getPassword(),account.getPassword())){
             throw new CustomException(CustomExceptionStatus.FAILED_TO_LOGIN);
         }
 
-        return new SignInRes(accountEntity.getAccountId(), jwtTokenProvider.createToken(accountEntity.getStudentId(),accountEntity.getRole()));
+        return new SignInRes(account.getAccountId(), jwtTokenProvider.createToken(account.getStudentId(),account.getRole()));
 
     }
 
-    public ResponseAccountDto getAccount(CustomUserDetails customUserDetails) {
+    public ResponseAccountRes getAccount(CustomUserDetails customUserDetails) {
         Account account = customUserDetails.getAccount();
-        return new ResponseAccountDto(account);
+        return new ResponseAccountRes(account);
     }
 
-    public void changePwd(PasswordUpdateDto dto, CustomUserDetails customUserDetails) {
+    public void changePwd(PasswordUpdateReq dto, CustomUserDetails customUserDetails) {
         Account accountEntity = customUserDetails.getAccount();
         if(!passwordEncoder.matches(dto.getBeforePassword(),accountEntity.getPassword())){
             throw new CustomException(CustomExceptionStatus.NOT_CORRECT_PASSWORD);
