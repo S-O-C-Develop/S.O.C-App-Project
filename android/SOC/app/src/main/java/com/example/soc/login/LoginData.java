@@ -6,7 +6,7 @@ import com.google.gson.annotations.SerializedName;
         String password;
         @SerializedName("studentId")
         String studentId;
-
+        public LoginData(){}
         public LoginData(String password, String studentId) {
             this.password = password;
             this.studentId = studentId;

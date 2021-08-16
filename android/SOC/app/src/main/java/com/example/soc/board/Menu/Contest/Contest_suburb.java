@@ -74,23 +74,22 @@ public class Contest_suburb extends Fragment {
                             clickUrl.add(element.attr("href"));
 
                         }
-                        for (int i = 0; i < 8; i++) {
-                            System.out.println( "========================" );
-                            System.out.println( listTitle);
-                            System.out.println( listUrl);
-                            System.out.println( clickUrl);
-                            System.out.println( "========================" );
+                        for (int i = 0; i < listTitle.size(); i++) {
+                            System.out.println("========================");
+                            System.out.println(listTitle);
+                            System.out.println(listUrl);
+                            System.out.println(clickUrl);
+                            System.out.println("========================");
                             Contest_suburb_data data = new Contest_suburb_data();
                             String url = listUrl.get(i);
                             int temp = url.lastIndexOf("=");
-                            data.setTitle(listTitle.get(i));
-                            data.setImageUrl("https://www.thinkcontest.com" + url.substring(temp + 1, url.length()));
-                            System.out.println(data.getImageUrl());
-                            data.setClickUrl(clickUrl.get(i));
-                            // 제대로 값이 들어감을 확인
-                            adapter.addItem(data);
-                        }
-                        adapter.notifyDataSetChanged();
+                                data.setTitle(listTitle.get(i));
+                                data.setImageUrl("https://www.thinkcontest.com" + url.substring(temp + 1, url.length()));
+                                data.setClickUrl(clickUrl.get(i));
+                                // 제대로 값이 들어감을 확인
+                                adapter.addItem(data);
+                            }
+                            adapter.notifyDataSetChanged();
                     }
                 });
             } catch (IOException e) {

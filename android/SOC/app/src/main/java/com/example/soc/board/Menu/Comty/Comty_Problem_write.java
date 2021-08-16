@@ -56,9 +56,9 @@ public class Comty_Problem_write extends  AppCompatActivity{
        image1 = (ImageView) findViewById(R.id.img1_write);
        image2 = (ImageView) findViewById(R.id.img2_write);
        image1_del = (ImageButton) findViewById(R.id.delete_image1);
-        image1_del.setVisibility(View.INVISIBLE);
+       image1_del.setVisibility(View.INVISIBLE);
        image2_del = (ImageButton) findViewById(R.id.delete_image2);
-        image2_del.setVisibility(View.INVISIBLE);
+       image2_del.setVisibility(View.INVISIBLE);
         ImageButton imageBtn= (ImageButton) findViewById(R.id.wirte_imgBt);
         ImageButton backbutton = (ImageButton) findViewById(R.id.backbutton_write);
         imageBtn.setOnClickListener(new View.OnClickListener() { //이미지뷰 사진넣기

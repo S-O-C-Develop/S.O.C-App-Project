@@ -41,6 +41,7 @@
             android:textSize="20dp"
            />
         <ListView
+            android:listSelector="#CFCDCD"
             android:id="@+id/gradelist"
             android:layout_marginLeft="10dp"
             android:layout_width="80dp"
@@ -59,6 +60,7 @@
         <ListView
             android:id="@+id/semesterlist"
             android:layout_width="80dp"
+            android:listSelector="#CFCDCD"
             android:layout_toRightOf="@+id/gradelist"
             android:layout_height="150dp"
             android:layout_below="@+id/semester"/>
@@ -74,10 +76,21 @@
             android:textColor="@color/black"
             android:textSize="20dp" />
 
+        <Button
+            android:id="@+id/subjectall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="전체 선택"
+            android:layout_marginLeft="110dp"
+            android:background="@android:color/transparent"
+            android:layout_toRightOf="@+id/subject"
+            />
+
+
         <ListView
             android:id="@+id/subjectlist"
             android:layout_width="wrap_content"
-            android:layout_height="500dp"
+            android:layout_height="400dp"
             android:layout_toRightOf="@+id/semesterlist"
             android:layout_below="@+id/subject"/>
         <Button

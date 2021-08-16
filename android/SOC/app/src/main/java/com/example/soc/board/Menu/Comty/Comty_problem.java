@@ -27,7 +27,6 @@ public class Comty_problem extends Fragment implements View.OnClickListener{
     private FloatingActionButton fabmain, fabedit, fabsearch;
     private Animation fab_open, fab_close, rotate_backward, rotate_forward;
     private Boolean isFabOpen = false;
-    private Object Comty_Problem_write;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -69,6 +68,7 @@ public class Comty_problem extends Fragment implements View.OnClickListener{
 
     //데이터 준비(최종적으로는 동적으로 추가하거나 삭제할 수 있어야 한다. 이 데이터를 어디에 저장할지 정해야 한다.)
     private void prepareData() {
+
     }
 
 

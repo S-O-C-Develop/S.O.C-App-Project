@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -22,6 +23,8 @@ import com.example.soc.login.LoginActivity;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
+import static android.content.ContentValues.TAG;
 
 public class SignUpActivity extends Activity {
     Button btnPrevious, btnNext, btnDoubleCheck;
@@ -169,7 +172,7 @@ public class SignUpActivity extends Activity {
                 String password = Upassword.getText().toString();
                 String email = Uemail.getText().toString() + "@catholic.ac.kr";
                 String studentId = schoolNum.getText().toString();
-                SignUpData signdata = new SignUpData(email,nickname,password, studentId);
+                SignUpData signdata = new SignUpData(email,nickname,password,studentId);
                 ApiService apiService1 = ApiClient.getClient().create(ApiService.class);
                 // APiservice의 apiService를 정의해 자동으로 Json에서 Gson으로 변환할 수 있게 함.
                 Call<SignUpResponse> call = apiService1.userSignup(signdata);
@@ -178,7 +181,7 @@ public class SignUpActivity extends Activity {
                     public void onResponse(Call<SignUpResponse> call, Response<SignUpResponse> response) {
                         if (response.isSuccessful()) {
                             SignUpResponse res = response.body();
-                            if(res.getSuccess() == "true"){
+                            if(res.getIssuccess() == true){
                                 Loginintent();
                             }
                         } else{
@@ -187,7 +190,7 @@ public class SignUpActivity extends Activity {
                     }
                     @Override
                     public void onFailure(Call<SignUpResponse> call, Throwable t) {
-
+                        Log.d(TAG, "Response:" + t.getMessage());
                     }
                 });
                 // LoginData의 data객체를 생성해서 password, studentId 정보를 준비해둔다.

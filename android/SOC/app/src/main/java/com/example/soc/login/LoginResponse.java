@@ -1,55 +1,72 @@
 package com.example.soc.login;
 
-import android.content.Context;
-import android.content.SharedPreferences;
+import com.google.gson.annotations.SerializedName;
 
-public class LoginResponse
-{
-        private int code;
+public class LoginResponse {
 
-        private String data;
 
-        private String success;
+    @SerializedName("result")
+    private Result result;
+    @SerializedName("message")
+    private String message;
+    @SerializedName("code")
+    private int code;
+    @SerializedName("isSuccess")
+    private boolean issuccess;
+    public LoginResponse() {}
 
-        private String message;
+    public Result getResult() {
+        return result;
+    }
 
-        public int getCode ()
-        {
-            return code;
+    public void setResult(Result result) {
+        this.result = result;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public int getCode() {
+        return code;
+    }
+
+    public void setCode(int code) {
+        this.code = code;
+    }
+
+    public boolean getIssuccess() {
+        return issuccess;
+    }
+
+    public void setIssuccess(boolean issuccess) {
+        this.issuccess = issuccess;
+    }
+
+    public static class Result {
+        @SerializedName("jwt")
+        private String jwt;
+        @SerializedName("accountId")
+        private int accountid;
+
+        public String getJwt() {
+            return jwt;
         }
 
-        public void setCode (int code)
-        {
-            this.code = code;
+        public void setJwt(String jwt) {
+            this.jwt = jwt;
         }
 
-        public String getData ()
-        {
-            return data;
+        public int getAccountid() {
+            return accountid;
         }
 
-        public void setData (String data)
-        {
-            this.data = data;
-        }
-
-        public String getSuccess ()
-        {
-            return success;
-        }
-
-        public void setSuccess (String success)
-        {
-            this.success = success;
-        }
-
-        public String getMessage ()
-        {
-            return message;
-        }
-
-        public void setMessage (String message)
-        {
-            this.message = message;
+        public void setAccountid(int accountid) {
+            this.accountid = accountid;
         }
     }
+}

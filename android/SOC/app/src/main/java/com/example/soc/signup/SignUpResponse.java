@@ -1,39 +1,50 @@
 package com.example.soc.signup;
 
-public class SignUpResponse {
+import com.google.gson.annotations.SerializedName;
+
+public class SignUpResponse{
+
+
+    @SerializedName("result")
+    private int result;
+    @SerializedName("message")
+    private String message;
+    @SerializedName("isSuccess")
+    private boolean issuccess;
+    @SerializedName("code")
     private int code;
 
-    private String success;
+    public SignUpResponse() {}
 
-    private String message;
-
-    public int getCode ()
-    {
-        return code;
+    public int getResult() {
+        return result;
     }
 
-    public void setCode (int code)
-    {
-        this.code = code;
+    public void setResult(int result) {
+        this.result = result;
     }
 
-    public String getSuccess ()
-    {
-        return success;
-    }
-
-    public void setSuccess (String success)
-    {
-        this.success = success;
-    }
-
-    public String getMessage ()
-    {
+    public String getMessage() {
         return message;
     }
 
-    public void setMessage (String message)
-    {
+    public void setMessage(String message) {
         this.message = message;
+    }
+
+    public boolean getIssuccess() {
+        return issuccess;
+    }
+
+    public void setIssuccess(boolean issuccess) {
+        this.issuccess = issuccess;
+    }
+
+    public int getCode() {
+        return code;
+    }
+
+    public void setCode(int code) {
+        this.code = code;
     }
 }

@@ -55,7 +55,7 @@ public class LoginActivity extends Activity {
         passwordView = (EditText) findViewById(R.id.password);
         imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
         tokenManager = new TokenManager(getApplicationContext());
-
+        ApiService apiService = ApiClient.getClient().create(ApiService.class);
         //로그인,회원가입,비밀번호 찾기 클릭 이벤트처리
         Button LoginButton = (Button) findViewById(R.id.login);
         Button SignButton = (Button) findViewById(R.id.sign);
@@ -78,12 +78,13 @@ public class LoginActivity extends Activity {
                 startActivity(intent);
             }
         });
+
         LoginButton.setOnClickListener(new OnClickListener() { //로그인버튼 눌렀을 때의 동작
             @Override
             public void onClick(View view) {
         LoginData data = new LoginData(passwordView.getText().toString(),idView.getText().toString());
         // LoginData의 data객체를 생성해서 password, studentId 정보를 준비해둔다.
-        ApiService apiService = ApiClient.getClient().create(ApiService.class);
+
         // APiservice의 apiService를 정의해 자동으로 Json에서 Gson으로 변환할 수 있게 함.
         Call<LoginResponse> call = apiService.userLogin(data);
                     call.enqueue(new Callback<LoginResponse>() {
@@ -91,35 +92,19 @@ public class LoginActivity extends Activity {
                         public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
                             if (response.isSuccessful()) {
                                 LoginResponse res = response.body();
-                                Log.e(TAG, "Response:" + res.getSuccess());
-                                tokenManager.createSession(res.getData()); //Loginresponse의 getData함수를 이용해 토큰을 저장
-                                SharedPreferences pref = getSharedPreferences("PREF", MODE_PRIVATE);
-                                Call<GetLogin> call1 = apiService.getuser(pref.getString("data", ""));
-                                call1.enqueue(new Callback<GetLogin>() {
-                                                  @Override
-                                                  public void onResponse(Call<GetLogin> call, Response<GetLogin> response) {
-                                                      GetLogin res = response.body();
-                                                        tokenManager.autoLogin(res.getMessage());
-                                                        Log.d(TAG, res.getMessage());
-                                                  }
-                                                  @Override
-                                                  public void onFailure(Call<GetLogin> call, Throwable t) {
-
-                                                  }
-                                              });
+                                Log.e(TAG, "Response:" + res.getIssuccess());
+                                tokenManager.createSession(res.getResult().getJwt()); //Loginresponse의 getData함수를 이용해 토큰을 저장
                                 Intent i = new Intent(getApplicationContext(), MainActivity.class);
                                 startActivity(i);
                                 finish();
                             } else{
-                                Intent i = new Intent(getApplicationContext(), MainActivity.class);
-                                startActivity(i);
-                                finish();
+                               showDialog();
                             }
                         }
 
                         @Override
                         public void onFailure(Call<LoginResponse> call, Throwable t) {
-                            Log.d(TAG, "Response:");
+                            Log.d(TAG, "Response:" + t.getMessage());
                         }
                     });
                 }
@@ -133,7 +118,31 @@ public class LoginActivity extends Activity {
                 imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
             }
             });
+
+        SharedPreferences pref = getSharedPreferences("PREF", MODE_PRIVATE);
+        Call<GetLogin> call1 = apiService.getuser(pref.getString("data", ""));
+        call1.enqueue(new Callback<GetLogin>() {
+            @Override
+            public void onResponse(Call<GetLogin> call, Response<GetLogin> response) {
+                if (response.isSuccessful()) {
+                    GetLogin res = response.body();
+                    tokenManager.autoLogin(res.getResult().getNickname());
+                    if(pref.getString("id","") != null){
+                        Intent i = new Intent(getApplicationContext(), MainActivity.class);
+                        startActivity(i);
+                        finish();
+                    }
+                    Log.d(TAG, res.getResult().getNickname());
+                }
+            }
+            @Override
+            public void onFailure(Call<GetLogin> call, Throwable t) {
+                Log.d(TAG, t.getMessage());
+            }
+        });
+
     }
+
     public void showDialog() {
         AlertDialog.Builder msgBuilder = new AlertDialog.Builder(LoginActivity.this)
                 .setTitle("알림")

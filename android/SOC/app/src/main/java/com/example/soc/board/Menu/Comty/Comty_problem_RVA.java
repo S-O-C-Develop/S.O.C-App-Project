@@ -56,7 +56,6 @@ public class Comty_problem_RVA extends RecyclerView.Adapter<Comty_problem_RVA.My
 
     @Override
     public int getItemCount() {
-
         return mDataset.size();
     }
 }

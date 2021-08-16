@@ -1,65 +1,96 @@
 package com.example.soc.login;
 
+import com.google.gson.annotations.SerializedName;
+
 public class GetLogin {
-private String code;
-        private String studentId;
 
-        private String confirm;
-
-        private String createdDate;
-
-        private String[] roles;
-
-        private String nickname;
-
-        private String modifiedDate;
-
-        private String id;
-
-        private String email;
+    @SerializedName("result")
+    private Result result;
+    @SerializedName("message")
     private String message;
-    private String success;
-    public String getCode(){
+    @SerializedName("code")
+    private int code;
+    @SerializedName("isSuccess")
+    private boolean issuccess;
+
+    public Result getResult() {
+        return result;
+    }
+
+    public void setResult(Result result) {
+        this.result = result;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public int getCode() {
         return code;
     }
 
-    public String getMessage(){
-        return message;
+    public void setCode(int code) {
+        this.code = code;
     }
-    public String success(){
 
-        return  success;
+    public boolean getIssuccess() {
+        return issuccess;
     }
-        public String getStudentId() {
-            return studentId;
-        }
 
-        public void setStudentId(String studentId) {
-            this.studentId = studentId;
-        }
+    public void setIssuccess(boolean issuccess) {
+        this.issuccess = issuccess;
+    }
 
-        public String getConfirm() {
+    public static class Result {
+        @SerializedName("confirm")
+        private boolean confirm;
+        @SerializedName("createdDate")
+        private String createddate;
+        @SerializedName("roles")
+        private String roles;
+        @SerializedName("email")
+        private String email;
+        @SerializedName("nickname")
+        private String nickname;
+        @SerializedName("studentId")
+        private String studentid;
+        @SerializedName("id")
+        private int id;
+
+        public boolean getConfirm() {
             return confirm;
         }
 
-        public void setConfirm(String confirm) {
+        public void setConfirm(boolean confirm) {
             this.confirm = confirm;
         }
 
-        public String getCreatedDate() {
-            return createdDate;
+        public String getCreateddate() {
+            return createddate;
         }
 
-        public void setCreatedDate(String createdDate) {
-            this.createdDate = createdDate;
+        public void setCreateddate(String createddate) {
+            this.createddate = createddate;
         }
 
-        public String[] getRoles() {
+        public String getRoles() {
             return roles;
         }
 
-        public void setRoles(String[] roles) {
+        public void setRoles(String roles) {
             this.roles = roles;
+        }
+
+        public String getEmail() {
+            return email;
+        }
+
+        public void setEmail(String email) {
+            this.email = email;
         }
 
         public String getNickname() {
@@ -70,27 +101,20 @@ private String code;
             this.nickname = nickname;
         }
 
-        public String getModifiedDate() {
-            return modifiedDate;
+        public String getStudentid() {
+            return studentid;
         }
 
-        public void setModifiedDate(String modifiedDate) {
-            this.modifiedDate = modifiedDate;
+        public void setStudentid(String studentid) {
+            this.studentid = studentid;
         }
 
-        public String getId() {
+        public int getId() {
             return id;
         }
 
-        public void setId(String id) {
+        public void setId(int id) {
             this.id = id;
         }
-
-        public String getEmail() {
-            return email;
-        }
-
-        public void setEmail(String email) {
-            this.email = email;
-        }
     }
+}

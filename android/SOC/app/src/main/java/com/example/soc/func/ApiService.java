@@ -16,7 +16,7 @@ public interface ApiService {
     @POST("sign-in")
     Call<LoginResponse> userLogin(@Body LoginData logindata);
     @GET("get-account")
-    Call<GetLogin> getuser(@Header("X-AUTH-TOKEN") String auth);
+    Call<GetLogin> getuser(@Header("X-ACCESS-TOKEN") String auth);
     @POST("sign-up")
     Call<SignUpResponse> userSignup(@Body SignUpData signupdata);
 }
