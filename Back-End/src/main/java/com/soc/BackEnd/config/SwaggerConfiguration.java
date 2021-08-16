@@ -2,6 +2,8 @@ package com.soc.backend.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.validation.Errors;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
@@ -19,6 +21,8 @@ public class SwaggerConfiguration {
                 .apis(RequestHandlerSelectors.basePackage("com.soc.backend"))
                 .paths(PathSelectors.any())
                 .build()
+                .host("prod.soc-project.site")
+                .ignoredParameterTypes(AuthenticationPrincipal.class, Errors.class)
                 .useDefaultResponseMessages(false);
     }
 

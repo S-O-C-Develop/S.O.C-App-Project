@@ -1,6 +1,7 @@
 package com.soc.backend.board.entity;
 
 import com.soc.backend.account.Account;
+import com.soc.backend.config.enums.Status;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -20,7 +21,7 @@ public class Ripple {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long rippleId;
 
-    private String status;
+    private Status status;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "accountId")
@@ -34,10 +35,10 @@ public class Ripple {
     private String contents;
 
     @Column(nullable = false)
-    private Long likeCount = 0L;
+    private Long likeCount;
 
     @Column(nullable = false)
-    private Boolean isNested = false;
+    private Boolean isNested;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "parentRippleId")

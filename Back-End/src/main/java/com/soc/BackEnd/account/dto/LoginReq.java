@@ -7,18 +7,20 @@ import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
 
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class PasswordUpdateDto {
+public class LoginReq {
+    @NotBlank
+    @Length(min=9,max=9)
+    @Pattern(regexp = "^[0-9]{3,20}$")
+    private String studentId;
 
     @NotBlank
-    @Length(min = 8, max = 50)
-    private String beforePassword;
+    @Length(min=8, max= 50)
+    private String password;
 
-    @NotBlank
-    @Length(min = 8, max = 50)
-    private String updatePassword;
 }

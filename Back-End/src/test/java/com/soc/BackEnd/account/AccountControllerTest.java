@@ -1,8 +1,8 @@
 package com.soc.backend.account;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.soc.backend.account.dto.LoginDto;
-import com.soc.backend.account.dto.SignupDto;
+import com.soc.backend.account.dto.LoginReq;
+import com.soc.backend.account.dto.SignupReq;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +15,6 @@ import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.transaction.annotation.Transactional;
 
 
-import java.util.Collections;
 import java.util.UUID;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -44,23 +43,24 @@ class AccountControllerTest {
     @Test
     public void signupTest() throws Exception{
         // given
-        SignupDto signupDto = SignupDto.builder()
+        SignupReq signupReq = SignupReq.builder()
                 .studentId("123456789")
-                .nickname("vividswan")
+                .nickname("vividswanTest")
                 .password("12345678910")
-                .email("vividswan@naver.com")
+                .email("vividswanTest@naver.com")
                 .build();
 
         // when
         final ResultActions perform = mockMvc.perform(post("/api/sign-up")
-                .content(objectMapper.writeValueAsString(signupDto))
+                .content(objectMapper.writeValueAsString(signupReq))
                 .contentType(MediaType.APPLICATION_JSON));
 
         //then
         perform.andExpect(status().isOk())
-                .andExpect(jsonPath("$.message").value("Success"))
-                .andExpect(jsonPath("$.code").value(0))
-                .andExpect(jsonPath("$.success").value(true));
+                .andExpect(jsonPath("$.message").value("요청에 성공하였습니다."))
+                .andExpect(jsonPath("$.code").value(1000))
+                .andExpect(jsonPath("$.isSuccess").value(true))
+                .andExpect(jsonPath("$.result").exists());
 
     }
 
@@ -77,26 +77,26 @@ class AccountControllerTest {
                 .email("test@test.com")
                 .password(passwordEncoder.encode(rawPassword))
                 .isConfirm(false)
-                .roles(Collections.singletonList(RoleType.ROLE_USER))
+                .role(RoleType.ROLE_USER)
                 .emailToken(UUID.randomUUID().toString())
                 .build();
         accountRepository.save(accountEntity);
 
-        LoginDto loginDto = LoginDto.builder()
+        LoginReq loginReq = LoginReq.builder()
                 .studentId(studentId)
                 .password(rawPassword)
                 .build();
 
         //when
         final ResultActions perform = mockMvc.perform(post("/api/sign-in")
-                .content(objectMapper.writeValueAsString(loginDto))
+                .content(objectMapper.writeValueAsString(loginReq))
                 .contentType(MediaType.APPLICATION_JSON));
 
         //then
         perform.andExpect(status().isOk())
-                .andExpect(jsonPath("$.message").value("Success"))
-                .andExpect(jsonPath("$.code").value(0))
-                .andExpect(jsonPath("$.success").value(true))
-                .andExpect(jsonPath("$.data").exists());
+                .andExpect(jsonPath("$.message").value("요청에 성공하였습니다."))
+                .andExpect(jsonPath("$.code").value(1000))
+                .andExpect(jsonPath("$.isSuccess").value(true))
+                .andExpect(jsonPath("$.result").exists());
     }
 }

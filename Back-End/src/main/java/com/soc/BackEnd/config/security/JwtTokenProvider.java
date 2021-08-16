@@ -1,10 +1,8 @@
 package com.soc.backend.config.security;
 
 import com.soc.backend.account.RoleType;
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jws;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import com.soc.backend.config.response.exception.CustomExceptionStatus;
+import io.jsonwebtoken.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -17,7 +15,6 @@ import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Base64;
 import java.util.Date;
-import java.util.List;
 
 @RequiredArgsConstructor
 @Component
@@ -25,19 +22,19 @@ public class JwtTokenProvider {
 
     private final UserDetailsService userDetailsService;
 
-    @Value("jwt.secret")
+    @Value("${jwt.secret}")
     private String secretKey;
 
-    private long tokenValidity = 60 * 60 * 1000L;
+    private long tokenValidity = 30 * 24 * 60 * 60 * 1000L;
 
     @PostConstruct
     protected void init(){
         secretKey = Base64.getEncoder().encodeToString(secretKey.getBytes());
     }
 
-    public String createToken(String studentId, List<RoleType> roles){
+    public String createToken(String studentId, RoleType role){
         Claims claims = Jwts.claims().setSubject(studentId);
-        claims.put("roles",roles);
+        claims.put("role",role);
         Date now = new Date();
         return Jwts.builder()
                 .setClaims(claims)
@@ -57,16 +54,20 @@ public class JwtTokenProvider {
     }
 
     public String resolveToken(HttpServletRequest req){
-        return req.getHeader("X-AUTH-TOKEN");
+        return req.getHeader("X-ACCESS-TOKEN");
     }
 
-    public boolean validateToken(String jwtToken){
-        try{
+    public boolean validateToken(String jwtToken, HttpServletRequest req) {
+        try {
+            if (jwtToken.isEmpty()) throw new JwtException("empty jwtToken");
             Jws<Claims> claimsJws = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(jwtToken);
             return !claimsJws.getBody().getExpiration().before(new Date());
-        }catch (Exception e){
+        } catch (JwtException e) {
+            if (jwtToken.isEmpty()) {
+                req.setAttribute("exception", CustomExceptionStatus.EMPTY_JWT.getMessage());
+            }
+            else req.setAttribute("exception", CustomExceptionStatus.INVALID_JWT.getMessage());
             return false;
         }
     }
-
 }

@@ -1,25 +1,18 @@
 package com.soc.backend.account;
 
-import com.soc.backend.account.dto.LoginDto;
-import com.soc.backend.account.dto.PasswordUpdateDto;
-import com.soc.backend.account.dto.ResponseAccountDto;
-import com.soc.backend.account.dto.SignupDto;
+import com.soc.backend.account.dto.*;
 import com.soc.backend.account.mail.MailService;
 import com.soc.backend.account.mail.MessageData;
-import com.soc.backend.api.CommonResponse;
-import com.soc.backend.api.ResponseService;
-import com.soc.backend.api.SingleResponse;
-import com.soc.backend.config.advice.exception.CustomException;
-import com.soc.backend.config.advice.exception.CustomExceptionStatus;
+import com.soc.backend.config.response.exception.CustomException;
+import com.soc.backend.config.response.exception.CustomExceptionStatus;
+import com.soc.backend.config.security.CustomUserDetails;
 import com.soc.backend.config.security.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.Collections;
 import java.util.Optional;
-import java.util.UUID;
 
 @RequiredArgsConstructor
 @Transactional
@@ -27,39 +20,31 @@ import java.util.UUID;
 public class AccountService {
 
     private final AccountRepository accountRepository;
-    private final ResponseService responseService;
     private final PasswordEncoder passwordEncoder;
     private final JwtTokenProvider jwtTokenProvider;
     private final MailService mailService;
 
-    public CommonResponse signUp(SignupDto dto) {
+    public Long signUp(SignupReq dto) {
 
         if(accountRepository.findByEmail(dto.getEmail()).isPresent()){
-            throw new CustomException(CustomExceptionStatus.EMAIL_DUPLICATION);
+            throw new CustomException(CustomExceptionStatus.DUPLICATED_EMAIL);
         }
         if(accountRepository.findByStudentId(dto.getStudentId()).isPresent()){
-            throw new CustomException(CustomExceptionStatus.STUDENT_ID_DUPLICATE);
+            throw new CustomException(CustomExceptionStatus.POST_USERS_EXISTS_STUDENTID);
         }
         if(accountRepository.findByNickname(dto.getStudentId()).isPresent()){
-            throw new CustomException(CustomExceptionStatus.NICKNAME_DUPLICATION);
+            throw new CustomException(CustomExceptionStatus.DUPLICATED_NICKNAME);
         }
 
 
-        Account account = Account.builder()
-                .studentId(dto.getStudentId())
-                .nickname(dto.getNickname())
-                .password(passwordEncoder.encode(dto.getPassword()))
-                .email(dto.getEmail())
-                .roles(Collections.singletonList(RoleType.ROLE_USER))
-                .isConfirm(false)
-                .emailToken(UUID.randomUUID().toString())
-                .build();
+        Account account = Account.createAccount(dto);
+        account.changePassword(passwordEncoder.encode(dto.getPassword()));
 
-        accountRepository.save(account);
+        Account save = accountRepository.save(account);
 
         sendEmailToAccount(account);
 
-        return responseService.getSuccessResponse();
+        return save.getAccountId();
     }
 
     private void sendEmailToAccount(Account account) {
@@ -71,54 +56,40 @@ public class AccountService {
         mailService.sendMessage(messageData);
     }
 
-    public SingleResponse<String> signIn(LoginDto dto) {
+    public SignInRes signIn(LoginReq dto) {
 
-        Optional<Account> optionalAccount = accountRepository.findByStudentId(dto.getStudentId());
-        if (!optionalAccount.isPresent()) throw new CustomException(CustomExceptionStatus.ACCOUNT_NOT_FOUND);
-        Account accountEntity = optionalAccount.get();
-        if(!passwordEncoder.matches(dto.getPassword(),accountEntity.getPassword())){
-            throw new CustomException(CustomExceptionStatus.PASSWORD_NOT_CORRECT);
+        Account account = accountRepository.findByStudentId(dto.getStudentId())
+                .orElseThrow(() -> new CustomException(CustomExceptionStatus.FAILED_TO_LOGIN));
+        if(!passwordEncoder.matches(dto.getPassword(),account.getPassword())){
+            throw new CustomException(CustomExceptionStatus.FAILED_TO_LOGIN);
         }
 
-        return responseService.getSingleResponse(jwtTokenProvider.createToken(accountEntity.getStudentId(),accountEntity.getRoles()));
-
+        return new SignInRes(account.getAccountId(), jwtTokenProvider.createToken(account.getStudentId(),account.getRole()));
 
     }
 
-    public SingleResponse<ResponseAccountDto> getAccount(String studentId) {
-        Optional<Account> optionalAccount = accountRepository.findByStudentId(studentId);
-        if (!optionalAccount.isPresent()) {
-            throw new CustomException(CustomExceptionStatus.ACCOUNT_NOT_FOUND);
-        }
-        return responseService.getSingleResponse(new ResponseAccountDto(optionalAccount.get()));
+    public ResponseAccountRes getAccount(CustomUserDetails customUserDetails) {
+        Account account = customUserDetails.getAccount();
+        return new ResponseAccountRes(account);
     }
 
-    public SingleResponse<String> changePwd(PasswordUpdateDto dto, String userName) {
-        Optional<Account> optionalAccount = accountRepository.findByStudentId(userName);
-        if (!optionalAccount.isPresent()) {
-            throw new CustomException(CustomExceptionStatus.ACCOUNT_NOT_FOUND);
-        }
-        Account accountEntity = optionalAccount.get();
+    public void changePwd(PasswordUpdateReq dto, CustomUserDetails customUserDetails) {
+        Account accountEntity = customUserDetails.getAccount();
         if(!passwordEncoder.matches(dto.getBeforePassword(),accountEntity.getPassword())){
-            throw new CustomException(CustomExceptionStatus.PASSWORD_NOT_CORRECT);
+            throw new CustomException(CustomExceptionStatus.NOT_CORRECT_PASSWORD);
         }
         accountEntity.changePassword(passwordEncoder.encode(dto.getUpdatePassword()));
-        return responseService.getSingleResponse("비밀번호 변경 완료");
     }
 
-    public SingleResponse<String> changeNickname(String updateNickname, String userName) {
-        Optional<Account> optionalAccount = accountRepository.findByStudentId(userName);
-        if (!optionalAccount.isPresent()) throw new CustomException(CustomExceptionStatus.ACCOUNT_NOT_FOUND);
-        Account accountEntity = optionalAccount.get();
+    public void changeNickname(String updateNickname, CustomUserDetails customUserDetails) {
+        Account account = customUserDetails.getAccount();
         if(updateNickname.length() <8 || updateNickname.length() > 20)
-            throw new CustomException(CustomExceptionStatus.NICKNAME_VALIDATION_ERROR);
+            throw new CustomException(CustomExceptionStatus.POST_USERS_INVALID_NICKNAME);
 
-        if (!updateNickname.equals(accountEntity.getNickname())){
-            if(accountRepository.findByNickname(updateNickname).isPresent()) throw new CustomException(CustomExceptionStatus.NICKNAME_DUPLICATION_SELF);;
-            accountEntity.changeNickname(updateNickname);
+        if (!updateNickname.equals(account.getNickname())){
+            if(accountRepository.findByNickname(updateNickname).isPresent()) throw new CustomException(CustomExceptionStatus.DUPLICATED_NICKNAME);
+            account.changeNickname(updateNickname);
         }
-        else if(accountRepository.findByNickname(updateNickname).isPresent()) throw new CustomException(CustomExceptionStatus.NICKNAME_DUPLICATION);
-
-        return responseService.getSingleResponse("nickname 변경 완료");
+        else throw new CustomException(CustomExceptionStatus.DUPLICATED_NICKNAME_SELF);
     }
 }

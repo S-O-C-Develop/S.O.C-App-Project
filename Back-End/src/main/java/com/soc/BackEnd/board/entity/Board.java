@@ -1,6 +1,8 @@
 package com.soc.backend.board.entity;
 
 import com.soc.backend.account.Account;
+import com.soc.backend.board.dto.PostBoardReq;
+import com.soc.backend.config.enums.Status;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -8,19 +10,20 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
+import static com.soc.backend.config.enums.Status.*;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 @Getter
 @Entity
-public class
-
-Board {
+public class Board {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long boardId;
 
-    private String status;
+    @Enumerated(EnumType.STRING)
+    private Status status;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "accountId")
@@ -40,5 +43,19 @@ Board {
     Integer semester;
 
     String subject;
+
+    public static Board createBoard(Account account, PostBoardReq postBoardReq) {
+        Board board = Board.builder()
+                .account(account)
+                .status(VALID)
+                .category(postBoardReq.getCategory())
+                .korName(postBoardReq.getKorName())
+                .engName(postBoardReq.getEngName())
+                .grade(postBoardReq.getGrade())
+                .semester(postBoardReq.getSemester())
+                .subject(postBoardReq.getSubject())
+                .build();
+        return board;
+    }
 
 }
