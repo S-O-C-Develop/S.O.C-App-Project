@@ -36,6 +36,11 @@
 - Swift Ui 2.0
 - Xcode 12.5.1
 
+### Android
+- Android Studio 4.1
+- Java8
+- SDK platform(Android 10.0)
+
 ## Usage
 
 
