@@ -39,4 +39,13 @@ public class PostService {
         Post save = postRepository.save(Post.createPost(req, board, account));
         return save.getPostId();
     }
+
+
+    public Long updatePostByAccount(CustomUserDetails customUserDetails, CreatePostReq req, Long postId) {
+        Account account = customUserDetails.getAccount();
+        Post post = postRepository.findById(postId)
+                .orElseThrow(() -> new CustomException(CustomExceptionStatus.NOT_EXIST_POST));
+        post.updatePost(req);
+        return post.getPostId();
+    }
 }

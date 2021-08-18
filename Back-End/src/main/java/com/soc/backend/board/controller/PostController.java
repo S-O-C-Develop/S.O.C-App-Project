@@ -43,5 +43,16 @@ public class PostController {
         return responseService.getDataResponse(postId);
     }
 
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "X-ACCESS-TOKEN", value = "로그인 성공 후 토큰", required = false, dataType = "String", paramType = "header")
+    })
+    @ApiOperation(value = "게시글 수정 API", notes = "게시글 작성자가 게시글 수정")
+    @PatchMapping("/posts/{postId}")
+    public DataResponse<Long> updatePostByAccount(@AuthenticationPrincipal CustomUserDetails customUserDetails,
+                                                  @ApiParam(value = "게시판 수정 객체", required = true) @Valid @RequestBody CreatePostReq req, @PathVariable(name = "postId") Long postId) {
+        Long updatedPostId = postService.updatePostByAccount(customUserDetails, req, postId);
+        return responseService.getDataResponse(updatedPostId);
+    }
+
 
 }

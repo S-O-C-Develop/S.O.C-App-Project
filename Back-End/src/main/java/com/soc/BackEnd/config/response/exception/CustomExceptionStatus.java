@@ -55,9 +55,12 @@ public enum CustomExceptionStatus {
     FAILED_TO_LOGIN(false,3016,"등록되지 않은 학번이거나 비밀번호가 틀렸습니다."),
     NOT_CORRECT_PASSWORD(false,3017,"비밀번호가 틀렸습니다."),
 
-    // /boards
+    // boards
     EXIST_BOARD(false,3030,"이미 존재하는 게시판입니다."),
     NOT_EXIST_BOARD(false,3031,"게시판이 존재하지 않습니다."),
+
+    // posts
+    NOT_EXIST_POST(false,3032,"게시글이 존재하지 않습니다."),
 
     /**
      * 4000 : Database, Server 오류

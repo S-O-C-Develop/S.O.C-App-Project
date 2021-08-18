@@ -59,4 +59,11 @@ public class Post {
                 .build();
     }
 
+    public void updatePost(CreatePostReq req) {
+        this.title = req.getTitle();
+        this.contents = req.getContents();
+        this.firstImageUrl = req.getFirstImageUrl();
+        this.secondImageUrl = req.getSecondImageUrl();
+    }
+
 }
