@@ -21,7 +21,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.util.ArrayList;
 
 public class Comty_problem extends Fragment implements View.OnClickListener{
-    private ArrayList<Compty_problem_Response> List = new ArrayList<>();
+    private ArrayList<Compty_problem_write_Response> List = new ArrayList<>();
     private RecyclerView recyclerView;
     private Comty_problem_RVA mAdapter;
     private FloatingActionButton fabmain, fabedit, fabsearch;
@@ -63,12 +63,10 @@ public class Comty_problem extends Fragment implements View.OnClickListener{
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         prepareData();
-
     }
 
     //데이터 준비(최종적으로는 동적으로 추가하거나 삭제할 수 있어야 한다. 이 데이터를 어디에 저장할지 정해야 한다.)
     private void prepareData() {
-
     }
 
 

@@ -1,7 +1,5 @@
 package com.example.soc.board.Menu.Comty;
 
-import android.content.Context;
-import android.provider.ContactsContract;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,10 +12,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.soc.R;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class Comty_problem_RVA extends RecyclerView.Adapter<Comty_problem_RVA.MyViewHolder> {
-    private final ArrayList<Compty_problem_Response> mDataset;
+    private final ArrayList<Compty_problem_write_Response> mDataset;
     public class MyViewHolder extends RecyclerView.ViewHolder {
         public TextView time, content, nickname, reply;
         public ImageView image1, image2;
@@ -32,7 +29,7 @@ public class Comty_problem_RVA extends RecyclerView.Adapter<Comty_problem_RVA.My
         }
     }
 
-    public Comty_problem_RVA(ArrayList<Compty_problem_Response> myData){
+    public Comty_problem_RVA(ArrayList<Compty_problem_write_Response> myData){
         this.mDataset = myData;
     }
 
@@ -47,10 +44,7 @@ public class Comty_problem_RVA extends RecyclerView.Adapter<Comty_problem_RVA.My
 
     @Override
     public void onBindViewHolder(@NonNull Comty_problem_RVA.MyViewHolder holder, int position) {
-        holder.nickname.setText(mDataset.get(position).getNickname());
-        holder.time.setText(mDataset.get(position).getTime());
-        holder.reply.setText(mDataset.get(position).getReply());
-        holder.content.setText(mDataset.get(position).getContent());
+
 
     }
 

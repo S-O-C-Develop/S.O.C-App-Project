@@ -5,6 +5,7 @@ import android.content.ClipData;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,6 +16,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -22,9 +24,18 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.example.soc.R;
+import com.example.soc.func.ApiClient;
+import com.example.soc.func.ApiService;
 import com.gun0912.tedpermission.PermissionListener;
 import com.gun0912.tedpermission.TedPermission;
+
 import java.util.ArrayList;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
+import static android.content.ContentValues.TAG;
 
 
 public class Comty_Problem_write extends  AppCompatActivity{
@@ -32,15 +43,23 @@ public class Comty_Problem_write extends  AppCompatActivity{
     private ImageView image1;
     private ImageView image2;
     private ImageButton image1_del, image2_del;
-    private TextView nickname,content,time;
+    private TextView nickname,time;
+    private EditText title,content;
     private Spinner gradeSpinner, semesterSpinner, subjectSpinner;
     private ArrayAdapter<String> arrayAdapter;
+    String image1_1,image2_2, image11, grade, semester;
+    int gr, se, boardid;
+    Compty_problem_write_Data problemData;
     public static final String EXTRA_ADDRESS = "address";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_comty__problem_write);
 
+        title = (EditText) findViewById(R.id.title_pro);
+        content = (EditText) findViewById(R.id.content_et);
+        nickname = (TextView) findViewById(R.id.pro_nickname);
+        time = (TextView) findViewById(R.id.pro_time);
         //스피너
         gradeSpinner = (Spinner) findViewById(R.id.spinner1);
         arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, (String[]) getResources().getStringArray(R.array.grade)); //스피너를 위한 배열 어댑터 선언
@@ -48,6 +67,8 @@ public class Comty_Problem_write extends  AppCompatActivity{
         gradeSpinner.setAdapter(arrayAdapter);
         semesterSpinner = (Spinner) findViewById(R.id.spinner2);
         subjectSpinner = (Spinner) findViewById(R.id.spinner3);
+          grade = (String) gradeSpinner.getSelectedItem();
+          semester = (String) semesterSpinner.getSelectedItem();
         initAddressSpinner();
 
         //이미지뷰
@@ -70,16 +91,84 @@ public class Comty_Problem_write extends  AppCompatActivity{
                 startActivityForResult(intent,PICK_FROM_ALBUM);
             }
         });
-
+        SharedPreferences pref = getSharedPreferences("PREF", MODE_PRIVATE);
         //글쓰기 등록버튼
         Button reg_button = (Button) findViewById(R.id.reg_button);
         reg_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DialogClick(v);
+                if(grade == "1학년") {
+                    gr = 1;
+                }
+                else if(grade == "2학년") {
+                    gr = 2;
+                }
+                else if(grade == "3학년") {
+                    gr = 3;
+                }
+                else if(grade == "4학년") {
+                    gr = 4;
+                }
+                if(semester == "1학기") {
+                    se = 1;
+                }
+                else if(semester == "2학기") {
+                    se = 2;
+                }
+                ApiService apiService1 = ApiClient.getClient().create(ApiService.class);
+                Compty_problem_write_condition_Data conditiondata = new Compty_problem_write_condition_Data("커뮤니티","a", gr,"a",se,"프로그래밍및실습1");
+                Call<Compty_condition_Response> call2 = apiService1.Boardinfo(pref.getString("data", ""), conditiondata);
+                call2.enqueue(new Callback<Compty_condition_Response>() {
+                    @Override
+                    public void onResponse(Call<Compty_condition_Response> call2, Response<Compty_condition_Response> response) {
+                        if (response.isSuccessful()) {
+                            Compty_condition_Response res = response.body();
+                            System.out.print(res.getMessage());
+                            boardid = res.getResult();
+                            if (image2 == null) {
+                                problemData = new Compty_problem_write_Data(boardid, content.getText().toString(), image11, title.getText().toString());
+                            } else if (image2 != null) {
+                                problemData = new Compty_problem_write_Data(boardid, content.getText().toString(), image1_1, image2_2, title.getText().toString());
+                            } else if (image1 == null) {
+                                problemData = new Compty_problem_write_Data(boardid, content.getText().toString(), image2_2, title.getText().toString());
+                            } else if (image1 == null && image2 == null) {
+                                problemData = new Compty_problem_write_Data(boardid, content.getText().toString(), title.getText().toString());
+                            }
+                            if (content.getText().toString() == null || title.getText().toString() == null) {
+                                Toast.makeText(Comty_Problem_write.this, "토스트 메시지 띄우기 성공~!", Toast.LENGTH_SHORT).show();
+                            } else if (content.getText().toString() != null && title.getText().toString() != null) {
+                                // APiservice의 apiService를 정의해 자동으로 Json에서 Gson으로 변환할 수 있게 함.
+                                Call<Compty_problem_write_Response> call1 = apiService1.writeinfo(pref.getString("data", ""), problemData);
+                                call1.enqueue(new Callback<Compty_problem_write_Response>() {
+                                    @Override
+                                    public void onResponse(Call<Compty_problem_write_Response> call1, Response<Compty_problem_write_Response> response) {
+                                        if (response.isSuccessful()) {
+                                            Compty_problem_write_Response res = response.body();
+                                            Log.d(TAG, res.getMessage());
+                                            DialogClick(v);
+                                        } else {
+                                            Log.d(TAG, response.errorBody().toString());
+                                        }
+                                    }
+                                    @Override
+                                    public void onFailure(Call<Compty_problem_write_Response> call, Throwable t) {
+                                        Log.d(TAG, t.getMessage());
+                                    }
+                                });
+                            }
+                        }
+                        else{
+                            Log.d(TAG, "실패");
+                        }
+                    }
+                    @Override
+                    public void onFailure(Call<Compty_condition_Response> call2, Throwable t) {
+                        Log.d(TAG, t.getMessage());
+                    }
+                });
             }
         });
-
+        
         //뒤로가기 버튼
         backbutton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -221,6 +310,7 @@ public class Comty_Problem_write extends  AppCompatActivity{
              if (clipData.getItemCount() == 1) {
                  Uri urione = clipData.getItemAt(0).getUri();
                  image1.setImageURI(urione);
+                 image11 = urione.toString();
                  image1_del.setVisibility(View.VISIBLE);
                  image1_del.setOnClickListener(new View.OnClickListener() {
                      @Override
@@ -252,9 +342,12 @@ public class Comty_Problem_write extends  AppCompatActivity{
                     switch (i) {
                         case 0:
                             image1.setImageURI(uritwo);
+                            image1_1 = uritwo.toString();
                             break;
                         case 1:
                             image2.setImageURI(uritwo);
+                            image2_2 = uritwo.toString();
+                            break;
                     }
                 }
             }
