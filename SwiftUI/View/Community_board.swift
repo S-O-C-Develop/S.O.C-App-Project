@@ -9,44 +9,44 @@ import SwiftUI
 
 struct Community_board: View {
     
-    
+    @State var posts: [PostContent] = []
     @Namespace var animationID
     @State var currentTab = "문제"
     @State var show = false
     
-    @StateObject var viewModel = PostViewModel()
+    @ObservedObject var viewModel = PostViewModel()
     
     var body: some View {
         
-        ZStack(alignment: .bottomTrailing) {
+        ZStack(alignment: .bottomTrailing){
+            
             NavigationView{
                 VStack{
                     TopBarView(title: "커뮤니티")
-
+                    
                     ScrollView(.vertical, showsIndicators: false) {
                         LazyVStack{
-                            ForEach(viewModel.postings){ posting in
-                                // posting Card View...
+                            ForEach(posts){ post in
                                 NavigationLink(destination: PasswordFindView()){
-                                    PostingCardView(posting: posting)
+                                    PostingCardView(posting: post)
                                         .accentColor(.black)
                                 }
-                                .padding()
-
                                 Divider()
-                            
                             }
                         }
                         .padding()
-                        .navigationBarHidden(true)
-                        
+                    }
+                    .navigationBarHidden(true)
+                    .onAppear {
+                        viewModel.boardsPosting() { (posts) in
+                            self.posts = posts
+                        }
                     }
                 }
             }
-            PopOverMenuView()
+            FloatingButtonView()
                 .padding()
-           
-        }.background(Color.black.opacity(0.1).edgesIgnoringSafeArea(.all))
+        }
     }
 }
 
