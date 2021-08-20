@@ -53,9 +53,9 @@ public class Account extends BaseTimeEntity {
     @Enumerated(EnumType.STRING)
     private RoleType role;
 
-    public void changeConfirm(){
-        this.isConfirm = true;
-    }
+    private Integer smsAuthToken;
+
+    private boolean isSmsCertified;
 
     public void changePassword(String password){
         this.password = password;
@@ -72,6 +72,16 @@ public class Account extends BaseTimeEntity {
                 .role(RoleType.ROLE_USER)
                 .isConfirm(false)
                 .emailToken(UUID.randomUUID().toString())
+                .isSmsCertified(false)
                 .build();
+    }
+
+    public void createTokenToPhoneNumber(Integer smsAuthToken, String phoneNumber) {
+        this.smsAuthToken = smsAuthToken;
+        this.phoneNumber = phoneNumber;
+    }
+
+    public void certifySmsAuth() {
+        this.isSmsCertified = true;
     }
 }
