@@ -54,6 +54,9 @@ public enum CustomExceptionStatus {
     DUPLICATED_NICKNAME_SELF(false, 3015, "원래의 닉네임과 중복됩니다."),
     FAILED_TO_LOGIN(false,3016,"등록되지 않은 학번이거나 비밀번호가 틀렸습니다."),
     NOT_CORRECT_PASSWORD(false,3017,"비밀번호가 틀렸습니다."),
+    ALREADY_CERTIFICATION_ACCOUNT(false,3018,"이미 인증된 유저입니다."),
+    FAILED_TO_RECEPTION(false,3019,"유효한 수신 번호가 아닙니다."),
+    FAILED_TO_CERTIFICATION(false,3020,"유효한 토큰 값이 아닙니다."),
 
     // boards
     EXIST_BOARD(false,3030,"이미 존재하는 게시판입니다."),

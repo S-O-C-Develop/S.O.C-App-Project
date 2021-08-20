@@ -1,6 +1,9 @@
 package com.soc.backend.account;
 
 import com.soc.backend.account.dto.*;
+import com.soc.backend.account.sms.PhoneNumberDto;
+import com.soc.backend.account.sms.SmsAuthService;
+import com.soc.backend.account.sms.TokenDto;
 import com.soc.backend.config.response.CommonResponse;
 import com.soc.backend.config.response.DataResponse;
 import com.soc.backend.config.response.ResponseService;
@@ -23,6 +26,7 @@ public class AccountController {
 
     private final AccountService accountService;
     private final ResponseService responseService;
+    private final SmsAuthService smsAuthService;
 
     @ApiOperation(value = "회원 가입 API", notes = "학번, 닉네임,비밀번호, 이메일 전송")
     @PostMapping(value = "/sign-up")
@@ -66,6 +70,20 @@ public class AccountController {
     public CommonResponse changeNickname(@ApiParam(value = "변경 될 닉네임", required = true) @RequestParam String updateNickname,
                                                @AuthenticationPrincipal CustomUserDetails customUserDetails){
         accountService.changeNickname(updateNickname, customUserDetails);
+        return responseService.getSuccessResponse();
+    }
+
+    @PatchMapping(value = "/accounts/sms-token")
+    public DataResponse<Integer> updateAccountSmsToken(@AuthenticationPrincipal CustomUserDetails customUserDetails,
+                                                       @RequestBody PhoneNumberDto phoneNumberDto) {
+        Integer token = smsAuthService.updateAccountSmsToken(customUserDetails, phoneNumberDto.getPhoneNumber());
+        return responseService.getDataResponse(token);
+    }
+
+    @PatchMapping(value = "/accounts/sms-certification")
+    public CommonResponse updateAccountSmsCertification(@AuthenticationPrincipal CustomUserDetails customUserDetails,
+                                                        @RequestBody TokenDto tokenDto) {
+        smsAuthService.updateAccountSmsCertification(customUserDetails, tokenDto.getSmsToken());
         return responseService.getSuccessResponse();
     }
 
