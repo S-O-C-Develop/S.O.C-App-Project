@@ -6,16 +6,48 @@
 //
 
 import SwiftUI
+import Alamofire
+import Foundation
+import Combine
 
 class PostViewModel: ObservableObject {
-    
-    @Published var postings: [PostModel] = [
-    
-//        PostModel(contents: "Genesis2010", timing: Date()),
-//        PostModel(contents: "catholic", timing: Date()),
-        
-        PostModel(id: "Genesis2010", contents: "안녕하세요 개발자입니다", timing: "5분전", comment_cnt: "댓글 수 : 2"),
-        PostModel(id: "SOC_people", contents: "안녕하세요 SOC 회원입니다", timing: "3분전", comment_cnt: "댓글 수 : 25")
-    ]
-    
+
+    @Published var boardNumber = "19"
+    @Published var postings = [PostContent]()
+
+
+    //MARK: - 게시글 조회하는 함수
+    func boardsPosting(completion: @escaping ([PostContent]) -> ()) {
+
+        let url = "https://prod.soc-project.site/api/posts/boards/"
+
+        AF.request(url + boardNumber, method: .get, parameters: nil, encoding: URLEncoding.default)
+            .responseJSON(completionHandler: { response in
+                switch response.result {
+                case .success(let jsonData):
+                    print("success")
+
+                    debugPrint(jsonData)
+
+                    do {
+
+                        let json = try JSONSerialization.data(withJSONObject: jsonData, options: .prettyPrinted)
+                        let PostingInData = try JSONDecoder().decode(PostJson.self, from: json)
+
+                        DispatchQueue.main.async {
+                            completion(PostingInData.result.content)
+                        }
+                        
+                    } catch (let err) {
+
+                    }
+
+
+                case .failure(let values):
+                    print("failure")
+
+                    debugPrint(values)
+                }
+            })
+    }
 }
