@@ -1,8 +1,6 @@
 package com.soc.backend.account;
 
 import com.soc.backend.account.dto.*;
-import com.soc.backend.account.mail.MailService;
-import com.soc.backend.account.mail.MessageData;
 import com.soc.backend.config.response.exception.CustomException;
 import com.soc.backend.config.response.exception.CustomExceptionStatus;
 import com.soc.backend.config.security.CustomUserDetails;
@@ -12,7 +10,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.Optional;
 
 @RequiredArgsConstructor
 @Transactional
@@ -22,7 +19,6 @@ public class AccountService {
     private final AccountRepository accountRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtTokenProvider jwtTokenProvider;
-    private final MailService mailService;
 
     public Long signUp(SignupReq dto) {
 
@@ -42,19 +38,10 @@ public class AccountService {
 
         Account save = accountRepository.save(account);
 
-        sendEmailToAccount(account);
 
         return save.getAccountId();
     }
 
-    private void sendEmailToAccount(Account account) {
-        MessageData messageData = MessageData.builder()
-                .to(account.getEmail())
-                .title("S.O.C 회원가입 인증")
-                .content("check-valid-email?emailToken="+ account.getEmailToken()+"&email="+ account.getEmail())
-                .build();
-        mailService.sendMessage(messageData);
-    }
 
     public SignInRes signIn(LoginReq dto) {
 
