@@ -18,7 +18,6 @@ public class ResponseAccountRes {
     private String studentId;
     private String nickname;
     private String email;
-    private boolean isConfirm;
     private RoleType roles;
     private LocalDateTime createdDate;
 
@@ -27,7 +26,6 @@ public class ResponseAccountRes {
         this.studentId = account.getStudentId();
         this.nickname = account.getNickname();
         this.email = account.getEmail();
-        this.isConfirm = account.isConfirm();
         this.roles = account.getRole();
         this.createdDate = account.getCreatedDate();
     }
