@@ -8,36 +8,31 @@
 import SwiftUI
 
 struct PostingCardView: View {
-    var posting : PostModel
+    var posting : PostContent
     
     var body: some View {
         
         VStack(alignment: .leading, spacing: 20){
             
             HStack{
-                Text(posting.id)
+                Text(posting.author)
                     .font(.title3.bold())
                 
                 Spacer()
                 
-                Text(posting.timing)
+                Text(posting.title)
                     .font(.caption)
             }
             
             Text(posting.contents)
                 .font(.title3)
             
-            Text(posting.comment_cnt)
+            Text(String(posting.reportCount))
                 .font(.caption2)
                 .frame(maxWidth: .infinity, alignment: .bottomTrailing)
                 
         }
         .padding()
-        .overlay(
-                    RoundedRectangle(cornerRadius: 12)
-                        .stroke(Color.blue, lineWidth: 1)
-                )
-       
     }
 }
 
