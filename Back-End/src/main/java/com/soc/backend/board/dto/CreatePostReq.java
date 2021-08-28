@@ -1,5 +1,6 @@
 package com.soc.backend.board.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,6 +16,7 @@ import javax.validation.constraints.Pattern;
 @Getter
 public class CreatePostReq {
 
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Long boardId;
 
     @NotBlank

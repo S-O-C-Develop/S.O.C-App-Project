@@ -9,7 +9,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.UUID;
 
 import static com.soc.backend.config.enums.Status.*;
 
@@ -28,11 +27,6 @@ public class Account extends BaseTimeEntity {
 
     @Column(nullable = false, unique = true)
     private String email;
-
-    @Column(nullable = false)
-    private String emailToken;
-
-    private boolean isConfirm;
 
     @Column(nullable = false, unique = true)
     private String nickname;
@@ -53,9 +47,9 @@ public class Account extends BaseTimeEntity {
     @Enumerated(EnumType.STRING)
     private RoleType role;
 
-    public void changeConfirm(){
-        this.isConfirm = true;
-    }
+    private Integer smsAuthToken;
+
+    private boolean isSmsCertified;
 
     public void changePassword(String password){
         this.password = password;
@@ -70,8 +64,16 @@ public class Account extends BaseTimeEntity {
                 .nickname(dto.getNickname())
                 .email(dto.getEmail())
                 .role(RoleType.ROLE_USER)
-                .isConfirm(false)
-                .emailToken(UUID.randomUUID().toString())
+                .isSmsCertified(false)
                 .build();
+    }
+
+    public void createTokenToPhoneNumber(Integer smsAuthToken, String phoneNumber) {
+        this.smsAuthToken = smsAuthToken;
+        this.phoneNumber = phoneNumber;
+    }
+
+    public void certifySmsAuth() {
+        this.isSmsCertified = true;
     }
 }
