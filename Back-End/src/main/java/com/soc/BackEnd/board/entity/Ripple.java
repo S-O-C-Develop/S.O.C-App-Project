@@ -1,6 +1,7 @@
 package com.soc.backend.board.entity;
 
 import com.soc.backend.account.Account;
+import com.soc.backend.config.BaseTimeEntity;
 import com.soc.backend.config.enums.Status;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -16,7 +17,7 @@ import java.util.List;
 @Builder
 @Getter
 @Entity
-public class Ripple {
+public class Ripple extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long rippleId;

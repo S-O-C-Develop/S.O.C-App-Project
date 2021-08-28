@@ -27,7 +27,7 @@ public class ResponseAccountRes {
         this.nickname = account.getNickname();
         this.email = account.getEmail();
         this.roles = account.getRole();
-        this.createdDate = account.getCreatedDate();
+        this.createdDate = account.getCreatedAt();
     }
 
 }
