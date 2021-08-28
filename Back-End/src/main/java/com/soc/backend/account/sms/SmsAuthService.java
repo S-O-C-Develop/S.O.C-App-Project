@@ -67,7 +67,7 @@ public class SmsAuthService {
         params.put("to", phoneNumber);
         params.put("from", fromNumber);
         params.put("type", "SMS");
-        params.put("text", "[K.Cook] 인증번호 " + randNum.toString() + " 를 입력하세요.");
+        params.put("text", "[S.O.C] 인증번호 " + randNum.toString() + " 를 입력하세요.");
         params.put("app_version", "1.0");
 
 

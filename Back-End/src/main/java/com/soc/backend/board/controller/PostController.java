@@ -7,11 +7,8 @@ import com.soc.backend.config.response.DataResponse;
 import com.soc.backend.config.response.ResponseService;
 import com.soc.backend.config.security.CustomUserDetails;
 import io.swagger.annotations.*;
-import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,10 +23,20 @@ public class PostController {
     private final PostService postService;
     private final ResponseService responseService;
 
-    @ApiOperation(value = "게시글 조회 API", notes ="게시판 번호 전송")
+    @ApiOperation(value = "게시글 조회 API",  notes = "page, size, sortBy, isAsc RequestParam 설정")
     @GetMapping(value = "/posts/boards/{boardId}")
-    public DataResponse<Page<GetPostsPageRes>> getPostsByBoard(@PageableDefault(size = 10, page = 0) Pageable pageable, @ApiParam(value ="게시판 번호",required = true) @PathVariable(name = "boardId") Long boardId) {
-        return responseService.getDataResponse(postService.getPostsByBoard(pageable, boardId));
+    public DataResponse<Page<GetPostsPageRes>> getPostsByBoard(@ApiParam(value ="게시판 번호",required = true) @PathVariable(name = "boardId") Long boardId,
+                                                               @RequestParam(name = "page", required = false) Integer page,
+                                                               @RequestParam(name = "size", required = false) Integer size,
+                                                               @RequestParam(name = "sortBy", required = false) String sortBy,
+                                                               @RequestParam(name = "isAsc", required = false) Boolean isAsc
+                                                               ) {
+        if (page == null) page = 1;
+        page = page - 1;
+        if (size == null) size = 10;
+        if (isAsc == null) isAsc = true;
+        if (sortBy == null) sortBy = "updatedAt";
+        return responseService.getDataResponse(postService.getPostsByBoard(page, size, sortBy, isAsc,boardId));
     }
 
     @ApiImplicitParams({

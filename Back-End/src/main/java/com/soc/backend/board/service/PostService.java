@@ -12,7 +12,9 @@ import com.soc.backend.config.response.exception.CustomExceptionStatus;
 import com.soc.backend.config.security.CustomUserDetails;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,10 +27,12 @@ public class PostService {
     private final BoardRepository boardRepository;
 
     @Transactional(readOnly = true)
-    public Page<GetPostsPageRes> getPostsByBoard(Pageable pageable, Long boardId)  {
+    public Page<GetPostsPageRes> getPostsByBoard(int page, int size, String sortBy, boolean isAsc, Long boardId)  {
         Board board = boardRepository.findById(boardId)
                 .orElseThrow(() -> new CustomException(CustomExceptionStatus.NOT_EXIST_BOARD));
-
+        Sort.Direction direction = isAsc ? Sort.Direction.ASC : Sort.Direction.DESC;
+        Sort sort = Sort.by(direction, sortBy);
+        Pageable pageable = PageRequest.of(page, size, sort);
         return postRepository.findAllByBoard(pageable, board);
     }
 
