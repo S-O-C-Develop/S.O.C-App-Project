@@ -11,11 +11,16 @@ import com.example.soc.login.LoginResponse;
 import com.example.soc.signup.SignUpData;
 import com.example.soc.signup.SignUpResponse;
 
+import java.util.Map;
+
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
+import retrofit2.http.Path;
+import retrofit2.http.Query;
+import retrofit2.http.QueryMap;
 
 public interface ApiService {
     @POST("sign-in")
@@ -30,4 +35,8 @@ public interface ApiService {
     @POST("boards")
     Call<Compty_condition_Response> Boardinfo(@Header("X-ACCESS-TOKEN") String auth
             , @Body Compty_problem_write_condition_Data Condition_Data);
+    @GET("posts/boards/{boardId}")
+    Call<Compty_problem_Board_Response> getBoard(@Path("boardId") int id
+            ,@Query("page") int page, @Query("sortBy") String postId , @Query("isAsc") Boolean isAsc);
+
 }

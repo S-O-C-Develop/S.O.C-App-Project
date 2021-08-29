@@ -1,5 +1,4 @@
 <androidx.constraintlayout.widget.ConstraintLayout
-    android:layout_marginTop="140dp"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -8,13 +7,26 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".board.Menu.Comty.Comty_problem"
     android:background="@color/white">
-
+    <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="180dp"
+        android:id="@+id/asdf"
+        tools:ignore="MissingConstraints"
+        android:orientation="horizontal" >
+    </LinearLayout>
+    <ProgressBar
+        app:layout_constraintBottom_toBottomOf="@id/asdf"
+        android:id="@+id/progress_bartop"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
     <androidx.recyclerview.widget.RecyclerView
+        app:layout_constraintTop_toBottomOf="@+id/asdf"
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         android:scrollbars="vertical"
-        tools:ignore="MissingConstraints" />
+       />
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fabsearch"
         android:layout_width="wrap_content"
@@ -74,5 +86,10 @@
         app:layout_constraintHorizontal_bias="0.975"
         app:layout_constraintVertical_bias="0.982"
         android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"  />/>
+        android:layout_marginEnd="8dp"  />
+    <ProgressBar
+        app:layout_constraintBottom_toBottomOf="@id/fabMain"
+        android:id="@+id/progress_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

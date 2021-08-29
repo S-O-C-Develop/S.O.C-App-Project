@@ -6,7 +6,6 @@ import java.util.List;
 
 public class Compty_problem_Board_Response {
 
-
     @SerializedName("result")
     private Result result;
     @SerializedName("message")
@@ -197,7 +196,6 @@ public class Compty_problem_Board_Response {
         private String contents;
         @SerializedName("author")
         private String author;
-
         public String getTitle() {
             return title;
         }
@@ -246,4 +244,5 @@ public class Compty_problem_Board_Response {
             this.author = author;
         }
     }
+
 }

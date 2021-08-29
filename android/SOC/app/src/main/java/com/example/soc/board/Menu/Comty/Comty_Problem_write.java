@@ -58,8 +58,7 @@ public class Comty_Problem_write extends  AppCompatActivity{
 
         title = (EditText) findViewById(R.id.title_pro);
         content = (EditText) findViewById(R.id.content_et);
-        nickname = (TextView) findViewById(R.id.pro_nickname);
-        time = (TextView) findViewById(R.id.pro_time);
+
         //스피너
         gradeSpinner = (Spinner) findViewById(R.id.spinner1);
         arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, (String[]) getResources().getStringArray(R.array.grade)); //스피너를 위한 배열 어댑터 선언
