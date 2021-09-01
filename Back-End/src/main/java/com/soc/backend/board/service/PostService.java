@@ -7,9 +7,12 @@ import com.soc.backend.board.entity.Board;
 import com.soc.backend.board.entity.Post;
 import com.soc.backend.board.repository.BoardRepository;
 import com.soc.backend.board.repository.PostRepository;
+import com.soc.backend.config.enums.Status;
 import com.soc.backend.config.response.exception.CustomException;
 import com.soc.backend.config.response.exception.CustomExceptionStatus;
 import com.soc.backend.config.security.CustomUserDetails;
+import com.soc.backend.subject.Subject;
+import com.soc.backend.subject.SubjectRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -18,6 +21,10 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
+
+import static com.soc.backend.config.enums.Status.*;
+
 @Transactional
 @RequiredArgsConstructor
 @Service
@@ -25,6 +32,7 @@ public class PostService {
 
     private final PostRepository postRepository;
     private final BoardRepository boardRepository;
+    private final SubjectRepository subjectRepository;
 
     @Transactional(readOnly = true)
     public Page<GetPostsPageRes> getPostsByBoard(int page, int size, String sortBy, boolean isAsc, Long boardId)  {
@@ -40,7 +48,13 @@ public class PostService {
         Account account = customUserDetails.getAccount();
         Board board = boardRepository.findById(req.getBoardId())
                 .orElseThrow(() -> new CustomException(CustomExceptionStatus.NOT_EXIST_BOARD));
-        Post save = postRepository.save(Post.createPost(req, board, account));
+        Post save;
+        if (req.getSubjectId() != null) {
+            Subject subject = subjectRepository.findByIdAndStatus(req.getSubjectId(), VALID)
+                    .orElseThrow(() -> new CustomException(CustomExceptionStatus.NOT_EXIST_SUBJECT));
+            save = postRepository.save(Post.createPost(req, board, account, subject));
+        }
+        else save = postRepository.save(Post.createPost(req, board, account));
         return save.getPostId();
     }
 

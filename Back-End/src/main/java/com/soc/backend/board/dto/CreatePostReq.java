@@ -30,4 +30,6 @@ public class CreatePostReq {
 
     private String secondImageUrl;
 
+    private Long subjectId;
+
 }

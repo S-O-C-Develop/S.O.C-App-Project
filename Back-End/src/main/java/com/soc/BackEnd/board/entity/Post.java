@@ -4,6 +4,7 @@ import com.soc.backend.account.Account;
 import com.soc.backend.board.dto.CreatePostReq;
 import com.soc.backend.config.BaseTimeEntity;
 import com.soc.backend.config.enums.Status;
+import com.soc.backend.subject.Subject;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -12,6 +13,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 
 import static com.soc.backend.config.enums.Status.*;
+import static javax.persistence.FetchType.LAZY;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -47,6 +49,10 @@ public class Post extends BaseTimeEntity {
 
     private Long reportCount;
 
+    @ManyToOne(fetch = LAZY)
+    @JoinColumn(name = "subjectId")
+    private Subject subject;
+
     public static Post createPost(CreatePostReq req, Board board, Account account) {
         return Post.builder()
                 .board(board)
@@ -57,6 +63,20 @@ public class Post extends BaseTimeEntity {
                 .firstImageUrl(req.getFirstImageUrl())
                 .secondImageUrl(req.getSecondImageUrl())
                 .reportCount(0L)
+                .build();
+    }
+
+    public static Post createPost(CreatePostReq req, Board board, Account account, Subject subject) {
+        return Post.builder()
+                .board(board)
+                .account(account)
+                .status(VALID)
+                .title(req.getTitle())
+                .contents(req.getContents())
+                .firstImageUrl(req.getFirstImageUrl())
+                .secondImageUrl(req.getSecondImageUrl())
+                .reportCount(0L)
+                .subject(subject)
                 .build();
     }
 

@@ -65,6 +65,9 @@ public enum CustomExceptionStatus {
     // posts
     NOT_EXIST_POST(false,3032,"게시글이 존재하지 않습니다."),
 
+    // subject
+    NOT_EXIST_SUBJECT(false,3033,"과목이 존재하지 않습니다."),
+
     /**
      * 4000 : Database, Server 오류
      */
