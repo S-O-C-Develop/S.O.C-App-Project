@@ -1,0 +1,11 @@
+package com.soc.backend.subject;
+
+import com.soc.backend.config.enums.Status;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import java.util.Optional;
+
+public interface SubjectRepository extends JpaRepository<Subject, Long> {
+
+    Optional<Subject> findByIdAndStatus(Long subjectId, Status status);
+}
