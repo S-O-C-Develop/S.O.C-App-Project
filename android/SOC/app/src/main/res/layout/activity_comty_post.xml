@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:padding="16dp">
+    <LinearLayout
+        android:id="@+id/ll_write"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <ImageButton
+        android:id="@+id/backbutton_write"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left"
+        android:background="@android:color/transparent"
+        android:padding="10dp"
+        android:src="@drawable/ic_baseline_arrow_back_24"/>
+    </LinearLayout>
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+     <TextView
+         android:id="@+id/post_nickname"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:text="이름"
+         android:layout_marginBottom="15dp"
+    android:textSize="20dp"/>
+        <TextView
+            android:id="@+id/post_title"
+            android:textSize="15dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:hint="제목"
+            android:textStyle="bold" />
+</LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginBottom="10dp"
+            android:background="#8A8686"
+            android:layout_marginTop="10dp"
+            ></View>
+    <TextView
+        android:id="@+id/post_content"
+        android:textStyle="bold"
+        android:background="@android:color/transparent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="top"
+        android:textSize="15dp"
+        android:hint="내용"
+        />
+        <RelativeLayout
+            android:layout_gravity="left"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <ImageView
+                android:layout_marginTop="5dp"
+                android:id="@+id/post_img1"
+                android:scaleType="center"
+                android:layout_marginLeft="5dp"
+                android:layout_width="180dp"
+                android:layout_marginRight="5dp"
+                android:layout_height="180dp"/>
+            <ImageView
+                android:layout_toRightOf="@+id/post_img1"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="5dp"
+                android:id="@+id/post_img2"
+                android:scaleType="center"
+                android:layout_width="180dp"
+                android:layout_height="180dp"/>
+        </RelativeLayout>
+<LinearLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:layout_gravity="right">
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_baseline_wechat_24"/>
+    <TextView
+        android:id="@+id/postid"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="1"/>
+</LinearLayout>
+    </LinearLayout>
+
+</RelativeLayout>

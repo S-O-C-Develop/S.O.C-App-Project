@@ -49,15 +49,27 @@
             android:spinnerMode="dialog"
             android:prompt="@string/subject" />
     </LinearLayout>
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+        <EditText
+            android:id="@+id/title_pro"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:background="@android:color/transparent"
+            android:hint="제목"
+            android:textStyle="bold" />
+
     <ImageButton
-        android:layout_marginTop="10dp"
+        android:id="@+id/wirte_imgBt"
         android:layout_width="30dp"
         android:layout_height="20dp"
-        android:layout_gravity="right"
-        android:id="@+id/wirte_imgBt"
-        android:src="@drawable/ic_baseline_camera_alt_24"
-        android:background="@android:color/transparent"/>
-
+        android:layout_gravity="bottom"
+        android:layout_marginLeft="300dp"
+        android:background="@android:color/transparent"
+        android:src="@drawable/ic_baseline_camera_alt_24" />
+</LinearLayout>
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
@@ -66,6 +78,7 @@
             android:background="#8A8686"
             ></View>
 
+
     <EditText
         android:id="@+id/content_et"
         android:textStyle="bold"
@@ -73,7 +86,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
-
         android:gravity="top"
         android:hint="내용을 입력하세요."
         />
