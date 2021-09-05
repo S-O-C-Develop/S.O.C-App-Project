@@ -35,6 +35,7 @@ public interface ApiService {
     @POST("boards")
     Call<Compty_condition_Response> Boardinfo(@Header("X-ACCESS-TOKEN") String auth
             , @Body Compty_problem_write_condition_Data Condition_Data);
+
     @GET("posts/boards/{boardId}")
     Call<Compty_problem_Board_Response> getBoard(@Path("boardId") int id
             ,@Query("page") int page, @Query("sortBy") String postId , @Query("isAsc") Boolean isAsc);

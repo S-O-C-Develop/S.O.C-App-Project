@@ -20,6 +20,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.soc.R;
 import com.example.soc.func.ApiClient;
@@ -50,6 +51,7 @@ public class Comty_problem extends Fragment implements View.OnClickListener {
     private int page = 1;
     private Boolean isNext = true;
     private int total = 0;
+    SwipeRefreshLayout mSwipeRefreshLayout;
     ApiService apiService1 = ApiClient.getClient().create(ApiService.class);
     static java.util.ArrayList<Compty_problem_Board_Response.Content> list2 = new ArrayList<>();
     java.util.ArrayList<Compty_problem_Board_Response.Content> list = new ArrayList<>();
@@ -73,6 +75,7 @@ public class Comty_problem extends Fragment implements View.OnClickListener {
         image1 = (ImageView) v.findViewById(R.id.pro_image1);
         image2 = (ImageView) v.findViewById(R.id.pro_image2);
         recyclerView = (RecyclerView) v.findViewById(R.id.recyclerView);
+        mSwipeRefreshLayout = (SwipeRefreshLayout) v.findViewById(R.id.swipe_layout);
         progressBar_bt = v.findViewById(R.id.progress_bar);
         progressBar_tp = v.findViewById(R.id.progress_bartop);
         progressBar_bt.setVisibility(View.GONE);
@@ -81,10 +84,22 @@ public class Comty_problem extends Fragment implements View.OnClickListener {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         loadPosts();
         initScrollListener();
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                list.clear(); // 리스트를 한 번 비워주고
+                loadPosts();
+                page = 1;
+                mAdapter.notifyDataSetChanged(); // 새로고침 하고
+                mSwipeRefreshLayout.setRefreshing(false);// 새로고침을 완료하면 아이콘을 없앤다.
+            }
+        });
         return v;
 
     }
+
     private void loadPosts() {
+        Log.d(TAG, "loadPosts: ");
         Call<Compty_problem_Board_Response> call2 = apiService1.getBoard(19, 1, "postId", false);
         call2.enqueue(new Callback<Compty_problem_Board_Response>() {
             @Override
@@ -124,7 +139,6 @@ public class Comty_problem extends Fragment implements View.OnClickListener {
                         isNext = res.getResult().getLast();
                         list2 = (ArrayList<Compty_problem_Board_Response.Content>) res.getResult().getContent();
                         list.addAll(list2);
-                        recyclerView.scrollToPosition(list.size() + 1);
                         mAdapter.notifyDataSetChanged();
                         Log.d(TAG, "1");
 
@@ -153,13 +167,16 @@ public class Comty_problem extends Fragment implements View.OnClickListener {
 
                 if (hasnextPage() == false) {
                     if (recyclerView.canScrollVertically(-1)) {
-                        dataMore();
-                        setHasNextPage(false);
+                        if(linearLayoutManager.findLastVisibleItemPosition() == 9) {
+                            dataMore();
+                            setHasNextPage(false);
+                        }
                     }
                 }
             }
         });
     }
+
     private int getPage() {
         page++;
         return page;
@@ -170,6 +187,9 @@ public class Comty_problem extends Fragment implements View.OnClickListener {
     private void setHasNextPage(boolean b) {
         isNext = b;
     }
+
+
+
     public void onClick(View view) {
         int id = view.getId();
         switch(id){
@@ -180,6 +200,7 @@ public class Comty_problem extends Fragment implements View.OnClickListener {
                 animFab();
                 Log.d("Raj", "FabEdit");
                 Intent intent = new Intent(getActivity(), Comty_Problem_write.class);
+                intent.putExtra("boardId", 19);
                 startActivity(intent);
                 break;
             case R.id.fabsearch:

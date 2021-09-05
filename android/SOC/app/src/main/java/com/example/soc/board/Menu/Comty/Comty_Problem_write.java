@@ -50,6 +50,7 @@ public class Comty_Problem_write extends  AppCompatActivity{
     String image1_1,image2_2, image11, grade, semester;
     int gr, se, boardid;
     Compty_problem_write_Data problemData;
+    String boardString;
     public static final String EXTRA_ADDRESS = "address";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,77 +97,38 @@ public class Comty_Problem_write extends  AppCompatActivity{
         reg_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(grade == "1학년") {
-                    gr = 1;
-                }
-                else if(grade == "2학년") {
-                    gr = 2;
-                }
-                else if(grade == "3학년") {
-                    gr = 3;
-                }
-                else if(grade == "4학년") {
-                    gr = 4;
-                }
-                if(semester == "1학기") {
-                    se = 1;
-                }
-                else if(semester == "2학기") {
-                    se = 2;
-                }
+                boardid = getIntent().getIntExtra("boardId", 1);
                 ApiService apiService1 = ApiClient.getClient().create(ApiService.class);
-                Compty_problem_write_condition_Data conditiondata = new Compty_problem_write_condition_Data("커뮤니티","a", gr,"a",se,"프로그래밍및실습1");
-                Call<Compty_condition_Response> call2 = apiService1.Boardinfo(pref.getString("data", ""), conditiondata);
-                call2.enqueue(new Callback<Compty_condition_Response>() {
-                    @Override
-                    public void onResponse(Call<Compty_condition_Response> call2, Response<Compty_condition_Response> response) {
-                        if (response.isSuccessful()) {
-                            Compty_condition_Response res = response.body();
-                            System.out.print(res.getMessage());
-                            boardid = res.getResult();
-                            if (image2 == null) {
-                                problemData = new Compty_problem_write_Data(boardid, content.getText().toString(), image11, title.getText().toString());
-                            } else if (image2 != null) {
-                                problemData = new Compty_problem_write_Data(boardid, content.getText().toString(), image1_1, image2_2, title.getText().toString());
-                            } else if (image1 == null) {
-                                problemData = new Compty_problem_write_Data(boardid, content.getText().toString(), image2_2, title.getText().toString());
-                            } else if (image1 == null && image2 == null) {
-                                problemData = new Compty_problem_write_Data(boardid, content.getText().toString(), title.getText().toString());
-                            }
-                            if (content.getText().toString() == null || title.getText().toString() == null) {
-                                Toast.makeText(Comty_Problem_write.this, "토스트 메시지 띄우기 성공~!", Toast.LENGTH_SHORT).show();
-                            } else if (content.getText().toString() != null && title.getText().toString() != null) {
-                                // APiservice의 apiService를 정의해 자동으로 Json에서 Gson으로 변환할 수 있게 함.
-                                Call<Compty_problem_write_Response> call1 = apiService1.writeinfo(pref.getString("data", ""), problemData);
-                                call1.enqueue(new Callback<Compty_problem_write_Response>() {
-                                    @Override
-                                    public void onResponse(Call<Compty_problem_write_Response> call1, Response<Compty_problem_write_Response> response) {
-                                        if (response.isSuccessful()) {
-                                            Compty_problem_write_Response res = response.body();
-                                            Log.d(TAG, res.getMessage());
-                                            DialogClick(v);
-                                        } else {
-                                            Log.d(TAG, response.errorBody().toString());
-                                        }
-                                    }
-                                    @Override
-                                    public void onFailure(Call<Compty_problem_write_Response> call, Throwable t) {
-                                        Log.d(TAG, t.getMessage());
-                                    }
-                                });
+                problemData = new Compty_problem_write_Data(boardid, content.getText().toString(), image1_1, image2_2, title.getText().toString());
+
+                if (content.getText().toString() == null || title.getText().toString() == null) {
+                    Toast.makeText(Comty_Problem_write.this, "토스트 메시지 띄우기 성공~!", Toast.LENGTH_SHORT).show();
+                } else if (content.getText().toString() != null && title.getText().toString() != null) {
+                    // APiservice의 apiService를 정의해 자동으로 Json에서 Gson으로 변환할 수 있게 함.
+                    Call<Compty_problem_write_Response> call1 = apiService1.writeinfo(pref.getString("data", ""), problemData);
+                    call1.enqueue(new Callback<Compty_problem_write_Response>() {
+                        @Override
+                        public void onResponse(Call<Compty_problem_write_Response> call1, Response<Compty_problem_write_Response> response) {
+                            if (response.isSuccessful()) {
+                                Compty_problem_write_Response res = response.body();
+                                Log.d(TAG, res.getMessage());
+                                DialogClick(v);
+                            } else {
+                                Log.d(TAG, response.errorBody().toString());
                             }
                         }
-                        else{
-                            Log.d(TAG, "실패");
+
+                        @Override
+                        public void onFailure(Call<Compty_problem_write_Response> call, Throwable t) {
+                            Log.d(TAG, t.getMessage());
                         }
-                    }
-                    @Override
-                    public void onFailure(Call<Compty_condition_Response> call2, Throwable t) {
-                        Log.d(TAG, t.getMessage());
-                    }
-                });
+                    });
+                } else {
+                    Log.d(TAG, "실패");
+                }
             }
-        });
+                    });
+
         
         //뒤로가기 버튼
         backbutton.setOnClickListener(new View.OnClickListener() {

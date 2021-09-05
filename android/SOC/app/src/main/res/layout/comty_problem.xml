@@ -13,20 +13,26 @@
         android:id="@+id/asdf"
         tools:ignore="MissingConstraints"
         android:orientation="horizontal" >
-    </LinearLayout>
+    </LinearLayout>\
     <ProgressBar
-        app:layout_constraintBottom_toBottomOf="@id/asdf"
+        app:layout_constraintTop_toTopOf="@id/swipe_layout"
         android:id="@+id/progress_bartop"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
-    <androidx.recyclerview.widget.RecyclerView
-        app:layout_constraintTop_toBottomOf="@+id/asdf"
-        android:id="@+id/recyclerView"
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:layout_marginTop="140dp"
+        android:id="@+id/swipe_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        android:scrollbars="vertical"
-       />
+        android:layout_height="match_parent"
+        app:layout_constraintTop_toBottomOf="@+id/asdfg">
+        <androidx.recyclerview.widget.RecyclerView
+            app:layout_constraintTop_toBottomOf="@+id/asdfg"
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scrollbars="vertical"
+            tools:ignore="MissingConstraints" />
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fabsearch"
         android:layout_width="wrap_content"
@@ -66,9 +72,7 @@
         app:layout_constraintVertical_bias="1.0"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
-
      />
-
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fabMain"
         android:layout_width="wrap_content"
