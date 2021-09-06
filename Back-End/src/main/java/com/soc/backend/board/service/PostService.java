@@ -3,6 +3,7 @@ package com.soc.backend.board.service;
 import com.soc.backend.account.Account;
 import com.soc.backend.board.dto.CreatePostReq;
 import com.soc.backend.board.dto.GetPostsPageRes;
+import com.soc.backend.board.dto.PostDetailRes;
 import com.soc.backend.board.entity.Board;
 import com.soc.backend.board.entity.Post;
 import com.soc.backend.board.repository.BoardRepository;
@@ -50,7 +51,7 @@ public class PostService {
                 .orElseThrow(() -> new CustomException(CustomExceptionStatus.NOT_EXIST_BOARD));
         Post save;
         if (req.getSubjectId() != null) {
-            Subject subject = subjectRepository.findByIdAndStatus(req.getSubjectId(), VALID)
+            Subject subject = subjectRepository.findBySubjectIdAndStatus(req.getSubjectId(), VALID)
                     .orElseThrow(() -> new CustomException(CustomExceptionStatus.NOT_EXIST_SUBJECT));
             save = postRepository.save(Post.createPost(req, board, account, subject));
         }
@@ -63,7 +64,15 @@ public class PostService {
         Account account = customUserDetails.getAccount();
         Post post = postRepository.findById(postId)
                 .orElseThrow(() -> new CustomException(CustomExceptionStatus.NOT_EXIST_POST));
+        if (!post.getAccount().equals(account)) throw new CustomException(CustomExceptionStatus.ACCOUNT_NOT_CERTIFICATION);
         post.updatePost(req);
         return post.getPostId();
+    }
+
+    @Transactional(readOnly = true)
+    public PostDetailRes getPostByPostId(Long postId) {
+        PostDetailRes postDetailRes = postRepository.getPostByStatusAndPostId(VALID, postId)
+                .orElseThrow(() -> new CustomException(CustomExceptionStatus.NOT_EXIST_POST));
+        return postDetailRes;
     }
 }
