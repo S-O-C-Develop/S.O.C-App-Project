@@ -57,6 +57,7 @@ public enum CustomExceptionStatus {
     ALREADY_CERTIFICATION_ACCOUNT(false,3018,"이미 인증된 유저입니다."),
     FAILED_TO_RECEPTION(false,3019,"유효한 수신 번호가 아닙니다."),
     FAILED_TO_CERTIFICATION(false,3020,"유효한 토큰 값이 아닙니다."),
+    ACCOUNT_NOT_CERTIFICATION(false, 3021, "유효한 회원이 아닙니다."),
 
     // boards
     EXIST_BOARD(false,3030,"이미 존재하는 게시판입니다."),

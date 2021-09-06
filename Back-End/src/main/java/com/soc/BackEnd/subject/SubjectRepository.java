@@ -7,5 +7,5 @@ import java.util.Optional;
 
 public interface SubjectRepository extends JpaRepository<Subject, Long> {
 
-    Optional<Subject> findByIdAndStatus(Long subjectId, Status status);
+    Optional<Subject> findBySubjectIdAndStatus(Long subjectId, Status status);
 }

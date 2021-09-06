@@ -1,5 +1,6 @@
 package com.soc.backend.board.dto;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.soc.backend.board.entity.Post;
 import com.soc.backend.config.enums.Status;
 import lombok.AllArgsConstructor;
@@ -22,6 +23,12 @@ public class GetPostsPageRes {
     private String author;
 
     private Long reportCount;
+
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    private String firstImageUrl;
+
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    private String secondImageUrl;
 
     public GetPostsPageRes(Post post) {
         this.postId = post.getPostId();
