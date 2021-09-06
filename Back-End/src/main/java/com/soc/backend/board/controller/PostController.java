@@ -2,6 +2,7 @@ package com.soc.backend.board.controller;
 
 import com.soc.backend.board.dto.CreatePostReq;
 import com.soc.backend.board.dto.GetPostsPageRes;
+import com.soc.backend.board.dto.PostDetailRes;
 import com.soc.backend.board.service.PostService;
 import com.soc.backend.config.response.DataResponse;
 import com.soc.backend.config.response.ResponseService;
@@ -59,6 +60,16 @@ public class PostController {
                                                   @ApiParam(value = "게시판 수정 객체", required = true) @Valid @RequestBody CreatePostReq req, @PathVariable(name = "postId") Long postId) {
         Long updatedPostId = postService.updatePostByAccount(customUserDetails, req, postId);
         return responseService.getDataResponse(updatedPostId);
+    }
+
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "X-ACCESS-TOKEN", value = "로그인 성공 후 토큰", required = false, dataType = "String", paramType = "header")
+    })
+    @ApiOperation(value = "한 게시글 조회 API", notes = "하나의 게시글 Detail 조회 API")
+    @GetMapping("/posts/{postId}")
+    public DataResponse<PostDetailRes> getPostByPostId(@PathVariable(name = "postId") Long postId) {
+        PostDetailRes postDetailRes = postService.getPostByPostId(postId);
+        return responseService.getDataResponse(postDetailRes);
     }
 
 
