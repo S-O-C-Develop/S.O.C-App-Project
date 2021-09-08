@@ -16,7 +16,6 @@ import javax.validation.constraints.Pattern;
 @Getter
 public class CreatePostReq {
 
-    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Long boardId;
 
     @NotBlank
