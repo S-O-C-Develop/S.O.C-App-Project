@@ -2,11 +2,14 @@ package com.soc.backend.subject;
 
 import com.soc.backend.config.BaseTimeEntity;
 import com.soc.backend.config.enums.Status;
+import com.soc.backend.subject.dto.CreateSubjectReq;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+
+import static com.soc.backend.config.enums.Status.*;
 
 @Getter
 @AllArgsConstructor
@@ -26,5 +29,12 @@ public class Subject extends BaseTimeEntity {
     private Integer semester;
 
     private String name;
+
+    public Subject(CreateSubjectReq dto) {
+        this.status = VALID;
+        this.grade = dto.getGrade();
+        this.semester = dto.getSemester();
+        this.name = dto.getName();
+    }
 
 }
