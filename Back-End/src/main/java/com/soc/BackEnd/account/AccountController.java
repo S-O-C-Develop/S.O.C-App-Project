@@ -43,7 +43,7 @@ public class AccountController {
     }
 
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "X-ACCESS-TOKEN", value = "로그인 성공 후 토큰", required = false, dataType = "String", paramType = "header")
+            @ApiImplicitParam(name = "X-ACCESS-TOKEN", value = "로그인 성공 후 토큰", required = false, dataTypeClass = String.class, paramType = "header")
     })
     @ApiOperation(value = "로그인한 회원 조회", notes = "JWT토큰으로 조회한다.")
     @GetMapping(value = "/get-account")
@@ -52,7 +52,7 @@ public class AccountController {
     }
 
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "X-ACCESS-TOKEN", value = "로그인 성공 후 토큰", required = false, dataType = "String", paramType = "header")
+            @ApiImplicitParam(name = "X-ACCESS-TOKEN", value = "로그인 성공 후 토큰", required = false, dataTypeClass = String.class, paramType = "header")
     })
     @ApiOperation(value = "비밀번호 변경 API", notes ="이전 비밀번호, 새로운 비밀번호 전송")
     @PutMapping(value = "/account/password")
@@ -63,7 +63,7 @@ public class AccountController {
     }
 
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "X-ACCESS-TOKEN", value = "로그인 성공 후 토큰", required = false, dataType = "String", paramType = "header")
+            @ApiImplicitParam(name = "X-ACCESS-TOKEN", value = "로그인 성공 후 토큰", required = false, dataTypeClass = String.class, paramType = "header")
     })
     @ApiOperation(value = "닉네임 변경 API", notes ="새로운 닉네임 전송")
     @PutMapping(value = "/account-update")
