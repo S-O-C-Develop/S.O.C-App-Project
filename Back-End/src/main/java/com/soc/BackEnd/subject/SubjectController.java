@@ -24,7 +24,7 @@ public class SubjectController {
     private final ResponseService responseService;
 
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "X-ACCESS-TOKEN", value = "로그인 성공 후 토큰", required = false, dataType = "String", paramType = "header")
+            @ApiImplicitParam(name = "X-ACCESS-TOKEN", value = "로그인 성공 후 토큰", required = false, dataTypeClass = String.class, paramType = "header")
     })
     @ApiOperation(value = "과목 생성 API", notes ="과목 정보 전송")
     @PostMapping(value = "/subjects")

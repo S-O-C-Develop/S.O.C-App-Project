@@ -41,7 +41,7 @@ public class PostController {
     }
 
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "X-ACCESS-TOKEN", value = "로그인 성공 후 토큰", required = false, dataType = "String", paramType = "header")
+            @ApiImplicitParam(name = "X-ACCESS-TOKEN", value = "로그인 성공 후 토큰", required = false, dataTypeClass = String.class, paramType = "header")
     })
     @ApiOperation(value = "게시글 생성 API", notes = "boardId를 포함한 게시글 정보 전송")
     @PostMapping("/posts")
@@ -52,7 +52,7 @@ public class PostController {
     }
 
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "X-ACCESS-TOKEN", value = "로그인 성공 후 토큰", required = false, dataType = "String", paramType = "header")
+            @ApiImplicitParam(name = "X-ACCESS-TOKEN", value = "로그인 성공 후 토큰", required = false, dataTypeClass = String.class, paramType = "header")
     })
     @ApiOperation(value = "게시글 수정 API", notes = "게시글 작성자가 게시글 수정")
     @PatchMapping("/posts/{postId}")
@@ -63,7 +63,7 @@ public class PostController {
     }
 
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "X-ACCESS-TOKEN", value = "로그인 성공 후 토큰", required = false, dataType = "String", paramType = "header")
+            @ApiImplicitParam(name = "X-ACCESS-TOKEN", value = "로그인 성공 후 토큰", required = false, dataTypeClass = String.class, paramType = "header")
     })
     @ApiOperation(value = "한 게시글 조회 API", notes = "하나의 게시글 Detail 조회 API")
     @GetMapping("/posts/{postId}")
