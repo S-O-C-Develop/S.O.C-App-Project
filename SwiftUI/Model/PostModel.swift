@@ -55,3 +55,37 @@ struct SortResult: Codable {
     var sorted : Bool
     var unsorted : Bool
 }
+
+struct PostingResult: Codable {
+    var isSuccess : Bool
+    var code : Int
+    var message : String
+    var result : Int
+}
+
+//MARK: - Detail 게시글 Model
+
+struct DetailJson: Codable {
+    var code: Int
+    var isSuccess : Bool
+    var message : String
+    var result : DetailResult
+}
+
+struct DetailResult: Codable,Identifiable {
+    let id: UUID = UUID()
+    var accountId : Int
+    var accountNickname : String
+    var boardId : Int
+    var contents : String
+    var firstImageUrl : String?
+    var postId : Int
+    var reportCount : Int
+    var secondImageUrl : String?
+    var status : String
+    var subjectId : Int?
+    var subjectName : String?
+    var title : String
+}
+
+
