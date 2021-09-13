@@ -37,6 +37,8 @@ public class PostDetailRes {
 
     private String subjectName;
 
+    private Boolean hasImages;
+
     public PostDetailRes(Post post) {
         this.postId = post.getPostId();
         this.status = post.getStatus();
@@ -52,6 +54,9 @@ public class PostDetailRes {
             this.subjectId = post.getSubject().getSubjectId();
             this.subjectName = post.getSubject().getName();
         }
+        if (firstImageUrl == null && secondImageUrl == null) {
+            this.hasImages = false;
+        } else this.hasImages = true;
     }
 
 }

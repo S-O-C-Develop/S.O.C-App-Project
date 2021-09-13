@@ -24,6 +24,8 @@ public class GetPostsPageRes {
 
     private Long reportCount;
 
+    private Boolean hasImages;
+
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private String firstImageUrl;
 
@@ -37,6 +39,9 @@ public class GetPostsPageRes {
         this.contents = post.getContents();
         this.author = post.getAccount().getNickname();
         reportCount = post.getReportCount();
+        if (post.getFirstImageUrl() == null && post.getSecondImageUrl() == null) {
+            this.hasImages = false;
+        } else this.hasImages = true;
     }
 
 }
