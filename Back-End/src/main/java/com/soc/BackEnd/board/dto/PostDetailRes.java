@@ -2,6 +2,7 @@ package com.soc.backend.board.dto;
 
 import com.soc.backend.board.entity.Post;
 import com.soc.backend.config.enums.Status;
+import com.soc.backend.utils.LocalDateTimeChanger;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -39,6 +40,8 @@ public class PostDetailRes {
 
     private Boolean hasImages;
 
+    private String updatedAt;
+
     public PostDetailRes(Post post) {
         this.postId = post.getPostId();
         this.status = post.getStatus();
@@ -57,6 +60,7 @@ public class PostDetailRes {
         if (firstImageUrl == null && secondImageUrl == null) {
             this.hasImages = false;
         } else this.hasImages = true;
+        this.updatedAt = LocalDateTimeChanger.changeTimeByCurrent(post.getUpdatedAt());
     }
 
 }

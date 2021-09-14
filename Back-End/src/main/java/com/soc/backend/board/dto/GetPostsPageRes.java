@@ -3,6 +3,7 @@ package com.soc.backend.board.dto;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.soc.backend.board.entity.Post;
 import com.soc.backend.config.enums.Status;
+import com.soc.backend.utils.LocalDateTimeChanger;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -32,6 +33,8 @@ public class GetPostsPageRes {
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private String secondImageUrl;
 
+    private String updatedAt;
+
     public GetPostsPageRes(Post post) {
         this.postId = post.getPostId();
         this.status = post.getStatus();
@@ -42,6 +45,7 @@ public class GetPostsPageRes {
         if (post.getFirstImageUrl() == null && post.getSecondImageUrl() == null) {
             this.hasImages = false;
         } else this.hasImages = true;
+        this.updatedAt = LocalDateTimeChanger.changeTimeByCurrent(post.getUpdatedAt());
     }
 
 }
