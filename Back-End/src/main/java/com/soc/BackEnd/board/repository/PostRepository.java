@@ -22,4 +22,6 @@ public interface PostRepository extends JpaRepository<Post, Long> {
             "LEFT JOIN FETCH  p.subject JOIN FETCH p.account JOIN FETCH p.board " +
             "WHERE p.status = :status AND p.postId = :postId")
     Optional<PostDetailRes> getPostByStatusAndPostId(@Param("status") Status status, @Param("postId") Long postId);
+
+    Optional<Post> findByStatusAndPostId(Status status, Long postId);
 }
