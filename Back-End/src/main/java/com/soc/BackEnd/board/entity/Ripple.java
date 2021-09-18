@@ -1,6 +1,7 @@
 package com.soc.backend.board.entity;
 
 import com.soc.backend.account.Account;
+import com.soc.backend.board.dto.CreateParentRippleReq;
 import com.soc.backend.config.BaseTimeEntity;
 import com.soc.backend.config.enums.Status;
 import lombok.AllArgsConstructor;
@@ -11,6 +12,10 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.soc.backend.config.enums.Status.*;
+import static javax.persistence.CascadeType.*;
+import static javax.persistence.FetchType.*;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -24,11 +29,11 @@ public class Ripple extends BaseTimeEntity {
 
     private Status status;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "accountId")
     private Account account;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "postId")
     private Post post;
 
@@ -39,12 +44,25 @@ public class Ripple extends BaseTimeEntity {
     private Long likeCount;
 
     @Column(nullable = false)
+    private Long reportCount;
+
+    @Column(nullable = false)
     private Boolean isNested;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "parentRippleId")
-    private Ripple ripple;
+    @ManyToOne(fetch = LAZY)
+    @JoinColumn(name = "parentRipple")
+    private Ripple parentRipple;
 
-    @OneToMany(mappedBy = "ripple")
+    @OneToMany(mappedBy = "parentRipple", cascade = ALL)
     private List<Ripple> rippleList = new ArrayList<>();
+
+    public Ripple(Account account, Post post, CreateParentRippleReq req) {
+        this.status = VALID;
+        this.account = account;
+        this.post = post;
+        this.contents = req.getContents();
+        this.likeCount = 0L;
+        this.reportCount = 0L;
+        this.isNested = false;
+    }
 }
