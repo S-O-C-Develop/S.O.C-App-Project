@@ -7,6 +7,9 @@ import com.soc.backend.config.response.ResponseService;
 import com.soc.backend.config.security.CustomUserDetails;
 import com.soc.backend.utils.ValidationExceptionProvider;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.Errors;
@@ -23,6 +26,10 @@ public class RippleController {
     private final RippleService rippleService;
     private final ResponseService responseService;
 
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "X-ACCESS-TOKEN", value = "로그인 성공 후 토큰", required = false, dataTypeClass = String.class, paramType = "header")
+    })
+    @ApiOperation(value = "부모 댓글 생성 API", notes = "게시글 id와 댓글 내용 필요")
     @PostMapping("/ripples/parent-ripples")
     public DataResponse<Long> createParentRipple(@AuthenticationPrincipal CustomUserDetails customUserDetails,
                                                  @RequestBody @Valid CreateParentRippleReq createParentRippleReq, Errors errors) {
