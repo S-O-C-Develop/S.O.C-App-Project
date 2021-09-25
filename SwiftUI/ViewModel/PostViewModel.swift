@@ -14,7 +14,6 @@ class PostViewModel: ObservableObject {
 
     @Published var boardNumber = "19"
     @Published var postings = [PostContent]()
-    @Published var TabButtonName = ""
     
     @Published var data = [PostContent]()
     
@@ -26,22 +25,27 @@ class PostViewModel: ObservableObject {
     @Published var contents = ""
     @Published var title = "Testing"
     
+    @Published var rippleContents = ""
+    @Published var ripplePostId = 0
+    
     @Published var postId : Int = 0
     
     @Published var posting = false
-    @Environment (\.presentationMode) var presentationMode
+    
+    @Published var isLoding = false
     
     @Published var detailResult : DetailResult
+    @Published var rippleResult : RippleJson
+    
+    
     
     init() {
-        self.detailResult = DetailResult(accountId: 0, accountNickname: "", boardId: 0, contents: "", firstImageUrl: "", postId: 0, reportCount: 0, secondImageUrl: "", status: "", subjectId: 0, subjectName: "", title: "")
-        updateData(19)
+        self.detailResult = DetailResult(accountId: 0, accountNickname: "", boardId: 0, contents: "", firstImageUrl: "", hasImages: true, postId: 0, reportCount: 0, secondImageUrl: "", status: "", subjectId: 0, subjectName: "", title: "", updatedAt: "")
+        
+        self.rippleResult = RippleJson(code: 0, isSuccess: true, message: "", result: 0)
+        
+//        updateData(19)
     }
-
-//    func changeNumber(_ number : String){
-//        boardNumber = number
-//        updateData()
-//    }
     
     //MARK: - 게시글 무한 조회하는 함수
     func updateData(_ number: Int) {
@@ -58,21 +62,28 @@ class PostViewModel: ObservableObject {
             }
 
             do {
-                
+               
                 print(number)
                 
+                
                 let json = try JSONDecoder().decode(PostJson.self, from: data!)
+                
+                print(json)
                 
                 let oldData = self.data
 
                 DispatchQueue.main.async {
+                    
+                    self.isLoding = true
 
                     self.data = oldData + json.result.content
                     
                     self.page += 1
+                    
+                    print(self.isLoding)
                 }
 
-
+                
             }
             catch {
                 print(error.localizedDescription)
@@ -81,25 +92,22 @@ class PostViewModel: ObservableObject {
         }
         .resume()
     }
-
     
-
-
     //MARK: - 게시글 조회하는 함수
-    func searchPosting(completion: @escaping ([PostContent]) -> ()) {
+    func searchPosting(_ num : Int, _ completion: @escaping ([PostContent]) -> ()) {
 
 //        let url = "https://prod.soc-project.site/api/posts/boards/"
 //        url + boardNumber
         
-        let url = "https://prod.soc-project.site/api/posts/boards/\(boardNumber)?isAsc=false&page=\(page)&size=10&sortBy=postId"
+        let url = "https://prod.soc-project.site/api/posts/boards/\(num)?isAsc=false&page=\(page)&size=1000&sortBy=postId"
 
         AF.request(url, method: .get, parameters: nil, encoding: URLEncoding.default)
             .responseJSON(completionHandler: { response in
                 switch response.result {
                 case .success(let jsonData):
                     print("success")
-
-                    debugPrint(jsonData)
+                    print(num)
+//                    debugPrint(jsonData)
 
                     do {
 
@@ -107,20 +115,20 @@ class PostViewModel: ObservableObject {
                         
                         let PostingInData = try! JSONDecoder().decode(PostJson.self, from: json)
 
-                        let oldData = self.postings
+//                        let oldData = self.postings
                         
                         DispatchQueue.main.async {
                             
-                            self.postings = oldData + PostingInData.result.content
+//                            self.postings = oldData + PostingInData.result.content
                             
-                            self.page += 1
+//                            self.page += 1
                             
                             completion(PostingInData.result.content)
                             
                         }
                         
                       
-                    } catch (let err) {
+                    } catch (_) {
 
                     }
 
@@ -134,7 +142,7 @@ class PostViewModel: ObservableObject {
     }
     
     //MARK: - 게시글 생성하는 함수
-    func createPosting () -> Bool {
+    func createPosting () {
 
         let url = "https://prod.soc-project.site/api/posts"
 
@@ -163,9 +171,10 @@ class PostViewModel: ObservableObject {
                             if CreatePostingData.code == 1000 {
                                 
                                 
-
-                                self.posting = true
-                                
+                                print("글쓰기 완료")
+                                DispatchQueue.main.async {
+                                    self.posting = true
+                                }
                             }
                         } catch (let err){
                             print(err.localizedDescription)
@@ -177,7 +186,6 @@ class PostViewModel: ObservableObject {
                 })
 
         }
-        return posting
     }
     
     
@@ -199,10 +207,9 @@ class PostViewModel: ObservableObject {
 
                             let jsonData = try! JSONDecoder().decode(DetailJson.self, from: json)
                             
-                            self.detailResult = DetailResult(accountId: jsonData.result.accountId, accountNickname: jsonData.result.accountNickname, boardId: jsonData.result.boardId, contents: jsonData.result.contents, firstImageUrl: jsonData.result.firstImageUrl, postId: jsonData.result.postId, reportCount: jsonData.result.reportCount, secondImageUrl: jsonData.result.secondImageUrl, status: jsonData.result.status, subjectId: jsonData.result.subjectId, subjectName: jsonData.result.subjectName, title: jsonData.result.title)
-                            
+                            self.detailResult = DetailResult(accountId: jsonData.result.accountId, accountNickname: jsonData.result.accountNickname, boardId: jsonData.result.boardId, contents: jsonData.result.contents, firstImageUrl: jsonData.result.firstImageUrl, hasImages: jsonData.result.hasImages, postId: jsonData.result.postId, reportCount: jsonData.result.reportCount, secondImageUrl: jsonData.result.secondImageUrl, status: jsonData.result.status, subjectId: jsonData.result.subjectId, subjectName: jsonData.result.subjectName, title: jsonData.result.title, updatedAt: jsonData.result.updatedAt)
                         }
-                        catch (let err) {
+                        catch (_) {
 
                         }
 
@@ -214,4 +221,50 @@ class PostViewModel: ObservableObject {
                     }
                 })
     }
+    
+    
+    //MARK: - 댓글 생성하는 함수
+    
+    func createRipple() {
+        
+        
+        let url = "https://prod.soc-project.site/api/ripples/parent-ripples"
+        
+        let tk = TokenUtils()
+        
+        let parameters: Parameters = [
+            "contents": rippleContents,
+            "postId": ripplePostId
+        ]
+        
+        if let accessToken = tk.load("com.SOC", account: "accessToken") {
+            
+            AF.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: ["X-ACCESS-TOKEN":accessToken])
+                .responseJSON(completionHandler: { response in
+                    switch response.result {
+                    case .success(let value):
+                        print("댓글 연결 success")
+                            debugPrint(value)
+                        do {
+                            let json = try JSONSerialization.data(withJSONObject: value, options: .prettyPrinted)
+                            let rippleData = try JSONDecoder().decode(RippleJson.self, from: json)
+                            
+                            print(rippleData)
+
+    //                        self.rippleResult  = RippleJson(code: rippleData.code, isSuccess: rippleData.isSuccess, message: rippleData.message, result: rippleData.result)
+                            
+                        } catch (let err){
+                            print(err.localizedDescription)
+                        }
+
+                    case .failure:
+                        print("failure")
+                    }
+                })
+
+        }
+        
+        }
+        
 }
+
