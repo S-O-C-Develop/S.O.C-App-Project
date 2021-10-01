@@ -80,14 +80,14 @@ struct DetailResult: Codable,Identifiable {
     var accountNickname : String
     var boardId : Int
     var contents : String
-    var firstImageUrl : String?
+    var firstImageUrl : String? //
     var hasImages : Bool
     var postId : Int
     var reportCount : Int
-    var secondImageUrl : String?
+    var secondImageUrl : String? //
     var status : String
-    var subjectId : Int?
-    var subjectName : String?
+    var subjectId : Int? //
+    var subjectName : String? //
     var title : String
     var updatedAt : String
 }
