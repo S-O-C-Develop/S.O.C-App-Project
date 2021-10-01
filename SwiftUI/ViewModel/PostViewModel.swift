@@ -38,9 +38,11 @@ class PostViewModel: ObservableObject {
     @Published var rippleResult : RippleJson
     
     
-    
+    @Published var detailKategorie_1 = "" // 대제목
+    @Published var detailKategorie_2 = "" // 소제목
+
     init() {
-        self.detailResult = DetailResult(accountId: 0, accountNickname: "", boardId: 0, contents: "", firstImageUrl: "", hasImages: true, postId: 0, reportCount: 0, secondImageUrl: "", status: "", subjectId: 0, subjectName: "", title: "", updatedAt: "")
+        self.detailResult = DetailResult(accountId: 0, accountNickname: "", boardId: 0, contents: "", firstImageUrl: "", hasImages: false, postId: 0, reportCount: 0, secondImageUrl: "", status: "", subjectId: 0, subjectName: "", title: "", updatedAt: "")
         
         self.rippleResult = RippleJson(code: 0, isSuccess: true, message: "", result: 0)
         
@@ -199,15 +201,31 @@ class PostViewModel: ObservableObject {
                     switch response.result {
                     case .success(let jsonData):
                         print("success")
-//                        debugPrint(jsonData)
+                        debugPrint(jsonData)
 
                         do {
                             let json = try JSONSerialization.data(withJSONObject: jsonData, options: .prettyPrinted)
-                            print("디테일뷰")
+//                            print(de)
 
                             let jsonData = try! JSONDecoder().decode(DetailJson.self, from: json)
                             
                             self.detailResult = DetailResult(accountId: jsonData.result.accountId, accountNickname: jsonData.result.accountNickname, boardId: jsonData.result.boardId, contents: jsonData.result.contents, firstImageUrl: jsonData.result.firstImageUrl, hasImages: jsonData.result.hasImages, postId: jsonData.result.postId, reportCount: jsonData.result.reportCount, secondImageUrl: jsonData.result.secondImageUrl, status: jsonData.result.status, subjectId: jsonData.result.subjectId, subjectName: jsonData.result.subjectName, title: jsonData.result.title, updatedAt: jsonData.result.updatedAt)
+                            
+                            switch detailResult.boardId {
+                                
+                            case 19:
+                                self.detailKategorie_1 = "커뮤니티"
+                                self.detailKategorie_2 = "문제"
+                            
+                            case 22:
+                                self.detailKategorie_1 = "커뮤니티"
+                                self.detailKategorie_2 = "정보"
+                                
+                            default :
+                                self.detailKategorie_1 = ""
+                                self.detailKategorie_2 = ""
+                        
+                            }
                         }
                         catch (_) {
 
@@ -225,7 +243,7 @@ class PostViewModel: ObservableObject {
     
     //MARK: - 댓글 생성하는 함수
     
-    func createRipple() {
+    func createRipple(_ postId : Int) {
         
         
         let url = "https://prod.soc-project.site/api/ripples/parent-ripples"
@@ -234,7 +252,7 @@ class PostViewModel: ObservableObject {
         
         let parameters: Parameters = [
             "contents": rippleContents,
-            "postId": ripplePostId
+            "postId": postId
         ]
         
         if let accessToken = tk.load("com.SOC", account: "accessToken") {
@@ -249,7 +267,7 @@ class PostViewModel: ObservableObject {
                             let json = try JSONSerialization.data(withJSONObject: value, options: .prettyPrinted)
                             let rippleData = try JSONDecoder().decode(RippleJson.self, from: json)
                             
-                            print(rippleData)
+//                            print(rippleData)
 
     //                        self.rippleResult  = RippleJson(code: rippleData.code, isSuccess: rippleData.isSuccess, message: rippleData.message, result: rippleData.result)
                             
