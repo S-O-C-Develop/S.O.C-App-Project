@@ -2,6 +2,7 @@ package com.soc.backend.board.service;
 
 import com.soc.backend.account.Account;
 import com.soc.backend.board.dto.CreateParentRippleReq;
+import com.soc.backend.board.dto.GetRippleRes;
 import com.soc.backend.board.entity.Post;
 import com.soc.backend.board.entity.Ripple;
 import com.soc.backend.board.repository.PostRepository;
@@ -12,6 +13,8 @@ import com.soc.backend.config.security.CustomUserDetails;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 import static com.soc.backend.config.enums.Status.*;
 
@@ -31,5 +34,11 @@ public class RippleService {
         Ripple ripple = new Ripple(account, post, createParentRippleReq);
         Ripple save = rippleRepository.save(ripple);
         return save.getRippleId();
+    }
+
+    public List<GetRippleRes> getParentRipplesByPost(Long postId) {
+        Post post = postRepository.findByStatusAndPostId(VALID, postId)
+                .orElseThrow(() -> new CustomException(CustomExceptionStatus.NOT_EXIST_POST));
+        return rippleRepository.getAllByPost(post);
     }
 }
