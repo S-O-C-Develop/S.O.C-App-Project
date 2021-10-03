@@ -27,6 +27,7 @@ public class Ripple extends BaseTimeEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long rippleId;
 
+    @Enumerated(EnumType.STRING)
     private Status status;
 
     @ManyToOne(fetch = LAZY)
