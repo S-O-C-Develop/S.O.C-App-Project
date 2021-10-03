@@ -1,6 +1,7 @@
 package com.soc.backend.board.controller;
 
 import com.soc.backend.board.dto.CreateParentRippleReq;
+import com.soc.backend.board.dto.GetRippleRes;
 import com.soc.backend.board.service.RippleService;
 import com.soc.backend.config.response.DataResponse;
 import com.soc.backend.config.response.ResponseService;
@@ -16,6 +17,7 @@ import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @Api(tags = {"Ripple API"})
 @RequiredArgsConstructor
@@ -36,6 +38,13 @@ public class RippleController {
         if (errors.hasErrors()) ValidationExceptionProvider.throwValidError(errors);
         Long rippleId = rippleService.createParentRipple(customUserDetails, createParentRippleReq);
         return responseService.getDataResponse(rippleId);
+    }
+
+    @ApiOperation(value = "부모 댓글 조회 API", notes = "게시글 id가 필요")
+    @GetMapping("/ripples/{postId}")
+    public DataResponse<List<GetRippleRes>> getParentRipplesByPost(@PathVariable(value = "postId")Long postId) {
+        List<GetRippleRes> list = rippleService.getParentRipplesByPost(postId);
+        return responseService.getDataResponse(list);
     }
 
 }
