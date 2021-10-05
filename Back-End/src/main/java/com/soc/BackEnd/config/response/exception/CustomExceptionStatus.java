@@ -70,6 +70,9 @@ public enum CustomExceptionStatus {
     NOT_EXIST_SUBJECT(false,3033,"과목이 존재하지 않습니다."),
     ALREADY_EXIST_SUBJECT(false,3034,"과목이 이미 존재합니다."),
 
+    // ripple
+    NOT_EXIST_RIPPLE(false,3040,"댓글이 존재하지 않습니다."),
+
     /**
      * 4000 : Database, Server 오류
      */

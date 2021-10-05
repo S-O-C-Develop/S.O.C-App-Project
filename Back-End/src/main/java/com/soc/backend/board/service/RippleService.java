@@ -41,4 +41,11 @@ public class RippleService {
                 .orElseThrow(() -> new CustomException(CustomExceptionStatus.NOT_EXIST_POST));
         return rippleRepository.getAllByPost(post);
     }
+
+    @Transactional
+    public void deleteRippleByRippleId(Long rippleId) {
+        Ripple ripple = rippleRepository.findByRippleIdAndStatus(rippleId, VALID)
+                .orElseThrow(() -> new CustomException(CustomExceptionStatus.NOT_EXIST_RIPPLE));
+        rippleRepository.delete(ripple);
+    }
 }

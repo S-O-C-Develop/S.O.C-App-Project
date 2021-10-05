@@ -3,10 +3,12 @@ package com.soc.backend.board.repository;
 import com.soc.backend.board.dto.GetRippleRes;
 import com.soc.backend.board.entity.Post;
 import com.soc.backend.board.entity.Ripple;
+import com.soc.backend.config.enums.Status;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface RippleRepository extends JpaRepository<Ripple, Long> {
 
@@ -20,4 +22,5 @@ public interface RippleRepository extends JpaRepository<Ripple, Long> {
     )
     List<GetRippleRes> getAllByPost(Post post);
 
+    Optional<Ripple> findByRippleIdAndStatus(Long rippleId, Status status);
 }

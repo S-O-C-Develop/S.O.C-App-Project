@@ -3,6 +3,7 @@ package com.soc.backend.board.controller;
 import com.soc.backend.board.dto.CreateParentRippleReq;
 import com.soc.backend.board.dto.GetRippleRes;
 import com.soc.backend.board.service.RippleService;
+import com.soc.backend.config.response.CommonResponse;
 import com.soc.backend.config.response.DataResponse;
 import com.soc.backend.config.response.ResponseService;
 import com.soc.backend.config.security.CustomUserDetails;
@@ -41,10 +42,17 @@ public class RippleController {
     }
 
     @ApiOperation(value = "부모 댓글 조회 API", notes = "게시글 id가 필요")
-    @GetMapping("/ripples/{postId}")
+    @GetMapping("/ripples/posts/{postId}")
     public DataResponse<List<GetRippleRes>> getParentRipplesByPost(@PathVariable(value = "postId")Long postId) {
         List<GetRippleRes> list = rippleService.getParentRipplesByPost(postId);
         return responseService.getDataResponse(list);
+    }
+
+    @ApiOperation(value = "댓글 삭제 API", notes = "댓글 id가 필요")
+    @DeleteMapping("/ripples/{rippleId}")
+    public CommonResponse deleteRippleByRippleId(@PathVariable(value = "rippleId")Long rippleId) {
+        rippleService.deleteRippleByRippleId(rippleId);
+        return responseService.getSuccessResponse();
     }
 
 }
