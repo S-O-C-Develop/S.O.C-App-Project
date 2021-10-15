@@ -1,6 +1,7 @@
 package com.soc.backend.board.service;
 
 import com.soc.backend.account.Account;
+import com.soc.backend.account.RoleType;
 import com.soc.backend.board.dto.CreateParentRippleReq;
 import com.soc.backend.board.dto.GetRippleRes;
 import com.soc.backend.board.entity.Post;
@@ -44,9 +45,12 @@ public class RippleService {
     }
 
     @Transactional
-    public void deleteRippleByRippleId(Long rippleId) {
+    public void deleteRippleByRippleId(Long rippleId, CustomUserDetails userDetails) {
         Ripple ripple = rippleRepository.findByRippleIdAndStatus(rippleId, VALID)
                 .orElseThrow(() -> new CustomException(CustomExceptionStatus.NOT_EXIST_RIPPLE));
+        Account account = userDetails.getAccount();
+        if (!(account.getRole().equals(RoleType.ROLE_ADMIN) || ripple.getAccount().equals(account)))
+            throw new CustomException(CustomExceptionStatus.INVALID_USER_JWT);
         ripple.changeStatus(DELETED);
     }
 }

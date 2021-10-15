@@ -50,8 +50,8 @@ public class RippleController {
 
     @ApiOperation(value = "댓글 삭제 API", notes = "댓글 id가 필요")
     @PutMapping("/ripples/{rippleId}")
-    public CommonResponse deleteRippleByRippleId(@PathVariable(value = "rippleId")Long rippleId) {
-        rippleService.deleteRippleByRippleId(rippleId);
+    public CommonResponse deleteRippleByRippleId(@PathVariable(value = "rippleId")Long rippleId, @AuthenticationPrincipal CustomUserDetails userDetails) {
+        rippleService.deleteRippleByRippleId(rippleId, userDetails);
         return responseService.getSuccessResponse();
     }
 
