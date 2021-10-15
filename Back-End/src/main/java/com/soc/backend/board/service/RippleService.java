@@ -7,6 +7,7 @@ import com.soc.backend.board.entity.Post;
 import com.soc.backend.board.entity.Ripple;
 import com.soc.backend.board.repository.PostRepository;
 import com.soc.backend.board.repository.RippleRepository;
+import com.soc.backend.config.enums.Status;
 import com.soc.backend.config.response.exception.CustomException;
 import com.soc.backend.config.response.exception.CustomExceptionStatus;
 import com.soc.backend.config.security.CustomUserDetails;
@@ -46,6 +47,6 @@ public class RippleService {
     public void deleteRippleByRippleId(Long rippleId) {
         Ripple ripple = rippleRepository.findByRippleIdAndStatus(rippleId, VALID)
                 .orElseThrow(() -> new CustomException(CustomExceptionStatus.NOT_EXIST_RIPPLE));
-        rippleRepository.delete(ripple);
+        ripple.changeStatus(DELETED);
     }
 }

@@ -4,6 +4,7 @@ import com.soc.backend.account.Account;
 import com.soc.backend.board.dto.CreateParentRippleReq;
 import com.soc.backend.config.BaseTimeEntity;
 import com.soc.backend.config.enums.Status;
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -56,6 +57,10 @@ public class Ripple extends BaseTimeEntity {
 
     @OneToMany(mappedBy = "parentRipple", cascade = ALL)
     private List<Ripple> rippleList = new ArrayList<>();
+
+    public void changeStatus(Status status) {
+        this.status = status;
+    }
 
     public Ripple(Account account, Post post, CreateParentRippleReq req) {
         this.status = VALID;
