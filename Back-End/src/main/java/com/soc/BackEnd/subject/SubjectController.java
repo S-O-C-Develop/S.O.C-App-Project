@@ -3,14 +3,12 @@ package com.soc.backend.subject;
 import com.soc.backend.config.response.DataResponse;
 import com.soc.backend.config.response.ResponseService;
 import com.soc.backend.subject.dto.CreateSubjectReq;
+import com.soc.backend.subject.dto.GetSubjectRes;
 import com.soc.backend.utils.ValidationExceptionProvider;
 import io.swagger.annotations.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.Errors;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -31,6 +29,13 @@ public class SubjectController {
     public DataResponse<Long> createSubject(@RequestBody @Valid CreateSubjectReq createSubjectReq, Errors errors) {
         if (errors.hasErrors()) ValidationExceptionProvider.throwValidError(errors);
         Long subjectId = subjectService.createSubject(createSubjectReq);
+        return responseService.getDataResponse(subjectId);
+    }
+
+    @ApiOperation(value = "과목 조회 API", notes ="과목 정보 전송")
+    @GetMapping(value = "/subjects/{subjectId}")
+    public DataResponse<Long> getSubject(@PathVariable(name = "subjectId") Long subjectId) {
+        GetSubjectRes subjectRes = subjectService.getSubject(subjectId);
         return responseService.getDataResponse(subjectId);
     }
 

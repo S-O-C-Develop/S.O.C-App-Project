@@ -5,6 +5,7 @@ import com.soc.backend.config.enums.Status;
 import com.soc.backend.config.response.exception.CustomException;
 import com.soc.backend.config.response.exception.CustomExceptionStatus;
 import com.soc.backend.subject.dto.CreateSubjectReq;
+import com.soc.backend.subject.dto.GetSubjectRes;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,5 +28,11 @@ public class SubjectService {
         Subject subject = new Subject(dto);
         Subject save = subjectRepository.save(subject);
         return save.getSubjectId();
+    }
+
+    public GetSubjectRes getSubject(Long subjectId) {
+        Subject subject = subjectRepository.findBySubjectIdAndStatus(subjectId, VALID)
+                .orElseThrow(() -> new CustomException(CustomExceptionStatus.NOT_EXIST_SUBJECT));
+        return new GetSubjectRes(subject);
     }
 }

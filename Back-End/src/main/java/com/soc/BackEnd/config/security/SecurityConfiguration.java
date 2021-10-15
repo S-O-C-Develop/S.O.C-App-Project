@@ -60,7 +60,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests()
                 .antMatchers(HttpMethod.POST,"/api/sign-up", "/api/sign-in").permitAll()
-                .antMatchers(HttpMethod.GET,"/api/posts/**","/errors/**", "/api/ripples/posts/{postId}").permitAll()
+                .antMatchers(HttpMethod.GET,"/api/posts/**","/errors/**", "/api/ripples/posts/{postId}","/api/subjects/{subjectId}").permitAll()
                 .requestMatchers(CorsUtils::isPreFlightRequest).permitAll()
                 .anyRequest().hasRole("USER")
                 .and()
