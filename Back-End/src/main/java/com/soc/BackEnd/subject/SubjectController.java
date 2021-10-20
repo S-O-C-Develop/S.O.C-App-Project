@@ -34,9 +34,9 @@ public class SubjectController {
 
     @ApiOperation(value = "과목 조회 API", notes ="과목 정보 전송")
     @GetMapping(value = "/subjects/{subjectId}")
-    public DataResponse<Long> getSubject(@PathVariable(name = "subjectId") Long subjectId) {
+    public DataResponse<GetSubjectRes> getSubject(@PathVariable(name = "subjectId") Long subjectId) {
         GetSubjectRes subjectRes = subjectService.getSubject(subjectId);
-        return responseService.getDataResponse(subjectId);
+        return responseService.getDataResponse(subjectRes);
     }
 
 }
