@@ -33,7 +33,7 @@
 
 ### iOS
 - Swift 5.3
-- Swift Ui 2.0
+- Swift Ui 3.0
 - Xcode 12.5.1
 
 ### Android
